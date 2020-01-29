@@ -68,3 +68,11 @@
   background: #ffffff;
 }
 
+.aaCodonLabelInput {
+   height: 39px !important;
+   padding-left: 10px;
+   margin-left: 8px;
+   vertical-align: top !important;
+   width: 70px !important;   
+}
+

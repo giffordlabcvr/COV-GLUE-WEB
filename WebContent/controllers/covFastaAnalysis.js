@@ -42,24 +42,44 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 				$scope.availableFeatures = [
 				    { name: "E",
+					  aaCodonLabel: 1,
+					  maxCodon: 76,
 				      displayName: "E" },
 				    { name: "M",
+				 	  aaCodonLabel: 1,
+					  maxCodon: 223,
 				      displayName: "M" },
 				    { name: "N",
+					  aaCodonLabel: 1,
+					  maxCodon: 420,
 				      displayName: "N" },
 				    { name: "ORF_10",
+					  aaCodonLabel: 1,
+					  maxCodon: 39,
 				      displayName: "ORF 10" },
 				    { name: "ORF_1ab",
+					  aaCodonLabel: 1,
+					  maxCodon: 7097,
 				      displayName: "ORF 1ab" },
 				    { name: "ORF_3a",
+					  aaCodonLabel: 1,
+					  maxCodon: 276,
 				      displayName: "ORF_3a" },
 				    { name: "ORF_6",
+					  aaCodonLabel: 1,
+					  maxCodon: 62,
 				      displayName: "ORF 6" },
 				    { name: "ORF_7a",
+					  aaCodonLabel: 1,
+					  maxCodon: 122,
 				      displayName: "ORF 7a" },
 				    { name: "ORF_8",
+					  aaCodonLabel: 1,
+					  maxCodon: 122,
 				      displayName: "ORF 8" },
 				    { name: "S",
+					  aaCodonLabel: 1,
+					  maxCodon: 1274,
 				      displayName: "S" }];
 
 				$scope.aaFeature = $scope.availableFeatures[0];
@@ -374,7 +394,8 @@ covApp.controller('covFastaAnalysisCtrl',
 						sequenceReport.covReport.sequenceResult.id+":"+
 						placement.placementIndex+":"+
 						$scope.tipAnnotation.name+":"+
-						$scope.aaFeature.name;
+						$scope.aaFeature.name+":"+
+						$scope.aaFeature.aaCodonLabel;
 					console.info('cacheKey', cacheKey);
 					
 
@@ -403,7 +424,7 @@ covApp.controller('covFastaAnalysisCtrl',
 											    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
 											    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
 											    "aaVisFeature" : $scope.aaFeature.name,
-											    "aaVisCodonLabel" : "2",
+											    "aaVisCodonLabel" : $scope.aaFeature.aaCodonLabel,
 											    "placementIndex" : placement.placementIndex,
 												"pxWidth" : 1136 - scrollbarWidth, 
 												"pxHeight" : 2500,

@@ -234,9 +234,7 @@
 						<div class="phyloVisualisationControls col-md-10">
 							<p>
 							<div>
-								<p>
-								Visualise submitted sequence:
-								<div class="btn-group" dropdown is-open="status.pseqButtonOpen">
+								Visualise submitted sequence: <div class="btn-group" dropdown is-open="status.pseqButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="pseq-button" type="button" class="btn btn-sm btn-default"
 										dropdown-toggle>
 										{{fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.id}}
@@ -250,8 +248,7 @@
 											role="menuitem"><a>{{report.covReport.sequenceResult.id}}</a></li>
 									</ul>
 								</div>
-								<span ng-if="fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.placements.length > 1">
-									alternative placement:
+								<span ng-if="fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.placements.length > 1">, alternative placement:
 									<div class="btn-group" dropdown is-open="status.pButtonOpen">
 										<button ng-disabled="phyloVisualisationUpdating" id="p-button" type="button" class="btn btn-sm btn-default"
 											dropdown-toggle>
@@ -267,10 +264,10 @@
 										</ul>
 									</div>
 								</span>
-								</p>
-								<p>
-								Visualise amino acid in coding region:
-								<div class="btn-group" dropdown is-open="status.aafButtonOpen">
+								<br/>
+								&nbsp;
+								<br/>
+								Annotate amino acid in coding region: <div class="btn-group" dropdown is-open="status.aafButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="aaf-button" type="button" class="btn btn-sm btn-default"
 										dropdown-toggle>
 											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : aaFeature.displayName}}
@@ -284,24 +281,26 @@
 											role="menuitem"><a>{{feature.displayName}}</a></li>
 									</ul>
 								</div>
-								<span>
-									Metadata annotation:
-									<div class="btn-group" dropdown is-open="status.taButtonOpen">
-										<button ng-disabled="phyloVisualisationUpdating" id="ta-button" type="button" class="btn btn-sm btn-default"
-											dropdown-toggle>
-											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : tipAnnotation.displayName}}
-											<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu" role="menu"
-											aria-labelledby="ta-button">
-											<li
-												ng-repeat="availableTipAnnotation in availableTipAnnotations"
-												ng-click="setTipAnnotation(availableTipAnnotation)"
-												role="menuitem"><a>{{availableTipAnnotation.displayName}}</a></li>
-										</ul>
-									</div>
-								</span>
-								</p>
+								<span ng-disabled="phyloVisualisationUpdating">, codon number: 
+									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaCodonLabel"/>
+								</span> (Range: 1-{{aaFeature.maxCodon}})								
+								<br/>
+								&nbsp;
+								<br/>
+								Annotate metadata: <div class="btn-group" dropdown is-open="status.taButtonOpen">
+									<button ng-disabled="phyloVisualisationUpdating" id="ta-button" type="button" class="btn btn-sm btn-default"
+										dropdown-toggle>
+										{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : tipAnnotation.displayName}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu"
+										aria-labelledby="ta-button">
+										<li
+											ng-repeat="availableTipAnnotation in availableTipAnnotations"
+											ng-click="setTipAnnotation(availableTipAnnotation)"
+											role="menuitem"><a>{{availableTipAnnotation.displayName}}</a></li>
+									</ul>
+								</div>
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3

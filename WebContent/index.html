@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+	<!-- Due to a bug in webcomponents, I can't use CSS with HTML imports -->
+	<!-- (at least in IE) -->
+	<!-- https://github.com/webcomponents/webcomponentsjs/issues/400 -->
+	<link rel="stylesheet" href="../gluetools-web/bootstrap/css/bootstrap-yeti.css"/>
+	<link rel="stylesheet" href="../gluetools-web/www/css/style.css"/>
+	<link rel="stylesheet" href="../gluetools-web/angularjs-slider/rzslider.css"/>
+	<link rel="stylesheet" href="./covApp.css"/>
+	<link rel="stylesheet" href="../gluetools-web/angular-cookie-law/angular-cookie-law.min.css"/>
+	
+	<!-- link for CSS when using angular-tree-control as a Dom element -->
+	<link rel="stylesheet" type="text/css" href="../gluetools-web/angular-tree-control-master/css/tree-control.css">
+
+
+	<!-- Polyfill, required for browsers that do not support link rel="import" -->
+	<script type="text/javascript" src="../gluetools-web/webcomponents/webcomponents-lite.min.js"></script>
+
+	<link rel="import" href="./covAppDependencies.html"/>
+</head>
+<body>
+
+<cookie-law-banner message="This website uses Google Analytics First Party cookies for collecting usage statistics and some user-related data including geography and IP address. We use this facility to understand our users and improve our website. We do not store submitted sequence data on the server. In order to use the website, please indicate that you consent to our use of cookies and data collection." accept-text="I consent"></cookie-law-banner>
+
+<div class="container" ng-controller="covAppCtrl">
+
+	<!--  http://plnkr.co/edit/by9bV5jBA4Qn8VASfw08?p=preview  -->
+	<div>
+	  <nav class="navbar navbar-inverse " role="navigation">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	
+	      <button type="button" class="navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a class="navbar-brand" href="#home">{{brand}}</a>
+	    </div>
+	  
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
+	    
+	      <ul class="nav navbar-nav">
+	        <li><a href="#home">{{homeMenuTitle}}</a></li>
+	        <li><a href="#about">{{aboutMenuTitle}}</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </nav>
+	</div>     
+
+	<div ng-view></div>
+
+	<hr/>
+	
+	<div>
+		<div class="row">
+			<div class="col-md-2">
+				<a target="_blank" href="http://www.gla.ac.uk/researchinstitutes/iii/cvr/"><img style="width:100%" alt="CVR logo" src="./images/cvrBioinformatics_scaled.png"></a>
+			</div>
+			<div class="col-md-8">
+				<p>COV-GLUE is based on the <a target="_blank" href="http://glue-tools.cvr.gla.ac.uk">GLUE</a> software framework. 
+				GLUE and COV-GLUE are developed and maintained by the 
+				<a target="_blank" href="http://www.gla.ac.uk/researchinstitutes/iii/cvr/">MRC-University of Glasgow Centre for Virus Research</a>. 
+				<span style="color:#cc2222">Please note this is alpha software, still undergoing development and testing before its official release.</span></p> 
+			</div>
+			<div class="col-md-2">
+				<p>
+					<a target="_blank" href="https://www.researchgate.net/project/COV-GLUE-A-sequence-data-resource-for-Hepatitis-B-Virus">
+						<img style="width:60px;padding-right:10px" align="left" alt="COV-GLUE Project on ResearchGate" src="../gluetools-web/www/images/RG_square_green.jpg">
+					</a>
+					<a href="https://twitter.com/intent/tweet?button_hashtag=covGlue">
+						<img style="width:60px;padding-right:10px" align="left" alt="COV-GLUE on Twitter" src="../gluetools-web/www/images/Twitter_Logo_White_On_Blue.png">
+					</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div style="display: table; margin: auto;">
+					<a target="_blank" href="https://www.gla.ac.uk"><img style="height:65px" alt="University of glasgow logo" src="images/university_of_glasgow_zero_sat.png"></a>
+					<a target="_blank" href="https://mrc.ukri.org"><img style="height:65px;padding-left:20px" MRC="MRC logo" src="images/mrc_zero_sat.png"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+</body>
+</html>

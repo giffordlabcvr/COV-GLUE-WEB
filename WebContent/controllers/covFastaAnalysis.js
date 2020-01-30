@@ -4,6 +4,7 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 				addUtilsToScope($scope);
 
+				$scope.responseID = 1;
 				$scope.analytics = $analytics;
 				$scope.featureVisualisationUpdating = false;
 				$scope.phyloVisualisationUpdating = false;
@@ -23,6 +24,10 @@ covApp.controller('covFastaAnalysisCtrl',
 					{
 						name: "isolate",
 						displayName: "Virus name"
+					},
+					{
+						name: "gisaidId",
+						displayName: "GISAID ID"
 					},
 					{
 						name: "country",
@@ -153,6 +158,8 @@ covApp.controller('covFastaAnalysisCtrl',
 							glueWS.collectGlueRequestResult(requestID).then(function onSuccess(response) {
 								console.log("covFastaAnalysis.requestStatus.response async", response.data);
 								fileItem.response = response.data;
+								fileItem.response.responseID = $scope.responseID;
+								$scope.responseID++;
 							}, function onError(response) {
 								fileItem.commandError = response;
 							});
@@ -316,7 +323,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					var sequenceReport = $scope.fileItemUnderAnalysis.sequenceReport;
 					var visualisationHints = sequenceReport.covReport.sequenceResult.visualisationHints;
 
-					var cacheKey = $scope.fileItemUnderAnalysis.file.name+":"+
+					var cacheKey = $scope.fileItemUnderAnalysis.response.responseID+":"+
 						sequenceReport.covReport.sequenceResult.id+":"+
 						sequenceReport.covReport.comparisonRef.refName+":"+
 						sequenceReport.covReport.feature.name;
@@ -390,7 +397,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					var sequenceReport = $scope.fileItemUnderAnalysis.sequenceReport;
 					var placement = sequenceReport.covReport.placement;
 
-					var cacheKey = $scope.fileItemUnderAnalysis.file.name+":"+
+					var cacheKey = $scope.fileItemUnderAnalysis.response.responseID+":"+
 						sequenceReport.covReport.sequenceResult.id+":"+
 						placement.placementIndex+":"+
 						$scope.tipAnnotation.name+":"+
@@ -484,5 +491,21 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	return coveragePct;
 			    }
 
-				
+			    $scope.getMutations = function(sequenceResult, featureName) {
+			    	var mutations = [];
+			    	_.each(sequenceResult.mutations, function(mut) {
+			    		if(mut.mutation.feature == featureName) {
+			    			mutations.push(mut.mutation);
+			    		}
+			    	});
+			    	return mutations;
+			    }
+
+				$scope.switchToMutationPhylo = function(report, feature, codonLabel) {
+			    	$scope.displaySection = 'phyloPlacement';
+			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
+			    	$scope.setAAFeature(feature);
+			    	feature.aaCodonLabel = parseInt(codonLabel);
+			    	$scope.updatePhyloSvg();
+				}
 			}]);

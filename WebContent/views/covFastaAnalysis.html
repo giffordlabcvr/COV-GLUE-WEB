@@ -139,39 +139,34 @@
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<th rowspan="2" style="width: 15%;">Sequence</th>
-								<th rowspan="2" style="width: 15%;">Identified as novel Coronavirus?</th>
-								<th colspan="10" rowspan="1" style="width: 60%;">Coding region coverage</th>
+								<th rowspan="2" style="width: 7%;">Sequence</th>
+								<th rowspan="2" style="width: 6%;">Novel Coronavirus?</th>
+								<th rowspan="2" style="width: 7%;"></th>
+								<th colspan="10" rowspan="1" style="width: 80%;">Coding regions</th>
 							</tr>
 							<tr>
-								<th rowspan="1" style="width: 6%;">E</th>
-								<th rowspan="1" style="width: 6%;">M</th>
-								<th rowspan="1" style="width: 6%;">N</th>
-								<th rowspan="1" style="width: 6%;">S</th>
-								<th rowspan="1" style="width: 6%;">ORF_1ab</th>
-								<th rowspan="1" style="width: 6%;">ORF_3a</th>
-								<th rowspan="1" style="width: 6%;">ORF_6</th>
-								<th rowspan="1" style="width: 6%;">ORF_7a</th>
-								<th rowspan="1" style="width: 6%;">ORF_8</th>
-								<th rowspan="1" style="width: 6%;">ORF_10</th>
+								<th rowspan="1" style="width: 8%;" ng-repeat="feature in availableFeatures track by $index">
+								{{feature.displayName}}</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr
-								ng-repeat="covResult in fileItemUnderAnalysis.response.covWebReport.results track by $index">
-								<td>{{covResult.covReport.sequenceResult.id}}</td>
-								<td>{{covResult.covReport.sequenceResult.isForwardCov ?
+						<tbody ng-repeat="covResult in fileItemUnderAnalysis.response.covWebReport.results track by $index">
+							<tr>
+								<td rowspan="2">{{covResult.covReport.sequenceResult.id}}</td>
+								<td rowspan="2">{{covResult.covReport.sequenceResult.isForwardCov ?
 									"Yes" : "No"}}</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'E'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'M'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'N'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'S'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_1ab'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_3a'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_6'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_7a'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_8'), 2)}}%</td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, 'ORF_10'), 2)}}%</td>
+								<td>Coverage</td>
+								<td ng-repeat="feature in availableFeatures track by $index">
+								{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
+							</tr>
+							<tr>
+								<td>Mutations</td>
+								<td ng-repeat="feature in availableFeatures track by $index">
+									<span ng-repeat="mutation in getMutations(covResult.covReport.sequenceResult, feature.name) track by $index">
+										<a ng-click="switchToMutationPhylo(covResult, feature, mutation.codonLabel)">
+										{{mutation.refAas.split("").join("/")}}{{mutation.codonLabel}}{{mutation.queryAas.split("").join("/")}}
+										</a>
+									</span>
+								</td>
 							</tr>
 						</tbody>
 					</table>

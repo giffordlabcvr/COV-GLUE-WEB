@@ -69,10 +69,11 @@
 }
 
 .aaCodonLabelInput {
-   height: 39px !important;
-   padding-left: 10px;
-   margin-left: 8px;
+   height: 35px !important;
+   padding-left: 5px;
+   margin-left: 5px;
    vertical-align: top !important;
    width: 70px !important;   
 }
+
 

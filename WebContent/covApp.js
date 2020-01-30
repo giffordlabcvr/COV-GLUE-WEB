@@ -7,7 +7,7 @@
 	  var trackingID;
 	  if(document.location.hostname.indexOf("cov-glue.cvr.gla.ac.uk") >= 0) {
 		  // COV-GLUE production analytics account
-		  trackingID = 'UA-147656992-1';
+		  trackingID = 'UA-157355923-1';
 		  ga('create', trackingID, 'auto');
 	  } else {
 		  // sandbox analytics account

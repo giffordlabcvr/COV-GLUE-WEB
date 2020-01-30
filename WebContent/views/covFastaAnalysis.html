@@ -2,17 +2,24 @@
 
 
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-9">
 			<h1>COV-GLUE</h1>
-			<h4>Mutation analysis for the 2020 novel Coronavirus (nCoV) outbreak</h4>
-			<p></p>
-		</div>
-		<div class="col-md-2">
-			<img width="100%" src="images/covVirion.jpg" />
-			<p class="text-center">
-				<small>Image copyright <a href="https://www.indiana.edu/">Indiana
-						University</a></small>
+			<h3>Mutation analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
+			<p>As the nCov outbreak develops, the virus genome may accumulate amino acid changes with a biological function. 
+			This web application allows labs that process genome sequences to quickly characterise mutations in their viruses.</p>
+			<p>
+			<ol>
+				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to the page. </li>
+				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
+				<li>If your sequences contain mutations these will be displayed under the relevant genome region.</li>
+				<li>Click on a mutation to display it in its phylogenetic context.</li>
+			</ol>
 			</p>
+			<p>Based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>, see the <a href="/#about" target="_blank">about page</a> for details.</p>
+			
+		</div>
+		<div class="col-md-3">
+			<img width="100%" src="images/GenusCoronovirusSchematic_n.gif" />
 		</div>
 	</div>
 </div>
@@ -21,10 +28,6 @@
 <div nv-file-drop="" uploader="uploader"
 		filters="queueLimit, customFilter">
 		<p>
-		<ol>
-			<li>Click "Add files" to add your nCoV sequence files in FASTA nucleotide format, or alternatively drag them here. </li>
-			<li>Slick "Submit" to run the analysis.</li>
-		</ol>
 			<small><br />For testing, download this
 				<a ng-click="downloadExampleSequence()">example sequence file</a>
 				and submit it for analysis.</small>

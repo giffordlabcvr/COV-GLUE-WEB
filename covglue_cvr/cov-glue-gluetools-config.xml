@@ -111,108 +111,12 @@
 			<maxRequests>20</maxRequests>
 		</requestQueue>
 	</requestQueueManager>
-	<requestGatekeeper>
+		<!-- COV-GLUE -->
 		<modePathRegexFilter>
 			<regex>^/project/cov</regex>
 			<!-- general -->
-			<simpleCommandFilter words="multi-render">
-				<arg name="tableName">m49_region</arg>
-				<arg name="rendererModuleName">m49RegionTreeRenderer</arg>
-			</simpleCommandFilter>
-			<!-- clade tree page -->
-			<modePathRegexFilter>
-				<regex>.*/alignment/AL_MASTER</regex>
-				<simpleCommandFilter words="descendent-tree"/>
-			</modePathRegexFilter>
-			<!-- sequences page -->
-			<modePathRegexFilter>
-				<regex>.*/module/fastaExporter$</regex>
-				<simpleCommandFilter words="web-export">
-					<queueAssignmentFilter>
-							<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<simpleCommandFilter words="count sequence"/>
-			<simpleCommandFilter words="list sequence"/>
-			<simpleCommandFilter words="web-list sequence"/>
-			<!-- alignment page -->
-			<modePathRegexFilter>
-				<regex>.*/alignment/.*</regex>
-				<simpleCommandFilter words="render-object">
-					<arg name="rendererModuleName">covAlignmentRenderer</arg>
-				</simpleCommandFilter>
-				<simpleCommandFilter words="count member"/>
-				<simpleCommandFilter words="list member"/>
-				<simpleCommandFilter words="web-list member">
-					<queueAssignmentFilter>
-						<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/reference/.*</regex>
-				<simpleCommandFilter words="show feature tree"/>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/module/covFastaExporter$</regex>
-				<simpleCommandFilter words="web-export-member">
-					<queueAssignmentFilter>
-							<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-				<simpleCommandFilter words="web-export">
-					<queueAssignmentFilter>
-							<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/module/covFastaAlignmentExporter$</regex>
-				<simpleCommandFilter words="web-export">
-					<queueAssignmentFilter>
-							<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/module/covFastaProteinAlignmentExporter$</regex>
-				<simpleCommandFilter words="web-export">
-					<queueAssignmentFilter>
-							<queueName>download</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<!-- sequence page -->
-			<modePathRegexFilter>
-				<regex>.*/sequence/.*$</regex>
-				<simpleCommandFilter words="render-object">
-					<arg name="rendererModuleName">covSequenceRenderer</arg>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<!-- version info -->
-			<simpleCommandFilter words="show setting">
-				<arg name="settingName">project-version</arg>
-			</simpleCommandFilter>
 			<simpleCommandFilter words="glue-engine show-version"/>
-			<simpleCommandFilter words="show extension-setting">
-				<arg name="extensionName">ncbi_cov</arg>
-				<arg name="extSettingName">extension-build-id</arg>
-			</simpleCommandFilter>
-			<simpleCommandFilter words="show extension-setting">
-				<arg name="extensionName">ncbi_cov</arg>
-				<arg name="extSettingName">extension-build-date</arg>
-			</simpleCommandFilter>
-			<simpleCommandFilter words="show extension-setting">
-				<arg name="extensionName">ncbi_cov</arg>
-				<arg name="extSettingName">extension-version</arg>
-			</simpleCommandFilter>
-			<!-- reference sequence -->
-			<modePathRegexFilter>
-				<regex>.*/reference/.*$</regex>
-				<simpleCommandFilter words="render-object"/>
-			</modePathRegexFilter>			
-			<!-- analysis page -->
+			<!-- analysis -->
 			<modePathRegexFilter>
 				<regex>.*/module/covReportingController$</regex>
 				<simpleCommandFilter words="invoke-consumes-binary-function">
@@ -227,28 +131,14 @@
 				<simpleCommandFilter words="visualise-feature"/>
 			</modePathRegexFilter>
 			<modePathRegexFilter>
+				<regex>.*/module/covFeatureToSvgTransformer$</regex>
+				<simpleCommandFilter words="transform-to-web-file"/>
+			</modePathRegexFilter>		
+			<modePathRegexFilter>
 				<regex>.*/module/covSvgPhyloVisualisation$</regex>
 				<simpleCommandFilter words="invoke-function">
 					<arg name="functionName">visualisePhyloAsSvg</arg>
 				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/module/covFeatureToSvgTransformer$</regex>
-				<simpleCommandFilter words="transform-to-web-file"/>
-			</modePathRegexFilter>		
-			<!-- Ahmed's analysis page -->
-			<modePathRegexFilter>
-				<regex>.*/module/hdrReportingController$</regex>
-				<simpleCommandFilter words="invoke-consumes-binary-function">
-					<arg name="functionName">reportFastaWeb</arg>
-					<queueAssignmentFilter>
-						<queueName>analysis</queueName>						
-					</queueAssignmentFilter>
-				</simpleCommandFilter>
-			</modePathRegexFilter>
-			<modePathRegexFilter>
-				<regex>.*/module/hdrRasReportTransformer$</regex>
-				<simpleCommandFilter words="transform-to-web-file"/>
 			</modePathRegexFilter>
 		</modePathRegexFilter>
 	</requestGatekeeper> 

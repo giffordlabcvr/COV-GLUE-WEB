@@ -111,6 +111,7 @@
 			<maxRequests>20</maxRequests>
 		</requestQueue>
 	</requestQueueManager>
+	<requestGatekeeper> 
 		<!-- COV-GLUE -->
 		<modePathRegexFilter>
 			<regex>^/project/cov</regex>

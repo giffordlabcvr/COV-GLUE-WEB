@@ -1,0 +1,76 @@
+<div ng-cloak>
+	<h3>{{mutation.featureDisplayName}} mutation {{mutation.displayName}}</h3>
+	
+	
+	<div class="btn-group" style="margin-bottom: 15px">
+        <label class="btn btn-primary" ng-model="displaySection" btn-radio="'phylogeneticContext'">Phylogenetic context</label>
+        <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
+    </div>
+	
+	
+	<div ng-if="displaySection == 'phylogeneticContext'" class="container-fluid">
+		<div class="row">
+			<p>
+			This tree shows the sequences from the outbreak, annotated with the amino acid residue at {{mutation.featureDisplayName}} position {{mutation.codonLabel}}
+			</p> 
+			Annotate metadata:
+			<div class="btn-group" dropdown is-open="status.taButtonOpen">
+				<button ng-disabled="phyloVisualisationUpdating" id="ta-button"
+					type="button" class="btn btn-sm btn-default" dropdown-toggle>
+					{{tipAnnotation.displayName}} <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="ta-button">
+					<li ng-repeat="availableTipAnnotation in availableTipAnnotations"
+						ng-click="setTipAnnotation(availableTipAnnotation)"
+						role="menuitem"><a>{{availableTipAnnotation.displayName}}</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="row phyloSvgContainer" us-spinner="{radius:23, width:7, length: 11}" spinner-on="phyloVisualisationUpdating || phyloLegendUpdating" style="min-height: 100px; position: relative">
+			<div ng-if="(phyloVisualisationSvgUrl == null && !phyloVisualisationUpdating) || (phyloLegendSvgUrl == null && !phyloLegendUpdating)">
+				<p class="text-center">No data</p>
+			</div>
+			<div style="height: 80px; width: 1136px;" data-onload="phyloLegendSvgUpdated()" ng-include="phyloLegendSvgUrl"></div>
+			<div style="height: 2px; width: 1136px; background-color: #cecece;" ng-if="phyloVisualisationSvgUrl != null && phyloLegendSvgUrl != null">
+			</div>
+			<div style="height: 800px; overflow: auto;" data-onload="phyloSvgUpdated()" ng-include="phyloVisualisationSvgUrl"></div>
+		</div>
+	</div>
+	
+	<div ng-if="displaySection == 'containingSequences'">
+		<div>
+		<p>The following outbreak sequences contain {{mutation.featureDisplayName}} mutation {{mutation.displayName}}</p>
+		</div>
+		<paging-buttons paging-context="seqPagingContext"></paging-buttons>
+		<span ng-show="listSequenceResult.length == 0">No data</span>
+		<div ng-show="listSequenceResult.length > 0">
+			Sequences {{seqPagingContext.firstItemIndex}} to {{seqPagingContext.lastItemIndex}} of {{seqPagingContext.totalItems}}
+			<table class="table table-striped table-bordered table-nonfluid">
+				<thead>
+					<th>Virus name</th>
+					<th>GISAID ID</th>
+					<th>Country</th>
+					<th>Location</th>
+					<th>Collection date</th>
+				</thead>
+				<colgroup>
+			       <col style="width: 20%;">
+			       <col style="width: 20%;">
+			       <col style="width: 20%;">
+			       <col style="width: 20%;">
+			       <col style="width: 20%;">
+			    </colgroup>
+				<tbody>
+					<tr ng-repeat="seq in listSequenceResult track by $index">
+						<td>{{seq.isolate}}</td>
+						<td>{{seq.sequenceID}}</td>
+						<td>{{seq['m49_country.display_name']}}</td>
+						<td>{{seq.place_sampled}}</td>
+						<td>{{seq.collection_month_day != null ? seq.collection_month_day+"-" : ""}}{{seq.collection_month}}-{{seq.collection_year}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<paging-buttons paging-context="seqPagingContext"></paging-buttons>
+		</div>
+	</div>
+</div>

@@ -36,20 +36,37 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
 	
 	var projectBrowserStandardRoutes = projectBrowserStandardRoutesProvider.$get();
 	var projectBrowserURL = "../gluetools-web/www/projectBrowser";
+
+	// home page
 	$routeProvider.
     when('/home', {
-      templateUrl: '../views/covFastaAnalysis.html',
-      controller: 'covFastaAnalysisCtrl'
-    }).
-    otherwise({
-  	  redirectTo: '/home'
-    });
+        templateUrl: '../views/covFastaAnalysis.html',
+        controller: 'covFastaAnalysisCtrl'
+      });
 
+	// mutations list
+	$routeProvider.
+    when('/mutation', {
+        templateUrl: '../views/covMutations.html',
+        controller: 'covMutationsCtrl'
+      });
+
+	// specific mutation
+	$routeProvider.
+    when('/project/mutation/:id', {
+    	  templateUrl: 'views/covMutation.html',
+    	  controller: 'covMutationCtrl'
+        });
+
+    // about page
     $routeProvider.
     when('/about', {
   	  templateUrl: '../views/covAbout.html',
   	  controller: 'covAboutCtrl'
-    }).
+    });
+
+    // default
+    $routeProvider.
     otherwise({
   	  redirectTo: '/home'
     });
@@ -64,6 +81,7 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.brand = "COV-GLUE";
 	$scope.homeMenuTitle = "Home";
 	$scope.aboutMenuTitle = "About";
+	$scope.mutationMenuTitle = "Mutations";
 	glueWS.setProjectURL("../../../gluetools-ws/project/cov");
 	glueWS.setAsyncURL("../../../gluetools-ws");
 	glueWebToolConfig.setAnalysisToolURL("../gluetools-web/www/analysisTool");

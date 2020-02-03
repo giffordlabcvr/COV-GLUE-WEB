@@ -4,15 +4,16 @@
 	<div class="row">
 		<div class="col-md-9">
 			<h1>COV-GLUE</h1>
-			<h3>Mutation analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
-			<p>As the nCov outbreak develops, the virus is accumulating amino acid changes. These may be of little consequence or they could affect the biology of the virus. 
-			This web application allows researchers and labs that process genome sequences to quickly characterise the mutations that arise.</p>
-			<p>
+			<h3>Amino acid analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
+			<p>As the nCov outbreak develops, the virus is accumulating amino acid replacements. These may be of little consequence or they could affect the biology of the virus. 
+			This web application allows researchers and public health labs to quickly characterise the amino acid replacements that arise.</p>
+			<p>You can browse <a href="#/replacement" target="_blank">replacements</a> which have been found in outbreak sequences.</p>
+			<p>You can also analyse new sequences:
 			<ol>
-				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to the page. </li>
+				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
-				<li>If your sequences contain mutations these will be displayed under the relevant genome region.</li>
-				<li>Click on a mutation to display it in its phylogenetic context.</li>
+				<li>If your sequences contain amino acid replacements these will be displayed under the relevant genome region.</li>
+				<li>Click on a replacement to display it in its phylogenetic context.</li>
 			</ol>
 			</p>
 			<p>Based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>, see the <a href="/#about" target="_blank">about page</a> for details.</p>
@@ -162,7 +163,7 @@
 								{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
 							</tr>
 							<tr>
-								<td>Mutations</td>
+								<td>Amino acid replacements</td>
 								<td ng-repeat="feature in availableFeatures track by $index">
 									<span ng-repeat="mutation in getMutations(covResult.covReport.sequenceResult, feature.name) track by $index">
 										<a ng-click="switchToMutationPhylo(covResult, feature, mutation.codonLabel)">

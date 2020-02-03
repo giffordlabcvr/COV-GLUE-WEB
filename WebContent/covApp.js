@@ -44,17 +44,17 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
         controller: 'covFastaAnalysisCtrl'
       });
 
-	// mutations list
+	// replacements list
 	$routeProvider.
-    when('/mutation', {
-        templateUrl: '../views/covMutations.html',
+    when('/replacement', {
+        templateUrl: '../views/covReplacements.html',
         controller: 'covMutationsCtrl'
       });
 
-	// specific mutation
+	// specific replacement
 	$routeProvider.
-    when('/project/mutation/:id', {
-    	  templateUrl: 'views/covMutation.html',
+    when('/project/replacement/:id', {
+    	  templateUrl: 'views/covReplacement.html',
     	  controller: 'covMutationCtrl'
         });
 
@@ -81,7 +81,7 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.brand = "COV-GLUE";
 	$scope.homeMenuTitle = "Home";
 	$scope.aboutMenuTitle = "About";
-	$scope.mutationMenuTitle = "Mutations";
+	$scope.replacementsMenuTitle = "Amino acid replacements";
 	glueWS.setProjectURL("../../../gluetools-ws/project/cov");
 	glueWS.setAsyncURL("../../../gluetools-ws");
 	glueWebToolConfig.setAnalysisToolURL("../gluetools-web/www/analysisTool");

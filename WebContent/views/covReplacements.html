@@ -1,16 +1,16 @@
 <div>
-	<h2>Mutations</h2>
+	<h2>Amino acid replacements</h2>
 	<p>
-	The following mutations relative to reference strain Wuhan-Hu-1 have been detected in viral genome sequences from the outbreak.
+	The following amino acid replacements relative to reference strain Wuhan-Hu-1 have been detected in viral genome sequences from the outbreak.
 	</p>
 	<paging-buttons paging-context="pagingContext"></paging-buttons>
 	<span ng-show="mutations.length == 0">None</span>
 	<div ng-show="mutations.length > 0">	
-		Mutations {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
+		Replacements {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
 		<table class="table table-striped table-bordered">
 			<thead>
 				<th>Virus genome region</th>		
-				<th>Mutation</th>		
+				<th>Amino acid replacement</th>		
 				<th>Number of containing sequences</th>		
 			</thead>
 			<colgroup>
@@ -21,7 +21,7 @@
 			<tbody>
 				<tr ng-repeat="m in mutations track by $index">
 					<td>{{m.mutation.featureDescription}}{{m.mutation.featureDescription != m.mutation.featureDisplayName ? " ("+m.mutation.featureDisplayName+")" : ""}}</td>
-					<td><a target="_blank" href="#project/mutation/{{m.mutation.id}}">{{m.mutation.displayName}}</a></td>
+					<td><a target="_blank" href="#project/replacement/{{m.mutation.id}}">{{m.mutation.displayName}}</a></td>
 					<td>{{m.mutation.numSeqs}}</td>
 				</tr>
 			</tbody>

@@ -165,9 +165,9 @@
 							<tr>
 								<td>Amino acid replacements</td>
 								<td ng-repeat="feature in availableFeatures track by $index">
-									<span ng-repeat="mutation in getMutations(covResult.covReport.sequenceResult, feature.name) track by $index">
-										<a ng-click="switchToMutationPhylo(covResult, feature, mutation.codonLabel)">
-										{{mutation.refAas.split("").join("/")}}{{mutation.codonLabel}}{{mutation.queryAas.split("").join("/")}}
+									<span ng-repeat="replacement in getReplacements(covResult.covReport.sequenceResult, feature.name) track by $index">
+										<a ng-click="switchToReplacementPhylo(covResult, feature, replacement.codonLabel)">
+										{{replacement.refAas.split("").join("/")}}{{replacement.codonLabel}}{{replacement.queryAas.split("").join("/")}}
 										</a>
 									</span>
 								</td>

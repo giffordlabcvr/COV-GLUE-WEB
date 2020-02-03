@@ -491,17 +491,17 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	return coveragePct;
 			    }
 
-			    $scope.getMutations = function(sequenceResult, featureName) {
-			    	var mutations = [];
-			    	_.each(sequenceResult.mutations, function(mut) {
-			    		if(mut.mutation.feature == featureName) {
-			    			mutations.push(mut.mutation);
+			    $scope.getReplacements = function(sequenceResult, featureName) {
+			    	var replacements = [];
+			    	_.each(sequenceResult.replacements, function(mut) {
+			    		if(mut.replacement.feature == featureName) {
+			    			replacements.push(mut.replacement);
 			    		}
 			    	});
-			    	return mutations;
+			    	return replacements;
 			    }
 
-				$scope.switchToMutationPhylo = function(report, feature, codonLabel) {
+				$scope.switchToReplacementPhylo = function(report, feature, codonLabel) {
 			    	$scope.displaySection = 'phyloPlacement';
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
 			    	$scope.setAAFeature(feature);

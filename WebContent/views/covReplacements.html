@@ -4,8 +4,8 @@
 	The following amino acid replacements relative to reference strain Wuhan-Hu-1 have been detected in viral genome sequences from the outbreak.
 	</p>
 	<paging-buttons paging-context="pagingContext"></paging-buttons>
-	<span ng-show="mutations.length == 0">None</span>
-	<div ng-show="mutations.length > 0">	
+	<span ng-show="replacements.length == 0">None</span>
+	<div ng-show="replacements.length > 0">	
 		Replacements {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
 		<table class="table table-striped table-bordered">
 			<thead>
@@ -19,10 +19,10 @@
 		       <col span="1" style="width: 30%;">
 			</colgroup>
 			<tbody>
-				<tr ng-repeat="m in mutations track by $index">
-					<td>{{m.mutation.featureDescription}}{{m.mutation.featureDescription != m.mutation.featureDisplayName ? " ("+m.mutation.featureDisplayName+")" : ""}}</td>
-					<td><a target="_blank" href="#project/replacement/{{m.mutation.id}}">{{m.mutation.displayName}}</a></td>
-					<td>{{m.mutation.numSeqs}}</td>
+				<tr ng-repeat="m in replacements track by $index">
+					<td>{{m.replacement.featureDescription}}{{m.replacement.featureDescription != m.replacement.featureDisplayName ? " ("+m.replacement.featureDisplayName+")" : ""}}</td>
+					<td><a target="_blank" href="#project/replacement/{{m.replacement.id}}">{{m.replacement.displayName}}</a></td>
+					<td>{{m.replacement.numSeqs}}</td>
 				</tr>
 			</tbody>
 		</table>

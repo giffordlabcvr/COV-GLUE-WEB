@@ -1,10 +1,10 @@
-covApp.controller('covMutationsCtrl', 
+covApp.controller('covReplacementsCtrl', 
 		[ '$scope', '$route', '$routeParams', 'glueWS', 'dialogs', 'pagingContext', 
 		  function($scope, $route, $routeParams, glueWS, dialogs, pagingContext) {
 
 			addUtilsToScope($scope);
 
-			$scope.mutations = [];
+			$scope.replacements = [];
 
 			$scope.pagingContext = null;
 			$scope.whereClause = "true"
@@ -13,7 +13,7 @@ covApp.controller('covMutationsCtrl',
 			$scope.updateCount = function(pContext) {
 				console.log("updateCount", pContext);
 				var cmdParams = {
-						"tableName": "cov_mutation",
+						"tableName": "cov_replacement",
 						"whereClause": $scope.whereClause
 				};
 				pContext.extendCountCmdParams(cmdParams);
@@ -34,20 +34,20 @@ covApp.controller('covMutationsCtrl',
 			$scope.updatePage = function(pContext) {
 				console.log("updatePage", pContext);
 				var cmdParams = {
-						"tableName": "cov_mutation",
+						"tableName": "cov_replacement",
 						"allObjects": false,
 			            "whereClause":$scope.whereClause,
-			            "rendererModuleName": "covListMutationsRenderer"
+			            "rendererModuleName": "covListReplacementsRenderer"
 				};
 				pContext.extendListCmdParams(cmdParams);
 				glueWS.runGlueCommand("", {
 			    	"multi-render": cmdParams 
 				})
 				.success(function(data, status, headers, config) {
-					$scope.mutations = data.multiRenderResult.resultDocument;
-					console.info('$scope.mutations', $scope.mutations);
+					$scope.replacements = data.multiRenderResult.resultDocument;
+					console.info('$scope.replacements', $scope.replacements);
 				})
-				.error(glueWS.raiseErrorDialog(dialogs, "retrieving mutations"));
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving replacements"));
 			}
 			
 			$scope.pagingContext = pagingContext.createPagingContext($scope.updateCount, $scope.updatePage);
@@ -61,7 +61,7 @@ covApp.controller('covMutationsCtrl',
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
   	            { property:"codon_label_int", displayName: "Codon number" },
   	            { property:"reference_aa", displayName: "Original amino acid" },
-  	            { property:"mutation_aa", displayName: "Mutation amino acid" }
+  	            { property:"replacement_aa", displayName: "Replacement amino acid" }
               ]);
 
 			$scope.pagingContext.setFilterProperties([
@@ -69,7 +69,7 @@ covApp.controller('covMutationsCtrl',
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region", altProperties:["variation.featureLoc.feature.displayName"], filterHints: {type: "String"}  },
   	            { property:"codon_label_int", displayName: "Codon number", filterHints: {type: "Integer"}  },
   	            { property:"reference_aa", displayName: "Original amino acid", filterHints: {type: "String"}  },
-  	            { property:"mutation_aa", displayName: "Mutation amino acid", filterHints: {type: "String"}  }
+  	            { property:"replacement_aa", displayName: "Replacement amino acid", filterHints: {type: "String"}  }
 	        ]);
 			                          			                          			
   			$scope.pagingContext.setDefaultFilterElems([]);

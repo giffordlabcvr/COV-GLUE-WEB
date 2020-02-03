@@ -1,12 +1,12 @@
-covApp.controller('covMutationCtrl', 
+covApp.controller('covReplacementCtrl', 
 
 		[ '$scope', '$route', '$routeParams','$controller', 'glueWS', 'glueWebToolConfig', 'dialogs', '$analytics', 'saveFile', 'FileSaver', '$http', '$window', '$timeout', 'pagingContext',
 			  function($scope, $route, $routeParams, $controller, glueWS, glueWebToolConfig, dialogs, $analytics, saveFile, FileSaver, $http, $window, $timeout, pagingContext) {
 
 			addUtilsToScope($scope);
 
-			$scope.mutation = null;
-			$scope.mutationId = $routeParams.id;
+			$scope.replacement = null;
+			$scope.replacementId = $routeParams.id;
 			
 			$scope.displaySection = 'phylogeneticContext';
 
@@ -39,17 +39,17 @@ covApp.controller('covMutationCtrl',
 			];
 			
 			
-			glueWS.runGlueCommand("custom-table-row/cov_mutation/"+$scope.mutationId, {
+			glueWS.runGlueCommand("custom-table-row/cov_replacement/"+$scope.replacementId, {
 			    "render-object":{
-			        "rendererModuleName":"covMutationRenderer"
+			        "rendererModuleName":"covReplacementRenderer"
 			    }
 			})
 			.success(function(data, status, headers, config) {
-				$scope.mutation = data.mutation;
-				console.info('$scope.mutation', $scope.mutation);
+				$scope.replacement = data.replacement;
+				console.info('$scope.replacement', $scope.replacement);
 				$scope.setTipAnnotation($scope.availableTipAnnotations[0]);
 			})
-			.error(glueWS.raiseErrorDialog(dialogs, "rendering mutation"));
+			.error(glueWS.raiseErrorDialog(dialogs, "rendering replacement"));
 
 
 		    $scope.setTipAnnotation = function(tipAnnotation) {
@@ -108,8 +108,8 @@ covApp.controller('covMutationCtrl',
 									"functionName": "visualisePhyloAsSvg", 
 									"document": {
 										"inputDocument": {
-										    "aaVisFeature" : $scope.mutation.feature,
-										    "aaVisCodonLabel" : $scope.mutation.codonLabel,
+										    "aaVisFeature" : $scope.replacement.feature,
+										    "aaVisCodonLabel" : $scope.replacement.codonLabel,
 											"pxWidth" : 1136 - scrollbarWidth, 
 											"pxHeight" : 2500,
 											"legendPxWidth" : 1136, 
@@ -137,7 +137,7 @@ covApp.controller('covMutationCtrl',
 				}
 			}
 			
-			$scope.seqWhereClause = "cov_mutation_sequence.cov_mutation.id = '"+$scope.mutationId+"'";
+			$scope.seqWhereClause = "cov_replacement_sequence.cov_replacement.id = '"+$scope.replacementId+"'";
 
 			$scope.updateSeqPage = function(pContext) {
 				console.log("updateSeqPage", pContext);

@@ -48,14 +48,14 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
 	$routeProvider.
     when('/replacement', {
         templateUrl: '../views/covReplacements.html',
-        controller: 'covMutationsCtrl'
+        controller: 'covReplacementsCtrl'
       });
 
 	// specific replacement
 	$routeProvider.
     when('/project/replacement/:id', {
     	  templateUrl: 'views/covReplacement.html',
-    	  controller: 'covMutationCtrl'
+    	  controller: 'covReplacementCtrl'
         });
 
     // about page

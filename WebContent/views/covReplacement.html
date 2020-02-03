@@ -1,5 +1,5 @@
 <div ng-cloak>
-	<h3>{{mutation.featureDisplayName}} replacement {{mutation.displayName}}</h3>
+	<h3>{{replacement.featureDisplayName}} replacement {{replacement.displayName}}</h3>
 	
 	
 	<div class="btn-group" style="margin-bottom: 15px">
@@ -11,7 +11,7 @@
 	<div ng-if="displaySection == 'phylogeneticContext'" class="container-fluid">
 		<div class="row">
 			<p>
-			This tree shows the sequences from the outbreak, annotated with the amino acid residue at {{mutation.featureDisplayName}} position {{mutation.codonLabel}}
+			This tree shows the sequences from the outbreak, annotated with the amino acid residue at {{replacement.featureDisplayName}} position {{replacement.codonLabel}}
 			</p> 
 			Annotate metadata:
 			<div class="btn-group" dropdown is-open="status.taButtonOpen">
@@ -39,7 +39,7 @@
 	
 	<div ng-if="displaySection == 'containingSequences'">
 		<div>
-		<p>The following outbreak sequences contain {{mutation.featureDisplayName}} mutation {{mutation.displayName}}</p>
+		<p>The following outbreak sequences contain {{replacement.featureDisplayName}} replacement {{replacement.displayName}}</p>
 		</div>
 		<paging-buttons paging-context="seqPagingContext"></paging-buttons>
 		<span ng-show="listSequenceResult.length == 0">No data</span>

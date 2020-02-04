@@ -5,14 +5,16 @@
 		<div class="col-md-9">
 			<h1>COV-GLUE</h1>
 			<h3>Amino acid analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
-			<p>As the nCov outbreak develops, the virus is accumulating amino acid replacements. These may be of little consequence or they could affect the biology of the virus. 
-			This web application allows researchers and public health labs to quickly characterise the amino acid replacements that arise.</p>
+			<p>As the nCov outbreak develops, the virus is accumulating amino acid replacements and indels. 
+			These may be of little consequence or they could affect the biology of the virus. 
+			This web application allows researchers and public health labs to quickly characterise the amino acid replacements and indels that arise.</p>
 			<p>You can browse <a href="#/replacement" target="_blank">replacements</a> which have been found in outbreak sequences.</p>
+			<p>As of the current GISAID data update (3rd Feb 2020), no indels have been found in outbreak sequences.</p>
 			<p>You can also analyse new sequences:
 			<ol>
 				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
-				<li>If your sequences contain amino acid replacements these will be displayed under the relevant genome region.</li>
+				<li>If your sequences contain replacements or indels these will be displayed under the relevant genome region.</li>
 				<li>Click on a replacement to display it in its phylogenetic context.</li>
 			</ol>
 			</p>
@@ -31,7 +33,7 @@
 		<p>
 			<small><br />For testing, download this
 				<a ng-click="downloadExampleSequence()">example sequence file</a>
-				and submit it for analysis.</small>
+				and submit it for analysis. The file has been artificially modified to contain a replacement, an insertion and a deletion</small>
 		</p>
 		
 		
@@ -155,20 +157,40 @@
 						</thead>
 						<tbody ng-repeat="covResult in fileItemUnderAnalysis.response.covWebReport.results track by $index">
 							<tr>
-								<td rowspan="2">{{covResult.covReport.sequenceResult.id}}</td>
-								<td rowspan="2">{{covResult.covReport.sequenceResult.isForwardCov ?
+								<td rowspan="4">{{covResult.covReport.sequenceResult.id}}</td>
+								<td rowspan="4">{{covResult.covReport.sequenceResult.isForwardCov ?
 									"Yes" : "No"}}</td>
 								<td>Coverage</td>
 								<td ng-repeat="feature in availableFeatures track by $index">
 								{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
 							</tr>
 							<tr>
-								<td>Amino acid replacements</td>
+								<td>Replacements</td>
 								<td ng-repeat="feature in availableFeatures track by $index">
 									<span ng-repeat="replacement in getReplacements(covResult.covReport.sequenceResult, feature.name) track by $index">
 										<a ng-click="switchToReplacementPhylo(covResult, feature, replacement.codonLabel)">
 										{{replacement.refAas.split("").join("/")}}{{replacement.codonLabel}}{{replacement.queryAas.split("").join("/")}}
 										</a>
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>Insertions</td>
+								<td ng-repeat="feature in availableFeatures track by $index">
+									<span ng-repeat="insertion in getInsertions(covResult.covReport.sequenceResult, feature.name) track by $index">
+										{{insertion.insertionIsCodonAligned ? 
+											insertion.refLastCodonBeforeIns+"-"+insertion.insertedQryAas+"-"+insertion.refFirstCodonAfterIns : 
+											"Non-codon-aligned:nt"+insertion.refLastNtBeforeIns+"-"+insertion.insertedQryNts+"-nt"+insertion.refFirstNtAfterIns}}
+									</span>
+								</td>
+							</tr>
+							<tr>
+								<td>Deletions</td>
+								<td ng-repeat="feature in availableFeatures track by $index">
+									<span ng-repeat="deletion in getDeletions(covResult.covReport.sequenceResult, feature.name) track by $index">
+										{{deletion.deletionIsCodonAligned ? 
+											( deletion.refFirstCodonDeleted+ ( deletion.refFirstCodonDeleted == deletion.refLastCodonDeleted ? "":"-"+deletion.refLastCodonDeleted ) + "del" ) : 
+											( "Non-codon-aligned:nt"+deletion.refFirstNtDeleted+"-nt"+deletion.refLastNtDeleted )}}
 									</span>
 								</td>
 							</tr>

@@ -493,12 +493,32 @@ covApp.controller('covFastaAnalysisCtrl',
 
 			    $scope.getReplacements = function(sequenceResult, featureName) {
 			    	var replacements = [];
-			    	_.each(sequenceResult.replacements, function(mut) {
-			    		if(mut.replacement.feature == featureName) {
-			    			replacements.push(mut.replacement);
+			    	_.each(sequenceResult.replacements, function(repl) {
+			    		if(repl.replacement.feature == featureName) {
+			    			replacements.push(repl.replacement);
 			    		}
 			    	});
 			    	return replacements;
+			    }
+
+			    $scope.getInsertions = function(sequenceResult, featureName) {
+			    	var insertions = [];
+			    	_.each(sequenceResult.insertions, function(ins) {
+			    		if(ins.insertion.variationFeature == featureName) {
+			    			insertions.push(ins.insertion);
+			    		}
+			    	});
+			    	return insertions;
+			    }
+
+			    $scope.getDeletions = function(sequenceResult, featureName) {
+			    	var deletions = [];
+			    	_.each(sequenceResult.deletions, function(del) {
+			    		if(del.deletion.variationFeature == featureName) {
+			    			deletions.push(del.deletion);
+			    		}
+			    	});
+			    	return deletions;
 			    }
 
 				$scope.switchToReplacementPhylo = function(report, feature, codonLabel) {

@@ -192,7 +192,7 @@
 										<span ng-if="replacement.known_replacements.length == 1">
 										<br/>
 										<a target="_blank" href="#/project/replacement/{{replacement.known_replacements[0].known_replacement.id}}">
-											Observed ({{replacement.known_replacements[0].known_replacement.num_seqs}})</a>
+											Observed:{{replacement.known_replacements[0].known_replacement.num_seqs}}</a>
 										</span>										
 										<span ng-if="replacement.known_replacements.length > 1">
 										<span ng-repeat="known_replacement in replacement.known_replacements track by $index">

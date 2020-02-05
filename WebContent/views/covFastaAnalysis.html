@@ -15,7 +15,8 @@
 				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
 				<li>If your sequences contain replacements or indels these will be displayed under the relevant genome region.</li>
-				<li>Click on a replacement to display it in its phylogenetic context.</li>
+				<li>If a replacement is known from GISAID sequences, you can click "Known" to view these sequences.</li>
+				<li>Click "Tree" to view the replacement in its phylogenetic context.</li>
 			</ol>
 			</p>
 			<p>Based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>, see the <a href="/#about" target="_blank">about page</a> for details.</p>
@@ -31,9 +32,9 @@
 <div nv-file-drop="" uploader="uploader"
 		filters="queueLimit, customFilter">
 		<p>
-			<small><br />For testing, download this
+			<small><br/>For testing, download this
 				<a ng-click="downloadExampleSequence()">example sequence file</a>
-				and submit it for analysis. The file has been artificially modified to contain a replacement, an insertion and a deletion</small>
+				and submit it for analysis. The file has been artificially modified to contain two replacements, an insertion and a deletion</small>
 		</p>
 		
 		
@@ -168,9 +169,29 @@
 								<td>Replacements</td>
 								<td ng-repeat="feature in availableFeatures track by $index">
 									<span ng-repeat="replacement in getReplacements(covResult.covReport.sequenceResult, feature.name) track by $index">
-										<a ng-click="switchToReplacementPhylo(covResult, feature, replacement.codonLabel)">
 										{{replacement.refAas.split("").join("/")}}{{replacement.codonLabel}}{{replacement.queryAas.split("").join("/")}}
-										</a>
+
+										<span ng-if="replacement.known_replacements.length == 0">
+										<br/>
+										Unknown
+										</span>										
+										<span ng-if="replacement.known_replacements.length == 1">
+										<br/>
+										<a target="_blank" href="#/project/replacement/{{replacement.known_replacements[0].known_replacement.id}}">
+											Known ({{replacement.known_replacements[0].known_replacement.num_seqs}})</a>
+										</span>										
+										<span ng-if="replacement.known_replacements.length > 1">
+										<span ng-repeat="known_replacement in replacement.known_replacements track by $index">
+										<br/>
+										<a target="_blank" href="#/project/replacement/{{known_replacement.known_replacement.id}}">
+											{{known_replacement.known_replacement.display_name}}
+											known ({{known_replacement.known_replacement.num_seqs}})</a>
+										</span>
+										</span>										
+
+
+										<br/>
+										<a ng-click="switchToReplacementPhylo(covResult, feature, replacement.codonLabel)">Tree</a>
 									</span>
 								</td>
 							</tr>
@@ -340,6 +361,16 @@
 						<div style="height: 800px; overflow: auto;" data-onload="phyloSvgUpdated()" ng-include="phyloVisualisationSvgUrl"></div>
 					</div>
 				</div>
+				<h5>Notes</h5>
+				<small>
+				<ul>
+					<li>The coding regions are those annotated on the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a>.</li> 
+					<li>Codon numbering is relative to the Wuhan-Hu-1 sequence.</li> 
+					<li>Particular care has been paid to correctly translate the ORF1ab region taking account of ribosomal slippage.</li> 
+					<li>Where ambiguous nucleotide codes give rise to multiple possible amino acids, these are displayed.</li> 
+				</ul>
+				</small>
+				
 			</div>
 		</div>
 	</div>

@@ -78,7 +78,7 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
 covApp.controller('covAppCtrl', 
   [ '$scope', 'glueWS', 'glueWebToolConfig',
 function ($scope, glueWS, glueWebToolConfig) {
-	$scope.brand = "COV-GLUE";
+	$scope.brand = "CoV-GLUE";
 	$scope.homeMenuTitle = "Home";
 	$scope.aboutMenuTitle = "About";
 	$scope.replacementsMenuTitle = "Amino acid replacements";

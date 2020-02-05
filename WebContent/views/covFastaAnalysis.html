@@ -5,21 +5,35 @@
 		<div class="col-md-9">
 			<h1>COV-GLUE</h1>
 			<h3>Amino acid analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
-			<p>As the nCov outbreak develops, the virus is accumulating amino acid replacements and indels. 
-			These may be of little consequence or they could affect the biology of the virus. 
-			This web application allows researchers and public health labs to quickly characterise the amino acid replacements and indels that arise.</p>
-			<p>You can browse <a href="#/replacement" target="_blank">replacements</a> which have been found in outbreak sequences.</p>
-			<p>As of the current GISAID data update (3rd Feb 2020), no indels have been found in outbreak sequences.</p>
-			<p>You can also analyse new sequences:
+
+
+			<p>As the nCov outbreak develops, the virus will naturally accumulate
+			mutations in its genome (nucleotide changes in the viral RNA) some of
+			which will result in amino acid replacements, while others will result 
+			in changes in gene lengths as a result of
+			insertions or deletions (indels). On average the observed changes
+			would be expected to have no or minimal consequence on virus biology.</p>
+			
+			<p>
+			This web application allows researchers and public health labs to
+			quickly locate any amino acid replacements and indels in new nCoV
+			genome sequences and visualise these changes on a phylogenetic tree. 
+			You can also browse those <a href="#/replacement" target="_blank">amino acid replacements</a> which
+			have been observed in sequences sampled from the outbreak to date.
+			</p>
+			
+			<p>As of the latest update of COV-GLUE from GISAID (3rd Feb 2020), no indels have been found in outbreak sequences.</p>
+			<p>To analyse new sequences:
 			<ol>
 				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
 				<li>If your sequences contain replacements or indels these will be displayed under the relevant genome region.</li>
-				<li>If a replacement is known from GISAID sequences, you can click "Known" to view these sequences.</li>
+				<li>If a replacement has been observed GISAID sequences, you can click "Observed" to view these sequences.</li>
 				<li>Click "Tree" to view the replacement in its phylogenetic context.</li>
 			</ol>
 			</p>
-			<p>Based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>, see the <a href="/#about" target="_blank">about page</a> for details.</p>
+			<p>Based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>. 
+			We gratefully acknowledge data contributors, see the <a href="/#about" target="_blank">about page</a> for details.</p>
 			
 		</div>
 		<div class="col-md-3">
@@ -173,19 +187,19 @@
 
 										<span ng-if="replacement.known_replacements.length == 0">
 										<br/>
-										Unknown
+										Novel
 										</span>										
 										<span ng-if="replacement.known_replacements.length == 1">
 										<br/>
 										<a target="_blank" href="#/project/replacement/{{replacement.known_replacements[0].known_replacement.id}}">
-											Known ({{replacement.known_replacements[0].known_replacement.num_seqs}})</a>
+											Observed ({{replacement.known_replacements[0].known_replacement.num_seqs}})</a>
 										</span>										
 										<span ng-if="replacement.known_replacements.length > 1">
 										<span ng-repeat="known_replacement in replacement.known_replacements track by $index">
 										<br/>
 										<a target="_blank" href="#/project/replacement/{{known_replacement.known_replacement.id}}">
 											{{known_replacement.known_replacement.display_name}}
-											known ({{known_replacement.known_replacement.num_seqs}})</a>
+											observed ({{known_replacement.known_replacement.num_seqs}})</a>
 										</span>
 										</span>										
 
@@ -290,7 +304,7 @@
 											role="menuitem"><a>{{report.covReport.sequenceResult.id}}</a></li>
 									</ul>
 								</div>
-								<span ng-if="fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.placements.length > 1">, alternative placement:
+								<span ng-if="fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.placements.length > 1">, alternative phylogenetic placement:
 									<div class="btn-group" dropdown is-open="status.pButtonOpen">
 										<button ng-disabled="phyloVisualisationUpdating" id="p-button" type="button" class="btn btn-sm btn-default"
 											dropdown-toggle>

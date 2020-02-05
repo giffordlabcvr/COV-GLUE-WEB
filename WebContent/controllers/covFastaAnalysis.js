@@ -97,6 +97,16 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				});
 				
+				$scope.$watch('displaySection', function(newObj, oldObj) {
+					if(newObj == "genomeVisualisation" && !$scope.fileItemUnderAnalysis.clickedGenomeVis) {
+						$scope.fileItemUnderAnalysis.clickedGenomeVis = true;
+						$scope.updateFeatureSvg();
+					} else if(newObj == "phyloPlacement" && !$scope.fileItemUnderAnalysis.clickedPhyloPlacement) {
+						$scope.fileItemUnderAnalysis.clickedPhyloPlacement = true;
+						$scope.updatePhyloSvg();
+					} 
+				});
+
 				
 			    // CALLBACKS
 			    $scope.uploader.onBeforeUploadItem = function(item) {

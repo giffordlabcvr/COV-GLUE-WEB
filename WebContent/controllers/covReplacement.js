@@ -8,7 +8,7 @@ covApp.controller('covReplacementCtrl',
 			$scope.replacement = null;
 			$scope.replacementId = $routeParams.id;
 			
-			$scope.displaySection = 'phylogeneticContext';
+			$scope.displaySection = 'containingSequences';
 
 			$scope.analytics = $analytics;
 			$scope.phyloVisualisationUpdating = false;

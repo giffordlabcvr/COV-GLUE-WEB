@@ -59,17 +59,15 @@ covApp.controller('covDeletionsCtrl',
   			$scope.pagingContext.setSortableProperties([
   	            { property:"num_seqs", displayName: "Containing sequences" },
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
-  	            { property:"codon_label_int", displayName: "Codon number" },
-  	            { property:"reference_aa", displayName: "Original amino acid" },
-  	            { property:"deletion_aa", displayName: "Deletion amino acid" }
+  	            { property:"start_codon_int", displayName: "Start codon number" },
+  	            { property:"end_codon_int", displayName: "End codon number" }
               ]);
 
 			$scope.pagingContext.setFilterProperties([
   	            { property:"num_seqs", displayName: "Containing sequences", filterHints: {type: "Integer"}  },
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region", altProperties:["variation.featureLoc.feature.displayName"], filterHints: {type: "String"}  },
-  	            { property:"codon_label_int", displayName: "Codon number", filterHints: {type: "Integer"}  },
-  	            { property:"reference_aa", displayName: "Original amino acid", filterHints: {type: "String"}  },
-  	            { property:"deletion_aa", displayName: "Deletion amino acid", filterHints: {type: "String"}  }
+  	            { property:"start_codon_int", displayName: "Start codon number", filterHints: {type: "Integer"}  },
+  	            { property:"end_codon_int", displayName: "End codon number", filterHints: {type: "Integer"}  }
 	        ]);
 			                          			                          			
   			$scope.pagingContext.setDefaultFilterElems([]);

@@ -48,44 +48,74 @@ covApp.controller('covFastaAnalysisCtrl',
 				$scope.availableFeatures = [
 				    { name: "E",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 76,
-				      displayName: "E" },
+				      displayName: "E",
+					  varType: "aminoAcid" },
 				    { name: "M",
 				 	  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 223,
-				      displayName: "M" },
+				      displayName: "M",
+					  varType: "aminoAcid" },
 				    { name: "N",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 420,
-				      displayName: "N" },
+				      displayName: "N",
+					  varType: "aminoAcid" },
 				    { name: "ORF_10",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 39,
-				      displayName: "ORF 10" },
+				      displayName: "ORF 10",
+					  varType: "aminoAcid" },
 				    { name: "ORF_1ab",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 7097,
-				      displayName: "ORF 1ab" },
+				      displayName: "ORF 1ab",
+					  varType: "aminoAcid" },
 				    { name: "ORF_3a",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 276,
-				      displayName: "ORF_3a" },
+				      displayName: "ORF_3a",
+					  varType: "aminoAcid" },
 				    { name: "ORF_6",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 62,
-				      displayName: "ORF 6" },
+				      displayName: "ORF 6",
+					  varType: "aminoAcid" },
 				    { name: "ORF_7a",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 122,
-				      displayName: "ORF 7a" },
+				      displayName: "ORF 7a",
+					  varType: "aminoAcid" },
 				    { name: "ORF_8",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 122,
-				      displayName: "ORF 8" },
+				      displayName: "ORF 8",
+					  varType: "aminoAcid" },
 				    { name: "S",
 					  aaCodonLabel: 1,
+					  aaDeletionStart: 1,
+					  aaDeletionEnd: 1,
 					  maxCodon: 1274,
-				      displayName: "S" }];
+				      displayName: "S",
+					  varType: "aminoAcid" }];
 
 				$scope.aaFeature = $scope.availableFeatures[0];
 				
@@ -256,7 +286,11 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	// need to nest feature within covReport to avoid breaking command doc assumptions.
 			    	sequenceReport.covReport.feature = feature;
 			    }
-			    
+
+			    $scope.setVarType = function(varType) {
+			    	$scope.aaFeature.varType = varType;
+			    }
+
 			    $scope.setPlacement = function(sequenceReport, placement) {
 			    	// need to nest feature within covReport to avoid breaking command doc assumptions.
 			    	sequenceReport.covReport.placement = placement;
@@ -412,7 +446,10 @@ covApp.controller('covFastaAnalysisCtrl',
 						placement.placementIndex+":"+
 						$scope.tipAnnotation.name+":"+
 						$scope.aaFeature.name+":"+
-						$scope.aaFeature.aaCodonLabel;
+						$scope.aaFeature.varType+":"+
+						$scope.aaFeature.aaCodonLabel+":"+
+						$scope.aaFeature.aaDeletionStart+":"+
+						$scope.aaFeature.aaDeletionEnd;
 					console.info('cacheKey', cacheKey);
 					
 
@@ -441,7 +478,9 @@ covApp.controller('covFastaAnalysisCtrl',
 											    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
 											    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
 											    "aaVisFeature" : $scope.aaFeature.name,
-											    "aaVisCodonLabel" : $scope.aaFeature.aaCodonLabel,
+											    "aaVisCodonLabel" : $scope.aaFeature.varType == 'aminoAcid' ? $scope.aaFeature.aaCodonLabel : null,
+											    "aaVisDeletionStart" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionStart : null,
+											    "aaVisDeletionEnd" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionEnd : null,
 											    "placementIndex" : placement.placementIndex,
 												"pxWidth" : 1136 - scrollbarWidth, 
 												"pxHeight" : 2500,
@@ -535,7 +574,19 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	$scope.displaySection = 'phyloPlacement';
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
 			    	$scope.setAAFeature(feature);
+			    	$scope.setVarType("aminoAcid");
 			    	feature.aaCodonLabel = parseInt(codonLabel);
 			    	$scope.updatePhyloSvg();
 				}
-			}]);
+
+				$scope.switchToDeletionPhylo = function(report, feature, startCodon, endCodon) {
+			    	$scope.displaySection = 'phyloPlacement';
+			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
+			    	$scope.setAAFeature(feature);
+			    	$scope.setVarType("deletion");
+			    	feature.aaDeletionStart = parseInt(startCodon);
+			    	feature.aaDeletionEnd = parseInt(endCodon);
+			    	$scope.updatePhyloSvg();
+				}
+
+		}]);

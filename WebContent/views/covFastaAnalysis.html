@@ -199,7 +199,7 @@
 										<br/>
 										<a target="_blank" href="#/project/replacement/{{known_replacement.known_replacement.id}}">
 											{{known_replacement.known_replacement.display_name}}
-											observed ({{known_replacement.known_replacement.num_seqs}})</a>
+											observed:{{known_replacement.known_replacement.num_seqs}}</a>
 										</span>
 										</span>										
 
@@ -226,6 +226,28 @@
 										{{deletion.deletionIsCodonAligned ? 
 											( deletion.refFirstCodonDeleted+ ( deletion.refFirstCodonDeleted == deletion.refLastCodonDeleted ? "":"-"+deletion.refLastCodonDeleted ) + "del" ) : 
 											( "Non-codon-aligned:nt"+deletion.refFirstNtDeleted+"-nt"+deletion.refLastNtDeleted )}}
+											
+										<span ng-if="deletion.known_deletions.length == 0">
+										<br/>
+										Novel
+										</span>										
+										<span ng-if="deletion.known_deletions.length == 1">
+										<br/>
+										<a target="_blank" href="#/project/deletion/{{deletion.known_deletions[0].known_deletion.id}}">
+											Observed:{{deletion.known_deletions[0].known_deletion.num_seqs}}</a>
+										</span>										
+										<span ng-if="deletion.known_deletions.length > 1">
+										<span ng-repeat="known_deletion in deletion.known_deletions track by $index">
+										<br/>
+										<a target="_blank" href="#/project/deletion/{{known_deletion.known_deletion.id}}">
+											{{known_deletion.known_deletion.display_name}}
+											observed:{{known_deletion.known_deletion.num_seqs}}</a>
+										</span>
+										</span>										
+										<span ng-if="deletion.deletionIsCodonAligned">
+											<br/>
+											<a ng-click="switchToDeletionPhylo(covResult, feature, deletion.refFirstCodonDeleted, deletion.refLastCodonDeleted)">Tree</a>
+										</span>
 									</span>
 								</td>
 							</tr>
@@ -323,22 +345,38 @@
 								<br/>
 								&nbsp;
 								<br/>
-								Annotate amino acid in coding region: <div class="btn-group" dropdown is-open="status.aafButtonOpen">
+								Annotate <div class="btn-group" dropdown is-open="status.vtButtonOpen">
+									<button ng-disabled="phyloVisualisationUpdating" id="vt-button" type="button" class="btn btn-sm btn-default"
+										dropdown-toggle>
+											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : aaFeature.varType.replace("aminoAcid", "amino acid")}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu"
+										aria-labelledby="vt-button">
+										<li ng-click="setVarType('aminoAcid')"
+											role="menuitem"><a>amino acid</a></li>
+										<li ng-click="setVarType('deletion')"
+											role="menuitem"><a>deletion</a></li>
+									</ul>
+								</div> in coding region: <div class="btn-group" dropdown is-open="status.aafButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="aaf-button" type="button" class="btn btn-sm btn-default"
 										dropdown-toggle>
 											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : aaFeature.displayName}}
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu" role="menu"
-										aria-labelledby="f-button">
+										aria-labelledby="aaf-button">
 										<li
 											ng-repeat="feature in availableFeatures"
 											ng-click="setAAFeature(feature)"
 											role="menuitem"><a>{{feature.displayName}}</a></li>
 									</ul>
 								</div>
-								<span ng-disabled="phyloVisualisationUpdating">, codon number: 
+								<span ng-if="aaFeature.varType == 'aminoAcid'" ng-disabled="phyloVisualisationUpdating">, codon number: 
 									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaCodonLabel"/>
+								</span> <span ng-if="aaFeature.varType == 'deletion'" ng-disabled="phyloVisualisationUpdating">, start codon: 
+									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionStart"/>, end codon:
+									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionEnd"/>
 								</span> (Range: 1-{{aaFeature.maxCodon}})								
 								<br/>
 								&nbsp;

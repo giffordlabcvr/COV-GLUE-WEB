@@ -1,0 +1,31 @@
+<div>
+	<h2>Coding region deletions</h2>
+	<p>
+	The following coding region deletions relative to reference strain Wuhan-Hu-1 have been detected in viral genome sequences from the outbreak.
+	</p>
+	<paging-buttons paging-context="pagingContext"></paging-buttons>
+	<span ng-show="deletions.length == 0">None</span>
+	<div ng-show="deletions.length > 0">	
+		Replacements {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
+		<table class="table table-striped table-bordered">
+			<thead>
+				<th>Virus genome region</th>		
+				<th>Deletion</th>		
+				<th>Number of containing sequences</th>		
+			</thead>
+			<colgroup>
+		       <col span="1" style="width: 30%;">
+		       <col span="1" style="width: 40%;">
+		       <col span="1" style="width: 30%;">
+			</colgroup>
+			<tbody>
+				<tr ng-repeat="m in deletions track by $index">
+					<td>{{m.deletion.featureDescription}}{{m.deletion.featureDescription != m.deletion.featureDisplayName ? " ("+m.deletion.featureDisplayName+")" : ""}}</td>
+					<td><a target="_blank" href="#project/deletion/{{m.deletion.id}}">{{m.deletion.displayName}}</a></td>
+					<td>{{m.deletion.numSeqs}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<paging-buttons paging-context="pagingContext"></paging-buttons>
+	</div>
+</div>

@@ -1,10 +1,10 @@
-covApp.controller('covReplacementsCtrl', 
+covApp.controller('covDeletionsCtrl', 
 		[ '$scope', '$route', '$routeParams', 'glueWS', 'dialogs', 'pagingContext', 
 		  function($scope, $route, $routeParams, glueWS, dialogs, pagingContext) {
 
 			addUtilsToScope($scope);
 
-			$scope.replacements = [];
+			$scope.deletions = [];
 
 			$scope.pagingContext = null;
 			$scope.whereClause = "true"
@@ -13,7 +13,7 @@ covApp.controller('covReplacementsCtrl',
 			$scope.updateCount = function(pContext) {
 				console.log("updateCount", pContext);
 				var cmdParams = {
-						"tableName": "cov_replacement",
+						"tableName": "cov_deletion",
 						"whereClause": $scope.whereClause
 				};
 				pContext.extendCountCmdParams(cmdParams);
@@ -28,26 +28,26 @@ covApp.controller('covReplacementsCtrl',
 					pContext.setTotalItems(data.countResult.count);
 					pContext.firstPage();
 			    })
-			    .error(glueWS.raiseErrorDialog(dialogs, "counting replacements"));
+			    .error(glueWS.raiseErrorDialog(dialogs, "counting deletions"));
 			}
 			
 			$scope.updatePage = function(pContext) {
 				console.log("updatePage", pContext);
 				var cmdParams = {
-						"tableName": "cov_replacement",
+						"tableName": "cov_deletion",
 						"allObjects": false,
 			            "whereClause":$scope.whereClause,
-			            "rendererModuleName": "covListReplacementsRenderer"
+			            "rendererModuleName": "covListDeletionsRenderer"
 				};
 				pContext.extendListCmdParams(cmdParams);
 				glueWS.runGlueCommand("", {
 			    	"multi-render": cmdParams 
 				})
 				.success(function(data, status, headers, config) {
-					$scope.replacements = data.multiRenderResult.resultDocument;
-					console.info('$scope.replacements', $scope.replacements);
+					$scope.deletions = data.multiRenderResult.resultDocument;
+					console.info('$scope.deletions', $scope.deletions);
 				})
-				.error(glueWS.raiseErrorDialog(dialogs, "retrieving replacements"));
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving deletions"));
 			}
 			
 			$scope.pagingContext = pagingContext.createPagingContext($scope.updateCount, $scope.updatePage);
@@ -61,7 +61,7 @@ covApp.controller('covReplacementsCtrl',
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
   	            { property:"codon_label_int", displayName: "Codon number" },
   	            { property:"reference_aa", displayName: "Original amino acid" },
-  	            { property:"replacement_aa", displayName: "Replacement amino acid" }
+  	            { property:"deletion_aa", displayName: "Deletion amino acid" }
               ]);
 
 			$scope.pagingContext.setFilterProperties([
@@ -69,7 +69,7 @@ covApp.controller('covReplacementsCtrl',
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region", altProperties:["variation.featureLoc.feature.displayName"], filterHints: {type: "String"}  },
   	            { property:"codon_label_int", displayName: "Codon number", filterHints: {type: "Integer"}  },
   	            { property:"reference_aa", displayName: "Original amino acid", filterHints: {type: "String"}  },
-  	            { property:"replacement_aa", displayName: "Replacement amino acid", filterHints: {type: "String"}  }
+  	            { property:"deletion_aa", displayName: "Deletion amino acid", filterHints: {type: "String"}  }
 	        ]);
 			                          			                          			
   			$scope.pagingContext.setDefaultFilterElems([]);

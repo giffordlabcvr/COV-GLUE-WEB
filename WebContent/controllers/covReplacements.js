@@ -60,8 +60,8 @@ covApp.controller('covReplacementsCtrl',
   	            { property:"num_seqs", displayName: "Containing sequences" },
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
   	            { property:"codon_label_int", displayName: "Codon number" },
-  	            { property:"reference_aa", displayName: "Original amino acid" },
-  	            { property:"replacement_aa", displayName: "Replacement amino acid" }
+  	            { property:"grantham_distance_double", displayName: "Grantham distance" },
+  	            { property:"miyata_distance", displayName: "Miyata distance" }
               ]);
 
 			$scope.pagingContext.setFilterProperties([
@@ -69,7 +69,12 @@ covApp.controller('covReplacementsCtrl',
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region", altProperties:["variation.featureLoc.feature.displayName"], filterHints: {type: "String"}  },
   	            { property:"codon_label_int", displayName: "Codon number", filterHints: {type: "Integer"}  },
   	            { property:"reference_aa", displayName: "Original amino acid", filterHints: {type: "String"}  },
-  	            { property:"replacement_aa", displayName: "Replacement amino acid", filterHints: {type: "String"}  }
+  	            { property:"replacement_aa", displayName: "Replacement amino acid", filterHints: {type: "String"}  },
+  	            { property:"grantham_distance_int", displayName: "Grantham distance", filterHints: {type: "Integer"}  },
+  	            { property:"miyata_distance", displayName: "Miyata distance", filterHints: {type: "Double"}  },
+	            { property:"radical_hanada_category_i", displayName: "Radical (Polarity & Volume)?", filterHints: {type: "Boolean"}  },
+	            { property:"radical_hanada_category_ii", displayName: "Radical (Charge & Aromaticity)?", filterHints: {type: "Boolean"}  },
+	            { property:"radical_hanada_category_iii", displayName: "Radical (Charge & Polarity)?", filterHints: {type: "Boolean"}  },
 	        ]);
 			                          			                          			
   			$scope.pagingContext.setDefaultFilterElems([]);

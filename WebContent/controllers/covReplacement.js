@@ -14,6 +14,7 @@ covApp.controller('covReplacementCtrl',
 			$scope.phyloVisualisationUpdating = false;
 			$scope.phyloLegendUpdating = false;
 			$scope.phyloSvgResultObjectCache = {};
+			$scope.residueAnalysis = false;
 
 			$scope.availableTipAnnotations = [
 				{
@@ -48,8 +49,32 @@ covApp.controller('covReplacementCtrl',
 				$scope.replacement = data.replacement;
 				console.info('$scope.replacement', $scope.replacement);
 				$scope.setTipAnnotation($scope.availableTipAnnotations[0]);
+
+				var referenceAa = $scope.replacement.referenceAa;
+				var replacementAa = $scope.replacement.replacementAa;
+				
+				if(referenceAa != '*' && referenceAa != 'X' && 
+						replacementAa != '*' && replacementAa != 'X') {
+					
+					$scope.residueAnalysis = true;
+					glueWS.runGlueCommand("module/covHanada2006ReplacementClassifier", {
+						"classify":{
+							"replacement":{
+								"originalAA":referenceAa,
+								"replacementAA":replacementAa
+							}
+						}
+					})
+					.success(function(data, status, headers, config) {
+						$scope.hanadaResults = tableResultAsObjectList(data);
+						console.info('$scope.hanadaResults', $scope.hanadaResults);
+					})
+					.error(glueWS.raiseErrorDialog(dialogs, "retrieving Hanada 2006 analysis"));
+				}
+			
 			})
 			.error(glueWS.raiseErrorDialog(dialogs, "rendering replacement"));
+
 
 
 		    $scope.setTipAnnotation = function(tipAnnotation) {

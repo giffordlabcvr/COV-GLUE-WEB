@@ -3,12 +3,87 @@
 	<p>
 	<small>Nucleotide position {{replacement.referenceNtCoord}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a></small>	
 	<p/>
-	
+
 	<div class="btn-group" style="margin-bottom: 15px">
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'phylogeneticTree'">Phylogenetic tree</label>
+        <label class="btn btn-primary" ng-model="displaySection" btn-radio="'replacementAnalysis'">Replacement analysis</label>
     </div>
 	
+
+	<div ng-if="displaySection == 'replacementAnalysis'">
+		<div ng-if="!residueAnalysis">
+		<p>
+		Replacement analysis is not applicable for this replacement.
+		</p>
+		</div>
+
+		<div ng-if="residueAnalysis">
+		<p>
+		Analysis of the replacement of amino acid residue {{replacement.referenceAa}} by residue {{replacement.replacementAa}}.
+		</p>		
+			<div class="row">
+				<div class="col-md-3">
+					<table class="table table-striped table-bordered table-nonfluid">
+						<tbody>
+							<tr>
+								<td><b>Grantham distance<sup>1</sup></b></td>
+								<td>{{replacement.granthamDistanceInt}}</td>
+							</tr>
+							<tr>
+								<td><b>Miyata distance<sup>2</sup></b></td>
+								<td>{{toFixed(replacement.miyataDistance,2)}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-md-9">
+					<table class="table table-striped table-bordered table-nonfluid">
+						<thead>
+							<th>Hanada<sup>3</sup> grouping scheme</th>
+							<th>Radical replacement?</th>
+							<th>{{replacement.referenceAa}} residue group</th>
+							<th>{{replacement.replacementAa}} residue group</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="hanadaResult in hanadaResults">
+								<td>{{hanadaResult.propShortName}}</td>
+								<td>{{hanadaResult.radical ? "Radical" : "Conservative"}}</td>
+								<td>{{hanadaResult.originalGroup}}</td>
+								<td>{{hanadaResult.replacementGroup}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+				<h5>Notes</h5>
+				<small>
+					<ol>
+						<li>A quantitative measure of amino acid residue replacements,
+							based on composition, polarity and molecular volume, with 100
+							being average, see <a
+							href="https://doi.org/10.1126%2Fscience.185.4154.862"
+							target="_blank">Grantham, 1974</a>
+						</li>
+						<li>A quantitative measure of amino acid residue replacements,
+							based on volume and polarity, see <a
+							href="https://doi.org/10.1007/bf01732340" target="_blank">Miyata
+								et al., 1979</a>
+						</li>
+						<li>Qualitative definitions of radical amino acid
+							replacements, based on three alternative residue groupings, see <a
+							href="http://doi.org/10.1016/j.gene.2006.06.029" target="_blank">Hanada
+								et al., 2006</a>
+						</li>
+					</ol>
+				</small>
+				</div>
+			</div>
+
+		</div>
+	</div>
 
 	<div ng-if="displaySection == 'containingSequences'">
 		<div>

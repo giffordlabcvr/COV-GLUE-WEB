@@ -9,23 +9,57 @@
 		Replacements {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
 		<table class="table table-striped table-bordered">
 			<thead>
-				<th>Virus genome region</th>		
-				<th>Amino acid replacement</th>		
-				<th>Number of containing sequences</th>		
+				<tr>
+					<th rowspan="2">Virus genome region</th>		
+					<th rowspan="2">Replacement</th>		
+					<th rowspan="2">Number of sequences</th>		
+					<th rowspan="2">Grantham distance<sup>1</sup></th>		
+					<th rowspan="2">Miyata distance<sup>2</sup></th>		
+					<th colspan="3">Hanada radical replacement<sup>3</sup></th>
+				</tr>
+				<tr>
+					<th>Polarity & Volume</th>		
+					<th>Charge & Aromaticity</th>		
+					<th>Charge & Polarity</th>		
+				</tr>
 			</thead>
 			<colgroup>
-		       <col span="1" style="width: 30%;">
-		       <col span="1" style="width: 40%;">
-		       <col span="1" style="width: 30%;">
+		       <col span="1" style="width: 24%;">
+		       <col span="1" style="width: 10%;">
+		       <col span="1" style="width: 8%;">
+		       <col span="1" style="width: 8%;">
+		       <col span="1" style="width: 8%;">
+		       <col span="1" style="width: 14%;">
+		       <col span="1" style="width: 14%;">
+		       <col span="1" style="width: 14%;">
 			</colgroup>
 			<tbody>
 				<tr ng-repeat="m in replacements track by $index">
 					<td>{{m.replacement.featureDescription}}{{m.replacement.featureDescription != m.replacement.featureDisplayName ? " ("+m.replacement.featureDisplayName+")" : ""}}</td>
 					<td><a target="_blank" href="#project/replacement/{{m.replacement.id}}">{{m.replacement.displayName}}</a></td>
 					<td>{{m.replacement.numSeqs}}</td>
+					<td>{{handleNull(m.replacement.granthamDistanceInt)}}</td>
+					<td>{{m.replacement.miyataDistance == null ? "-" : toFixed(m.replacement.miyataDistance,2)}}</td>
+					<td>{{m.replacement.radicalHanadaI == null ? "-" : ( m.replacement.radicalHanadaI ? "Radical" : "Conservative" )}}</td>
+					<td>{{m.replacement.radicalHanadaII == null ? "-" : ( m.replacement.radicalHanadaII ? "Radical" : "Conservative" )}}</td>
+					<td>{{m.replacement.radicalHanadaIII == null ? "-" : ( m.replacement.radicalHanadaIII ? "Radical" : "Conservative" )}}</td>
 				</tr>
 			</tbody>
 		</table>
 		<paging-buttons paging-context="pagingContext"></paging-buttons>
+		<h5>Notes</h5>
+		<small>
+			<ol>
+				<li>A quantitative measure of amino acid residue replacements, based on composition, 
+				polarity and molecular volume, with 100 being average, see 
+				<a href="https://doi.org/10.1126%2Fscience.185.4154.862" target="_blank">Grantham, 1974</a></li>
+				<li>A quantitative measure of amino acid residue replacements, based on 
+				volume and polarity, see 
+				<a href="https://doi.org/10.1007/bf01732340" target="_blank">Miyata et al., 1979</a></li>
+				<li>Qualitative definitions of radical amino acid replacements, based on 
+				three alternative residue groupings, see 
+				<a href="http://doi.org/10.1016/j.gene.2006.06.029" target="_blank">Hanada et al., 2006</a></li>
+			</ol>
+		</small>
 	</div>
 </div>

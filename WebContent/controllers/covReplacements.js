@@ -53,15 +53,19 @@ covApp.controller('covReplacementsCtrl',
 			$scope.pagingContext = pagingContext.createPagingContext($scope.updateCount, $scope.updatePage);
 
 			$scope.pagingContext.setDefaultSortOrder([
-	            { property:"num_seqs", displayName: "Containing sequences", order: "-" }
+	            { property:"num_seqs", displayName: "Containing sequences", order: "-" },
+  	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region", order: "+"  },
+  	            { property:"codon_label_int", displayName: "Codon number", order: "+"  },
+  	            { property:"replacement_aa", displayName: "Replacement amino acid", order: "+"  },
 			]);
 
   			$scope.pagingContext.setSortableProperties([
   	            { property:"num_seqs", displayName: "Containing sequences" },
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
   	            { property:"codon_label_int", displayName: "Codon number" },
+  	            { property:"replacement_aa", displayName: "Replacement amino acid" },
   	            { property:"grantham_distance_double", displayName: "Grantham distance" },
-  	            { property:"miyata_distance", displayName: "Miyata distance" }
+  	            { property:"miyata_distance", displayName: "Miyata distance" },
               ]);
 
 			$scope.pagingContext.setFilterProperties([

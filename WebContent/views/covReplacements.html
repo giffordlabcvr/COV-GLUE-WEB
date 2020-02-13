@@ -10,7 +10,7 @@
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th>Virus protein / genome region</th>		
+					<th colspan="2">Virus protein</th>		
 					<th>Replacement</th>		
 					<th>Number of sequences</th>		
 					<th>Grantham distance<sup>1</sup></th>		
@@ -19,16 +19,18 @@
 				</tr>
 			</thead>
 			<colgroup>
-		       <col span="1" style="width: 25%;">
+		       <col span="1" style="width: 11%;">
+		       <col span="1" style="width: 20%;">
+		       <col span="1" style="width: 10%;">
 		       <col span="1" style="width: 13%;">
 		       <col span="1" style="width: 13%;">
 		       <col span="1" style="width: 13%;">
-		       <col span="1" style="width: 13%;">
-		       <col span="1" style="width: 23%;">
+		       <col span="1" style="width: 20%;">
 			</colgroup>
 			<tbody>
 				<tr ng-repeat="m in replacements track by $index">
-					<td><b>{{m.replacement.featureDisplayName}}</b>{{m.replacement.featureDescription != null ? " "+m.replacement.featureDescription : ""}}</td>
+					<td><b>{{m.replacement.featureDisplayName}}</b></td>
+					<td>{{m.replacement.featureDescription != null ? " "+m.replacement.featureDescription : ""}}</td>
 					<td><a target="_blank" href="#project/replacement/{{m.replacement.id}}">{{m.replacement.displayName}}</a></td>
 					<td>{{m.replacement.numSeqs}}</td>
 					<td>{{handleNull(m.replacement.granthamDistanceInt)}}</td>

@@ -45,79 +45,51 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 				$scope.tipAnnotation = $scope.availableTipAnnotations[0];
 				
-				$scope.availableFeatures = [
-				    { name: "E",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 76,
-				      displayName: "E",
-					  varType: "aminoAcid" },
-				    { name: "M",
-				 	  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 223,
-				      displayName: "M",
-					  varType: "aminoAcid" },
-				    { name: "N",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 420,
-				      displayName: "N",
-					  varType: "aminoAcid" },
-				    { name: "ORF_10",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 39,
-				      displayName: "ORF 10",
-					  varType: "aminoAcid" },
-				    { name: "ORF_1ab",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 7097,
-				      displayName: "ORF 1ab",
-					  varType: "aminoAcid" },
-				    { name: "ORF_3a",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 276,
-				      displayName: "ORF_3a",
-					  varType: "aminoAcid" },
-				    { name: "ORF_6",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 62,
-				      displayName: "ORF 6",
-					  varType: "aminoAcid" },
-				    { name: "ORF_7a",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 122,
-				      displayName: "ORF 7a",
-					  varType: "aminoAcid" },
-				    { name: "ORF_8",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 122,
-				      displayName: "ORF 8",
-					  varType: "aminoAcid" },
-				    { name: "S",
-					  aaCodonLabel: 1,
-					  aaDeletionStart: 1,
-					  aaDeletionEnd: 1,
-					  maxCodon: 1274,
-				      displayName: "S",
-					  varType: "aminoAcid" }];
+				glueWS.runGlueCommand("", {
+				    "list":{
+				        "feature":{
+				            "whereClause":"featureMetatags.name = 'CODES_AMINO_ACIDS' and featureMetatags.value = true",
+				            "fieldName":[
+				                "name",
+				                "displayName",
+				                "max_codon_number",
+				                "description"
+				            ]
+				        }
+				    }
+				})
+				.success(function(data, status, headers, config) {
+					$scope.availableFeatures = tableResultAsObjectList(data);
+					_.each($scope.availableFeatures, function(feature) {
+						feature.aaCodonLabel = 1;
+						feature.aaDeletionStart = 1;
+						feature.aaDeletionEnd = 1;
+						feature.varType = "aminoAcid";
+					});
+					$scope.aaFeature = _.find($scope.availableFeatures, function(feature) { return feature.name == "NSP1"; });
+					console.info('$scope.availableFeatures', $scope.availableFeatures);
+				})
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving available features"));
 
-				$scope.aaFeature = $scope.availableFeatures[0];
+				glueWS.runGlueCommand("", {
+				    "list":{
+				        "feature":{
+				            "whereClause":"featureMetatags.name = 'CODES_AMINO_ACIDS' and featureMetatags.value = true and (name != 'ORF_1ab') and (name != 'ORF_1a')",
+				            "fieldName":[
+				                "name",
+				                "displayName",
+				                "description"
+				            ]
+				        }
+				    }
+				})
+				.success(function(data, status, headers, config) {
+					$scope.coverageFeatures = tableResultAsObjectList(data);
+					console.info('$scope.coverageFeatures', $scope.coverageFeatures);
+				})
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving coverage features"));
+
+				
 				
 				// executed after the project URL is set
 				glueWS.addProjectUrlListener( {
@@ -248,7 +220,7 @@ covApp.controller('covFastaAnalysisCtrl',
 			    		var availableFeatures = sequenceReport.covReport.sequenceResult.visualisationHints.features;
 			    		var feature = sequenceReport.covReport.feature;
 				    	if(feature == null) {
-				    		feature = availableFeatures[0];
+							feature = _.find(availableFeatures, function(feature) { return feature.name == "NSP1"; });
 				    	}
 			    		if($scope.lastFeatureName != null) {
 			    			var equivalentFeature = _.find(availableFeatures, function(availableFeature) { return availableFeature.name == $scope.lastFeatureName; });

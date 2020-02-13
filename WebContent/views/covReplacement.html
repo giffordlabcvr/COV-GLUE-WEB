@@ -1,6 +1,8 @@
 <div ng-cloak>
 	<h3>{{replacement.featureDisplayName}} replacement {{replacement.displayName}}</h3>
 	<p>
+	<small ng-if="replacement.featureDescription">{{replacement.featureDisplayName}}: {{replacement.featureDescription}}<br/></small>	
+	<small ng-if="replacement.parentFeature">Equivalently {{replacement.referenceAa+replacement.parentCodonLabel+replacement.replacementAa}} in {{replacement.parentFeatureDisplayName}}<br/></small>	
 	<small>Nucleotide position {{replacement.referenceNtCoord}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a></small>	
 	<p/>
 

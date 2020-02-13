@@ -10,27 +10,30 @@
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr>
-					<th rowspan="1">Virus genome region</th>		
-					<th rowspan="1">Replacement</th>		
-					<th rowspan="1">Number of sequences</th>		
-					<th rowspan="1">Grantham distance<sup>1</sup></th>		
-					<th rowspan="1">Miyata distance<sup>2</sup></th>		
+					<th>Virus protein / genome region</th>		
+					<th>Replacement</th>		
+					<th>Number of sequences</th>		
+					<th>Grantham distance<sup>1</sup></th>		
+					<th>Miyata distance<sup>2</sup></th>	
+					<th>Notes</th>		
 				</tr>
 			</thead>
 			<colgroup>
-		       <col span="1" style="width: 40%;">
-		       <col span="1" style="width: 15%;">
-		       <col span="1" style="width: 15%;">
-		       <col span="1" style="width: 15%;">
-		       <col span="1" style="width: 15%;">
+		       <col span="1" style="width: 25%;">
+		       <col span="1" style="width: 13%;">
+		       <col span="1" style="width: 13%;">
+		       <col span="1" style="width: 13%;">
+		       <col span="1" style="width: 13%;">
+		       <col span="1" style="width: 23%;">
 			</colgroup>
 			<tbody>
 				<tr ng-repeat="m in replacements track by $index">
-					<td>{{m.replacement.featureDescription}}{{m.replacement.featureDescription != m.replacement.featureDisplayName ? " ("+m.replacement.featureDisplayName+")" : ""}}</td>
+					<td><b>{{m.replacement.featureDisplayName}}</b>{{m.replacement.featureDescription != null ? " "+m.replacement.featureDescription : ""}}</td>
 					<td><a target="_blank" href="#project/replacement/{{m.replacement.id}}">{{m.replacement.displayName}}</a></td>
 					<td>{{m.replacement.numSeqs}}</td>
 					<td>{{handleNull(m.replacement.granthamDistanceInt)}}</td>
 					<td>{{m.replacement.miyataDistance == null ? "-" : toFixed(m.replacement.miyataDistance,2)}}</td>
+					<td>{{m.replacement.parentFeature != null ? ( "Equivalently "+m.replacement.referenceAa+m.replacement.parentCodonLabel+m.replacement.replacementAa+" in "+m.replacement.parentFeatureDisplayName ) : ""}}</td>
 				</tr>
 			</tbody>
 		</table>

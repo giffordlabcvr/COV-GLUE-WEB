@@ -53,14 +53,14 @@ covApp.controller('covDeletionsCtrl',
 			$scope.pagingContext = pagingContext.createPagingContext($scope.updateCount, $scope.updatePage);
 
 			$scope.pagingContext.setDefaultSortOrder([
-	            { property:"num_seqs", displayName: "Containing sequences", order: "-" }
+	            { property:"num_seqs", displayName: "Containing sequences", order: "-" },
+  	            { property:"reference_nt_start", displayName: "Genome start point", order: "+"  }
 			]);
 
   			$scope.pagingContext.setSortableProperties([
   	            { property:"num_seqs", displayName: "Containing sequences" },
   	            { property:"variation.featureLoc.feature.name", displayName: "Virus genome region" },
-  	            { property:"start_codon_int", displayName: "Start codon number" },
-  	            { property:"end_codon_int", displayName: "End codon number" }
+  	            { property:"reference_nt_start", displayName: "Genome start point" }
               ]);
 
 			$scope.pagingContext.setFilterProperties([

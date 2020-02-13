@@ -1,9 +1,12 @@
 <div ng-cloak>
 	<h3>{{deletion.featureDisplayName}} deletion {{deletion.displayName}}</h3>
 	<p>
+	<small ng-if="deletion.featureDescription">{{deletion.featureDisplayName}}: {{deletion.featureDescription}}<br/></small>	
+	<small ng-if="deletion.parentFeature">Equivalently
+		{{deletion.parentStartCodon + 
+			(deletion.parentEndCodon == deletion.parentStartCodon ? "" : ("-" +deletion.parentEndCodon)) + ":del"}} in {{deletion.parentFeatureDisplayName}}<br/></small>	
 	<small>Nucleotide positions {{deletion.referenceNtStart}}-{{deletion.referenceNtEnd}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a></small>	
 	<p/>
-	
 	<div class="btn-group" style="margin-bottom: 15px">
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'phylogeneticTree'">Phylogenetic tree</label>

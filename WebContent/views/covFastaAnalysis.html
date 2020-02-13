@@ -176,7 +176,7 @@
 									"Yes" : "No"}}</td>
 							</tr>
 							<tr ng-repeat="feature in coverageFeatures track by $index">	
-								<td><b>{{feature.displayName}}</b><span ng-if="feature.description"><br/>{{feature.description}}</span></td>
+								<td><a ng-click="switchToGenomeVisualisation(covResult, feature)">{{feature.displayName}}</a><span ng-if="feature.description"><br/>{{feature.description}}</span></td>
 								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
 								<td>
 									<span ng-if="getReplacements(covResult.covReport.sequenceResult, feature.name).length == 0">-</span>

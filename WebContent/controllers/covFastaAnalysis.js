@@ -561,4 +561,14 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	$scope.updatePhyloSvg();
 				}
 
+				$scope.switchToGenomeVisualisation = function(report, feature) {
+			    	$scope.displaySection = 'genomeVisualisation';
+			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
+			    	
+			    	var rFeature = _.find(report.covReport.sequenceResult.visualisationHints.features, function(rf) {return rf.name == feature.name;});
+			    	$scope.setFeature(report, rFeature);
+			    	$scope.updateFeatureSvg();
+				}
+
+				
 		}]);

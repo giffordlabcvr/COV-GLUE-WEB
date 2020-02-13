@@ -4,30 +4,26 @@
 	<div class="row">
 		<div class="col-md-9">
 			<h1>CoV-GLUE</h1>
-			<h3>Amino acid analysis for the 2020 novel Coronavirus (nCoV) outbreak</h3>
+			<h3>Amino acid analysis for the SARS-CoV-2 outbreak</h3>
 
+			<p>SARS-CoV-2 is the virus which causes the COVID-19 disease. This virus will naturally accumulate
+				nucleotide mutations (changes) in its RNA genome as the outbreak progresses. Some of these changes will have no
+				effect on protein expression, some will result in amino acid
+				replacements, while others will result in changes in gene lengths as
+				a result of insertions or deletions (indels). On average the
+				observed changes would be expected to have no or minimal consequence
+				on virus biology. However tracking these changes will help us better understand the virus outbreak.</p>
 
-			<p>As the nCoV outbreak develops, the virus will naturally accumulate
-			mutations in its genome (nucleotide changes in the viral RNA) some of
-			which will result in amino acid replacements, while others will result 
-			in changes in gene lengths as a result of
-			insertions or deletions (indels). On average the observed changes
-			would be expected to have no or minimal consequence on virus biology.</p>
-			
-			<p>
-			This web application allows researchers and public health laboratories to
-			quickly locate any amino acid replacements and indels in new nCoV
-			genome sequences and visualise these changes on a phylogenetic tree. 
-			You can also browse those <a href="#/replacement" target="_blank">replacements</a> and <a href="#/deletion" target="_blank">deletions</a> which
-			have already been observed in sequences sampled from the outbreak to date.
+			<p>CoV-GLUE contains a database of <a href="#/replacement" target="_blank">replacements</a> and <a href="#/deletion" target="_blank">deletions</a> which
+			have been observed in sequences sampled from the outbreak. No insertions have been observed so far.
 			</p>
-			
-			<p>As of the latest update of CoV-GLUE from GISAID (7th Feb 2020), no insertions have been found in outbreak sequences.</p>
-			<p>To analyse new sequences:
+			<p>
+			You can also use CoV-GLUE to analyse SARS-CoV-2 sequence files:
 			<ol>
-				<li>Click "Add files" to add your nCoV sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
+				<li>Click "Add files" to add your sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
-				<li>If your sequences contain replacements or indels these will be displayed under the relevant genome region.</li>
+				<li>Click on a virus protein name (e.g. nsp1) to visualise that coding region on the genome.</li>
+				<li>If your sequences contain replacements or indels these will be displayed next to the virus protein.</li>
 				<li>If a replacement/deletion has been observed in GISAID sequences, click "Observed" to view these sequences.</li>
 				<li>Click "Tree" to view the replacement or deletion in its phylogenetic context.</li>
 			</ol>
@@ -161,7 +157,7 @@
 						<thead>
 							<tr>
 								<th style="width: 20%;">Sequence</th>
-								<th style="width: 6%;">Novel Coronavirus?</th>
+								<th style="width: 6%;">SARS-CoV-2?</th>
 								<th style="width: 20%;">Virus protein</th>
 								<th style="width: 6%;">Coverage</th>
 								<th style="width: 16%;">Replacements</th>
@@ -274,7 +270,7 @@
 											role="menuitem"><a>{{report.covReport.sequenceResult.id}}</a></li>
 									</ul>
 								</div>
-								(green), highlighting any differences with the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a> (blue)
+								(green), highlighting differences with the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">SARS-CoV-2 reference</a> (blue)
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
@@ -400,9 +396,9 @@
 				<h5>Notes</h5>
 				<small>
 				<ul>
-					<li>The coding regions are those annotated on the <a href="https://www.ncbi.nlm.nih.gov/nuccore/MN908947.3" target="_blank">Wuhan-Hu-1 sequence</a>.</li> 
-					<li>Codon numbering is relative to the Wuhan-Hu-1 sequence.</li> 
-					<li>Particular care has been paid to correctly translate the ORF1ab region taking account of ribosomal slippage.</li> 
+					<li>The coding regions are those annotated on the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a>.</li> 
+					<li>Codon numbering is relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a>.</li> 
+					<li>Particular care has been paid to correctly translate the ORF1ab nsp12 region taking account of ribosomal slippage.</li> 
 					<li>Where ambiguous nucleotide codes give rise to multiple possible amino acids, these are displayed.</li> 
 				</ul>
 				</small>

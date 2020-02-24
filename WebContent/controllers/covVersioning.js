@@ -1,4 +1,4 @@
-covApp.controller('covAboutCtrl', 
+covApp.controller('covVersioningCtrl', 
 		[ '$scope', 'glueWS', 'dialogs', 
 		function($scope, glueWS, dialogs) {
 

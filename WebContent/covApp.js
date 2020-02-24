@@ -72,11 +72,21 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
     	  controller: 'covDeletionCtrl'
         });
 
-    // about page
+    // about pages
     $routeProvider.
-    when('/about', {
-  	  templateUrl: '../views/covAbout.html',
-  	  controller: 'covAboutCtrl'
+    when('/team', {
+  	  templateUrl: '../views/covTeam.html',
+  	  controller: 'covTeamCtrl'
+    });
+    $routeProvider.
+    when('/versioning', {
+  	  templateUrl: '../views/covVersioning.html',
+  	  controller: 'covVersioningCtrl'
+    });
+    $routeProvider.
+    when('/sequenceAcks', {
+  	  templateUrl: '../views/covSequenceAcks.html',
+  	  controller: 'covSequenceAcksCtrl'
     });
 
     // default
@@ -95,6 +105,9 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.brand = "CoV-GLUE";
 	$scope.homeMenuTitle = "Home";
 	$scope.aboutMenuTitle = "About";
+	$scope.versioningMenuTitle = "Versioning";
+	$scope.teamMenuTitle = "Team";
+	$scope.sequenceAcksMenuTitle = "Sequence acknowledgements";
 	$scope.replacementsMenuTitle = "Replacements";
 	$scope.deletionsMenuTitle = "Deletions";
 	glueWS.setProjectURL("../../../gluetools-ws/project/cov");

@@ -88,6 +88,11 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
   	  templateUrl: '../views/covSequenceAcks.html',
   	  controller: 'covSequenceAcksCtrl'
     });
+    $routeProvider.
+    when('/excludedSeqs', {
+  	  templateUrl: '../views/covExcludedSequences.html',
+  	  controller: 'covExcludedSeqsCtrl'
+    });
 
     // default
     $routeProvider.
@@ -107,6 +112,7 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.aboutMenuTitle = "About";
 	$scope.versioningMenuTitle = "Versioning";
 	$scope.teamMenuTitle = "Team";
+	$scope.excludedSeqsMenuTitle = "Excluded sequences";
 	$scope.sequenceAcksMenuTitle = "Sequence acknowledgements";
 	$scope.replacementsMenuTitle = "Replacements";
 	$scope.deletionsMenuTitle = "Deletions";

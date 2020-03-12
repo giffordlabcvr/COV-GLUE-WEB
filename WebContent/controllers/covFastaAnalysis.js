@@ -45,6 +45,20 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 				$scope.tipAnnotation = $scope.availableTipAnnotations[0];
 				
+				glueWS.runGlueCommand("custom-table-row/cov_project_properties/gisaidTimeStamp", {
+				    "show":{
+				        "property":{
+				            "property":"value"
+				        }
+				    }
+				})
+				.success(function(data, status, headers, config) {
+					$scope.gisaidTimeStamp = data.propertyValueResult.value;
+					console.info('$scope.gisaidTimeStamp', $scope.gisaidTimeStamp);
+				})
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving available features"));
+				
+				
 				glueWS.runGlueCommand("", {
 				    "list":{
 				        "feature":{

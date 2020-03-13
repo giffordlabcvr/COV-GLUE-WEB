@@ -3,13 +3,10 @@
 CoV-GLUE excludes the following GISAID sequences from its analysis:
 
 <ul>
-<li>Any sequence of length less than 24000 nucleotides</li>
+<li>Any sequence of length less than 29000 nucleotides</li>
 <li>Any sequence with a non-human host, e.g. bat, pangolin</li>
 <li>Sequences from environmental samples</li>
-<li>The following sequences marked as having quality issues on GISAID:
-EPI_ISL_408487, EPI_ISL_408485, EPI_ISL_408483, 
-EPI_ISL_408978, EPI_ISL_412971, EPI_ISL_406799, EPI_ISL_412964, 
-EPI_ISL_412900
-</li>
+<li>Any sequences marked with a warning flag, as having quality issues on GISAID</li>
 <li>The following sequences <a href="http://virological.org/t/phylodynamic-analysis-129-genomes-24-feb-2020/356/4" target="_blank">thought to contain sequencing errors</a>:  EPI_ISL_406592, EPI_ISL_406595.</li>
+<li>Any sequence which we detect has a frameshifting deletion or insertion relative to the SARS-COV-2 reference sequence.</li>
 </ul>

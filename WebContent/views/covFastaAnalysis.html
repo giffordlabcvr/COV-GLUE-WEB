@@ -4,21 +4,22 @@
 	<div class="row">
 		<div class="col-md-9">
 			<h1>CoV-GLUE</h1>
-			<h3>Amino acid analysis for the SARS-CoV-2 outbreak</h3>
+			<h3>Amino acid analysis for the SARS-CoV-2 pandemic</h3>
 
 			<p>SARS-CoV-2 is the virus which causes the COVID-19 disease. This
 				virus will naturally accumulate nucleotide mutations (changes) in
-				its RNA genome as the outbreak progresses. Most of these changes
+				its RNA genome as the pandemic progresses. Most of these changes
 				will have no effect on amino acid composition, some will result in
 				amino acid replacements, while others will result in changes in gene
 				lengths as a result of insertions or deletions (indels). On average
 				the observed changes would be expected to have no or minimal
 				consequence on virus biology. However tracking these changes will
-				help us better understand the virus outbreak.</p>
+				help us better understand the virus pandemic.</p>
 
-			<p>CoV-GLUE contains a database of <a href="#/replacement" target="_blank">replacements</a> and <a href="#/deletion" target="_blank">deletions</a> which
+			<p>CoV-GLUE contains a database of <a href="#/replacement" target="_blank">replacements</a>, 
+			<a href="#/insertion" target="_blank">insertions</a>
+			and <a href="#/deletion" target="_blank">deletions</a> which
 			have been observed in sequences sampled from the pandemic. 
-			An insertion in nsp6 has been observed in a sequence from Switzerland, one in nsp16 in a sequence from Minnesota, USA.
 			</p>
 			<p>
 			You can also use CoV-GLUE to analyse SARS-CoV-2 sequence files:
@@ -27,8 +28,8 @@
 				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
 				<li>Click on a virus protein name (e.g. nsp1) to visualise that coding region on the genome.</li>
 				<li>If your sequences contain replacements or indels these will be displayed next to the virus protein.</li>
-				<li>If a replacement/deletion has been observed in GISAID sequences, click "Observed" to view these sequences.</li>
-				<li>Click "Tree" to view the replacement or deletion in its phylogenetic context.</li>
+				<li>If a replacement/indel has been observed in GISAID sequences, click "Observed" to view these sequences.</li>
+				<li>Click "Tree" to view the replacement or indel in its phylogenetic context.</li>
 			</ol>
 			</p>
 			<p>CoV-GLUE is based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>. 
@@ -205,8 +206,26 @@
 									<span ng-if="getInsertions(covResult.covReport.sequenceResult, feature.name).length == 0">-</span>
 									<span ng-repeat="insertion in getInsertions(covResult.covReport.sequenceResult, feature.name) track by $index">
 										{{insertion.insertionIsCodonAligned ? 
-											insertion.refLastCodonBeforeIns+"-"+insertion.insertedQryAas+"-"+insertion.refFirstCodonAfterIns : 
-											"Non-codon-aligned:nt"+insertion.refLastNtBeforeIns+"-"+insertion.insertedQryNts+"-nt"+insertion.refFirstNtAfterIns}}
+											( insertion.refLastCodonBeforeIns+"-"+insertion.insertedQryAas+"-"+insertion.refFirstCodonAfterIns) : 
+											( "Non-codon-aligned:nt"+insertion.refLastNtBeforeIns+"-"+insertion.insertedQryNts+"-nt"+insertion.refFirstNtAfterIns )}},
+										<span ng-if="insertion.known_insertions.length == 0">
+										Novel,
+										</span>										
+										<span ng-if="insertion.known_insertions.length == 1">
+										<a target="_blank" href="#/project/insertion/{{insertion.known_insertions[0].known_insertion.id}}">
+											Observed:{{insertion.known_insertions[0].known_insertion.num_seqs}}</a>,
+										</span>										
+										<span ng-if="insertion.known_insertions.length > 1">
+										<span ng-repeat="known_insertion in insertion.known_insertions track by $index">
+										<a target="_blank" href="#/project/insertion/{{known_insertion.known_insertion.id}}">
+											{{known_insertion.known_insertion.display_name}}
+											observed:{{known_insertion.known_insertion.num_seqs}}</a>
+										<br/>
+										</span>,
+										</span>										
+										<span ng-if="insertion.insertionIsCodonAligned">
+											<a ng-click="switchToInsertionPhylo(covResult, feature, insertion.refLastCodonBeforeIns, insertion.insertedQryAas, insertion.refFirstCodonAfterIns)">Tree</a>
+										</span>
 									</span>
 								</td>
 								<td>
@@ -342,6 +361,8 @@
 											role="menuitem"><a>amino acid</a></li>
 										<li ng-click="setVarType('deletion')"
 											role="menuitem"><a>deletion</a></li>
+										<li ng-click="setVarType('insertion')"
+											role="menuitem"><a>insertion</a></li>
 									</ul>
 								</div> in coding region: <div class="btn-group" dropdown is-open="status.aafButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="aaf-button" type="button" class="btn btn-sm btn-default"
@@ -362,6 +383,9 @@
 								</span> <span ng-if="aaFeature.varType == 'deletion'" ng-disabled="phyloVisualisationUpdating">, start codon: 
 									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionStart"/>, end codon:
 									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionEnd"/>
+								</span> <span ng-if="aaFeature.varType == 'insertion'" ng-disabled="phyloVisualisationUpdating">, of amino acids:
+									<input class="aaCodonLabelInput" ng-model="aaFeature.aaInsertionAAs"/>, between codons: 
+									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaInsertionStart"/> and {{aaFeature.aaInsertionStart+1}}
 								</span> (Range: 1-{{aaFeature.max_codon_number}})								
 								<br/>
 								&nbsp;
@@ -388,11 +412,13 @@
 									ng-click="updatePhyloSvg()"><i class="glyphicon glyphicon-refresh"></i> Update</button>
 							</div>
 					</div>
+					<div>
+						<p>Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the selected residue / indel and with an additional branch for the submitted sequence.</p>
+					</div>
 					<div class="row phyloSvgContainer" us-spinner="{radius:23, width:7, length: 11}" spinner-on="phyloVisualisationUpdating || phyloLegendUpdating" style="min-height: 100px; position: relative">
 						<div ng-if="(phyloVisualisationSvgUrl == null && !phyloVisualisationUpdating) || (phyloLegendSvgUrl == null && !phyloLegendUpdating)">
 							<p class="text-center">No data</p>
 						</div>
-						<p>Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the selected residue / deletion and with an additional branch for the submitted sequence.</p>
 						<div style="height: 80px; width: 1136px;" data-onload="phyloLegendSvgUpdated()" ng-include="phyloLegendSvgUrl"></div>
 						<div style="height: 2px; width: 1136px; background-color: #cecece;" ng-if="phyloVisualisationSvgUrl != null && phyloLegendSvgUrl != null">
 						</div>

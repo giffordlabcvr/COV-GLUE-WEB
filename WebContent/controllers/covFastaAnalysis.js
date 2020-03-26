@@ -78,6 +78,8 @@ covApp.controller('covFastaAnalysisCtrl',
 						feature.aaCodonLabel = 1;
 						feature.aaDeletionStart = 1;
 						feature.aaDeletionEnd = 1;
+						feature.aaInsertionStart = 1;
+						feature.aaInsertionAAs = "M";
 						feature.varType = "aminoAcid";
 					});
 					$scope.aaFeature = _.find($scope.availableFeatures, function(feature) { return feature.name == "NSP1"; });
@@ -116,10 +118,10 @@ covApp.controller('covFastaAnalysisCtrl',
 				$scope.$watch('displaySection', function(newObj, oldObj) {
 					if(newObj == "genomeVisualisation" && !$scope.fileItemUnderAnalysis.clickedGenomeVis) {
 						$scope.fileItemUnderAnalysis.clickedGenomeVis = true;
-						$scope.updateFeatureSvg();
+						$scope.updateFeatureSvg(); 
 					} else if(newObj == "phyloPlacement" && !$scope.fileItemUnderAnalysis.clickedPhyloPlacement) {
 						$scope.fileItemUnderAnalysis.clickedPhyloPlacement = true;
-						$scope.updatePhyloSvg();
+						$scope.updatePhyloSvg(); 
 					} 
 				});
 
@@ -435,7 +437,9 @@ covApp.controller('covFastaAnalysisCtrl',
 						$scope.aaFeature.varType+":"+
 						$scope.aaFeature.aaCodonLabel+":"+
 						$scope.aaFeature.aaDeletionStart+":"+
-						$scope.aaFeature.aaDeletionEnd;
+						$scope.aaFeature.aaDeletionEnd+":"+
+						$scope.aaFeature.aaInsertionStart+":"+
+						$scope.aaFeature.aaInsertionAAs;
 					console.info('cacheKey', cacheKey);
 					
 
@@ -467,6 +471,9 @@ covApp.controller('covFastaAnalysisCtrl',
 											    "aaVisCodonLabel" : $scope.aaFeature.varType == 'aminoAcid' ? $scope.aaFeature.aaCodonLabel : null,
 											    "aaVisDeletionStart" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionStart : null,
 											    "aaVisDeletionEnd" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionEnd : null,
+											    "aaVisInsertionLastBeforeStart" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionStart : null,
+											    "aaVisInsertionFirstAfterEnd" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionStart+1 : null,
+											    "aaVisInsertedAas" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionAAs : null,
 											    "placementIndex" : placement.placementIndex,
 												"pxWidth" : 1136 - scrollbarWidth, 
 												"pxHeight" : "auto",
@@ -557,31 +564,40 @@ covApp.controller('covFastaAnalysisCtrl',
 			    }
 
 				$scope.switchToReplacementPhylo = function(report, feature, codonLabel) {
-			    	$scope.displaySection = 'phyloPlacement';
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
-			    	$scope.setAAFeature(feature);
+					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
+			    	aaFeature.aaCodonLabel = parseInt(codonLabel);
+			    	$scope.setAAFeature(aaFeature);
 			    	$scope.setVarType("aminoAcid");
-			    	feature.aaCodonLabel = parseInt(codonLabel);
-			    	$scope.updatePhyloSvg();
+			    	$scope.displaySection = 'phyloPlacement';
 				}
 
 				$scope.switchToDeletionPhylo = function(report, feature, startCodon, endCodon) {
-			    	$scope.displaySection = 'phyloPlacement';
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
-			    	$scope.setAAFeature(feature);
+					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
+			    	aaFeature.aaDeletionStart = parseInt(startCodon);
+			    	aaFeature.aaDeletionEnd = parseInt(endCodon);
+			    	$scope.setAAFeature(aaFeature);
 			    	$scope.setVarType("deletion");
-			    	feature.aaDeletionStart = parseInt(startCodon);
-			    	feature.aaDeletionEnd = parseInt(endCodon);
-			    	$scope.updatePhyloSvg();
+			    	$scope.displaySection = 'phyloPlacement';
+				}
+
+				$scope.switchToInsertionPhylo = function(report, feature, lastCodonBefore, insertedAAs, firstCodonAfter) {
+			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
+					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
+			    	aaFeature.aaInsertionStart = parseInt(lastCodonBefore);
+			    	aaFeature.aaInsertionAAs = insertedAAs;
+			    	$scope.setAAFeature(aaFeature);
+			    	$scope.setVarType("insertion");
+			    	$scope.displaySection = 'phyloPlacement';
 				}
 
 				$scope.switchToGenomeVisualisation = function(report, feature) {
-			    	$scope.displaySection = 'genomeVisualisation';
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
 			    	
 			    	var rFeature = _.find(report.covReport.sequenceResult.visualisationHints.features, function(rf) {return rf.name == feature.name;});
 			    	$scope.setFeature(report, rFeature);
-			    	$scope.updateFeatureSvg();
+			    	$scope.displaySection = 'genomeVisualisation';
 				}
 
 				

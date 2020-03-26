@@ -65,11 +65,25 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
         controller: 'covDeletionsCtrl'
       });
 
-	// specific replacement
+	// specific deletion
 	$routeProvider.
     when('/project/deletion/:id', {
     	  templateUrl: 'views/covDeletion.html',
     	  controller: 'covDeletionCtrl'
+        });
+
+	// insertions list
+	$routeProvider.
+    when('/insertion', {
+        templateUrl: '../views/covInsertions.html',
+        controller: 'covInsertionsCtrl'
+      });
+
+	// specific insertion
+	$routeProvider.
+    when('/project/insertion/:id', {
+    	  templateUrl: 'views/covInsertion.html',
+    	  controller: 'covInsertionCtrl'
         });
 
     // about pages
@@ -122,6 +136,7 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.sequenceAcksMenuTitle = "Sequence acknowledgements";
 	$scope.replacementsMenuTitle = "Replacements";
 	$scope.deletionsMenuTitle = "Deletions";
+	$scope.insertionsMenuTitle = "Insertions";
 	glueWS.setProjectURL("../../../gluetools-ws/project/cov");
 	glueWS.setAsyncURL("../../../gluetools-ws");
 	glueWebToolConfig.setAnalysisToolURL("../gluetools-web/www/analysisTool");

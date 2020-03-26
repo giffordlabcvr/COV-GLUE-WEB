@@ -89,7 +89,7 @@
 
 	<div ng-if="displaySection == 'containingSequences'">
 		<div>
-		<p>The following outbreak sequences contain {{replacement.featureDisplayName}} replacement {{replacement.displayName}}</p>
+		<p>The following pandemic sequences contain {{replacement.featureDisplayName}} replacement {{replacement.displayName}}</p>
 		</div>
 		<paging-buttons paging-context="seqPagingContext"></paging-buttons>
 		<span ng-show="listSequenceResult.length == 0">No data</span>
@@ -128,7 +128,10 @@
 		<div class="row">
 			<p>
 			Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the amino acid residue at {{replacement.featureDisplayName}} position {{replacement.codonLabel}}.
-			Unfortunately, because the global reference tree contains a subset of sequences, some rare replacements will not appear in the tree.
+			<br/>
+			If a question mark is shown, nucleotide ambiguity implies multiple amino acids are present, hover over this to see the residues. 
+			<br/>
+			Unfortunately, because the global reference tree contains a subset of sequences, only a subset of instances of a given replacement will appear, possibly none.
 			</p> 
 			Annotate metadata:
 			<div class="btn-group" dropdown is-open="status.taButtonOpen">

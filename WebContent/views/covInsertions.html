@@ -1,0 +1,38 @@
+<div>
+	<h2>Coding region insertions</h2>
+	<p>
+	This page lists non-frameshifting coding region insertions relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">SARS-CoV-2 reference sequence</a> which have been detected in viral genome sequences from the pandemic.</p>
+	<paging-buttons paging-context="pagingContext"></paging-buttons>
+	<span ng-show="insertions.length == 0">None</span>
+	<div ng-show="insertions.length > 0">	
+		Insertions {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
+		<table class="table table-striped table-bordered">
+			<thead>
+				<th colspan="2">Virus protein</th>		
+				<th>Insertion</th>		
+				<th>Number of sequences</th>		
+				<th>Notes</th>		
+			</thead>
+			<colgroup>
+		       <col span="1" style="width: 10%;">
+		       <col span="1" style="width: 20%;">
+		       <col span="1" style="width: 20%;">
+		       <col span="1" style="width: 20%;">
+		       <col span="1" style="width: 30%;">
+			</colgroup>
+			<tbody>
+				<tr ng-repeat="m in insertions track by $index">
+					<td><b>{{m.insertion.featureDisplayName}}</b></td>
+					<td>{{m.insertion.featureDescription != null ? " "+m.insertion.featureDescription : ""}}</td>
+					<td><a target="_blank" href="#project/insertion/{{m.insertion.id}}">{{m.insertion.displayName}}</a></td>
+					<td>{{m.insertion.numSeqs}}</td>
+					<td>{{m.insertion.parentFeature != null ? 
+					( "Equivalently " + 
+						m.insertion.parentFeatureDisplayName + " " + m.insertion.parentLastCodonBefore + "-" + 
+						m.insertion.insertedAas + "-" + m.insertion.parentFirstCodonAfter ) : "" }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<paging-buttons paging-context="pagingContext"></paging-buttons>
+	</div>
+</div>

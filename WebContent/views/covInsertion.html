@@ -1,11 +1,12 @@
 <div ng-cloak>
-	<h3>{{deletion.featureDisplayName}} deletion {{deletion.displayName}}</h3>
+	<h3>{{insertion.featureDisplayName}} insertion {{insertion.displayName}}</h3>
 	<p>
-	<small ng-if="deletion.featureDescription">{{deletion.featureDisplayName}}: {{deletion.featureDescription}}<br/></small>	
-	<small ng-if="deletion.parentFeature">Equivalently
-		{{deletion.parentStartCodon + 
-			(deletion.parentEndCodon == deletion.parentStartCodon ? "" : ("-" +deletion.parentEndCodon)) + ":del"}} in {{deletion.parentFeatureDisplayName}}<br/></small>	
-	<small>Deletion of nucleotide positions {{deletion.referenceNtStart}}-{{deletion.referenceNtEnd}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a></small>	
+	<small ng-if="insertion.featureDescription">{{insertion.featureDisplayName}}: {{insertion.featureDescription}}<br/></small>	
+	<small ng-if="insertion.parentFeature">
+		{{"Equivalently " + 
+						insertion.parentLastCodonBefore + "-" + 
+						insertion.insertedAas + "-" + insertion.parentFirstCodonAfter}} in {{insertion.parentFeatureDisplayName}}<br/></small>	
+	<small>Insertion between nucleotide positions {{insertion.lastRefNtBefore}} and {{insertion.firstRefNtAfter}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a></small>	
 	<p/>
 	<div class="btn-group" style="margin-bottom: 15px">
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
@@ -15,7 +16,7 @@
 
 	<div ng-if="displaySection == 'containingSequences'">
 		<div>
-		<p>The following pandemic sequences contain {{deletion.featureDisplayName}} deletion {{deletion.displayName}}</p>
+		<p>The following pandemic sequences contain {{insertion.featureDisplayName}} insertion {{insertion.displayName}}</p>
 		</div>
 		<paging-buttons paging-context="seqPagingContext"></paging-buttons>
 		<span ng-show="listSequenceResult.length == 0">No data</span>
@@ -55,10 +56,11 @@
 			<p>
 			Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with a symbol at each tip.
 			<br/>
-			If the sequence contains the {{deletion.featureDisplayName}} deletion {{deletion.displayName}} (or any larger deletion containing this region), a red minus sign is used. 
-			Otherwise a green plus sign is used.
+			If the sequence contains the {{insertion.featureDisplayName}} insertion {{insertion.displayName}}, a green plus sign is used. 
+			If it contains an insertion of different amino acids at the same location, an orange question mark is shown, hover over this to see the alternative insertion. 
+			Otherwise a red minus sign is used.
 			<br/>
-			Unfortunately, because the global reference tree contains a subset of sequences, only a subset of instances of a given deletion will appear, possibly none.
+			Unfortunately, because the global reference tree contains a subset of sequences, only a subset of instances of a given insertion will appear, possibly none.
 			</p> 
 			Annotate metadata:
 			<div class="btn-group" dropdown is-open="status.taButtonOpen">

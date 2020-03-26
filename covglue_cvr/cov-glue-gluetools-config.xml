@@ -5,18 +5,9 @@
 		<jdbcUrl>jdbc:mysql://glue-db.cvr.gla.ac.uk:3306/COV_GLUE?characterEncoding=UTF-8</jdbcUrl>	
 	</database>
 	<properties>
-		<!-- Scripting -->
-		<!-- In reality the VM has 2 cores. We can overload them effectively because the resistance scanning piece, which could use
-		      parallelism, spending a lot of time accessing the DB. So I've put 5 here.
-		     
-		     A better design would be for the invocation of the parallelCommands function to specify a load factor. This would get
-		     multiplied by the CPUs setting to give the number of workers created in the executor service thread pool.
-		     For CPU-intensive parallel commands you would use a load factor of 1, whereas if there was DB access you might use a 
-		     higher load factor.
-		      -->
 		<property>
 			<name>gluetools.core.scripting.parallel.cpus</name>
-			<value>5</value>
+			<value>4</value>
 		</property>
 		<!-- Web files -->
 	    <property>
@@ -50,7 +41,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.blast.search.threads</name>
-			<value>2</value>
+			<value>4</value>
 		</property>
 		<!-- RAxML-specific config -->
 		<property>
@@ -59,7 +50,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.raxml.raxmlhpc.cpus</name>
-			<value>2</value>
+			<value>4</value>
 		</property>
 		<property>
 			<name>gluetools.core.programs.raxml.temp.dir</name>
@@ -72,12 +63,15 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.mafft.cpus</name>
-			<value>2</value>
+			<value>4</value>
 		</property>
 		<property>
 			<name>gluetools.core.programs.mafft.temp.dir</name>
 			<value>/opt/gluetools/tmp/mafftfiles</value>
 		</property>
+		
+		
+		
 		<!-- SAM/BAM file processing -->
 		<property>
 			<name>gluetools.core.sam.temp.dir</name>

@@ -1,0 +1,14 @@
+<h3>Global reference tree</h3>
+
+CoV-GLUE dynamically computes a reference tree to represent the main lineages of the pandemic at the global level.
+Some sequences are excluded from the tree to keep it manageable. The reference tree is computed as follows:
+<ul>
+<li>Only sequences that pass the <a href="/#excludedSeqs" target="_blank">exclusion criteria</a> are candidates for inclusion in the reference tree</li>
+<li>The program <code>cd-hit-est</code> (see <a href="http://weizhongli-lab.org/cd-hit/" target="_blank">here</a>) 
+is applied to the coding regions of candidate sequences to generate clusters, using a 99.95% sequence identity threshold.</li>
+<li>Each sequence that <code>cd-hit-est</code> selects as a cluster representative is included in the tree.</li>
+<li>Additionally, non-representative sequences from each cluster are included in the tree to ensure that at least one sequence from each country represented in the cluster is included</li>
+<li>The reference strain Wuhan-Hu-1 is always included in the tree.</li>
+<li>The tree is computed using RAxML.</li>
+<li>The rooting is based on an early split in the virus population, characterised by the L/S polymorphism at ORF 8 position 84.
+</ul>

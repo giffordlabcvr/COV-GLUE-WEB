@@ -17,7 +17,8 @@
 				help us better understand the virus outbreak.</p>
 
 			<p>CoV-GLUE contains a database of <a href="#/replacement" target="_blank">replacements</a> and <a href="#/deletion" target="_blank">deletions</a> which
-			have been observed in sequences sampled from the outbreak. A single insertion in nsp6 has been observed in a sequence from Switzerland, this remains to be confirmed.
+			have been observed in sequences sampled from the pandemic. 
+			An insertion in nsp6 has been observed in a sequence from Switzerland, one in nsp16 in a sequence from Minnesota, USA.
 			</p>
 			<p>
 			You can also use CoV-GLUE to analyse SARS-CoV-2 sequence files:
@@ -391,6 +392,7 @@
 						<div ng-if="(phyloVisualisationSvgUrl == null && !phyloVisualisationUpdating) || (phyloLegendSvgUrl == null && !phyloLegendUpdating)">
 							<p class="text-center">No data</p>
 						</div>
+						<p>Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the selected residue / deletion and with an additional branch for the submitted sequence.</p>
 						<div style="height: 80px; width: 1136px;" data-onload="phyloLegendSvgUpdated()" ng-include="phyloLegendSvgUrl"></div>
 						<div style="height: 2px; width: 1136px; background-color: #cecece;" ng-if="phyloVisualisationSvgUrl != null && phyloLegendSvgUrl != null">
 						</div>

@@ -127,7 +127,8 @@
 	<div ng-if="displaySection == 'phylogeneticTree'" class="container-fluid">
 		<div class="row">
 			<p>
-			This tree shows the sequences from the outbreak, annotated with the amino acid residue at {{replacement.featureDisplayName}} position {{replacement.codonLabel}}
+			Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the amino acid residue at {{replacement.featureDisplayName}} position {{replacement.codonLabel}}.
+			Unfortunately, because the global reference tree contains a subset of sequences, some rare replacements will not appear in the tree.
 			</p> 
 			Annotate metadata:
 			<div class="btn-group" dropdown is-open="status.taButtonOpen">

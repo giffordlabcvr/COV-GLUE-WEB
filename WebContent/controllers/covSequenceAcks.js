@@ -13,9 +13,9 @@ covApp.controller('covSequenceAcksCtrl',
 				                "m49_country.display_name",
 				                "sequenceID",
 				                "isolate",
-				                "submitting_lab",
-				                "originating_lab",
-				                "authors"
+				                "gisaid_submitting_lab",
+				                "gisaid_submitting_lab",
+				                "gisaid_authors"
 				            ]
 				        }
 				    }

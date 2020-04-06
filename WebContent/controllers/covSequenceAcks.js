@@ -13,7 +13,7 @@ covApp.controller('covSequenceAcksCtrl',
 				                "m49_country.display_name",
 				                "sequenceID",
 				                "isolate",
-				                "gisaid_submitting_lab",
+				                "gisaid_originating_lab",
 				                "gisaid_submitting_lab",
 				                "gisaid_authors"
 				            ]

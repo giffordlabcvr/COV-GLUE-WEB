@@ -7,7 +7,7 @@
 	<properties>
 		<property>
 			<name>gluetools.core.scripting.parallel.cpus</name>
-			<value>4</value>
+			<value>8</value>
 		</property>
 		<!-- Web files -->
 	    <property>
@@ -41,7 +41,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.blast.search.threads</name>
-			<value>4</value>
+			<value>8</value>
 		</property>
 		<!-- RAxML-specific config -->
 		<property>
@@ -50,7 +50,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.raxml.raxmlhpc.cpus</name>
-			<value>4</value>
+			<value>8</value>
 		</property>
 		<property>
 			<name>gluetools.core.programs.raxml.temp.dir</name>
@@ -63,7 +63,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.programs.mafft.cpus</name>
-			<value>4</value>
+			<value>8</value>
 		</property>
 		<property>
 			<name>gluetools.core.programs.mafft.temp.dir</name>
@@ -79,7 +79,7 @@
 		</property>
 		<property>
 			<name>gluetools.core.sam.cpus</name>
-			<value>2</value>
+			<value>8</value>
 		</property>
 		<!-- Cayenne -->
 		<property>
@@ -191,6 +191,10 @@
 			<modePathRegexFilter>
 				<regex>.*/custom-table-row/cov_project_properties/gisaidTimeStamp$</regex>
 				<simpleCommandFilter words="show property"/>
+			</modePathRegexFilter>
+			<modePathRegexFilter>
+				<regex>.*/module/covPrimerProbeReportTransformer$</regex>
+				<simpleCommandFilter words="transform-to-web-file"/>
 			</modePathRegexFilter>
 		</modePathRegexFilter>
 

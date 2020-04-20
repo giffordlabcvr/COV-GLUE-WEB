@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-9">
 			<h1>CoV-GLUE</h1>
-			<h3>Amino acid analysis for the SARS-CoV-2 pandemic</h3>
+			<h3>Virus genome analysis for the SARS-CoV-2 pandemic</h3>
 
 			<p>SARS-CoV-2 is the virus which causes the COVID-19 disease. This
 				virus will naturally accumulate nucleotide mutations (changes) in
@@ -25,11 +25,13 @@
 			You can also use CoV-GLUE to analyse SARS-CoV-2 sequence files:
 			<ol>
 				<li>Click "Add files" to add your sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
-				<li>Click "Submit" to run the analysis. When complete, click "Show response". </li>
-				<li>Click on a virus protein name (e.g. nsp1) to visualise that coding region on the genome.</li>
-				<li>If your sequences contain replacements or indels these will be displayed next to the virus protein.</li>
-				<li>If a replacement/indel has been observed in GISAID sequences, click "Observed" to view these sequences.</li>
-				<li>Click "Tree" to view the replacement or indel in its phylogenetic context.</li>
+				<li>Click "Submit" to run the analysis. When complete, click "Show response" to display an analysis summary. </li>
+				<!-- <li>Click on a virus protein name (e.g. nsp1) to visualise that coding region on the genome.</li> -->
+				<li>The lineage (see <a target=_blank href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">Rambaut, Holmes & Pybus</a>) is detected using a max-likelihood method based on RAxML-EPA.</li>
+				<li>Each sequence is analysed against published primer/probe schemes.</li>
+				<li>Any detected replacements or indels will be displayed under "Differences from reference".</li>
+				<!-- <li>If a replacement/indel has been observed in GISAID sequences, click "Observed" to view these sequences.</li>
+				<li>Click "Tree" to view the replacement or indel in its phylogenetic context.</li> -->
 			</ol>
 			</p>
 			<p>CoV-GLUE is based on data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>. 

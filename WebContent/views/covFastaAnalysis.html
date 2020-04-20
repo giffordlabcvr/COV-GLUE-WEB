@@ -162,21 +162,56 @@
 					<table class="table table-striped table-bordered">
 						<thead>
 							<tr>
-								<th style="width: 20%;">Sequence</th>
-								<th style="width: 6%;">SARS-CoV-2?</th>
+								<th rowspan="2" style="width: 20%;">Sequence</th>
+								<th colspan="3" style="width: 24%;">Classification</th>
+								<th colspan="3" style="width: 24%;">Primer/probe analysis</th>
+								<th rowspan="2" style="width: 32%;">Differences from reference</th>
+								<!-- 
 								<th style="width: 20%;">Virus protein</th>
 								<th style="width: 6%;">Coverage</th>
 								<th style="width: 16%;">Replacements</th>
 								<th style="width: 16%;">Insertions</th>
-								<th style="width: 16%;">Deletions</th>
+								<th style="width: 16%;">Deletions</th> !-->
+							</tr>
+							<tr>
+								<th style="width: 8%;">SARS-CoV-2?</th>
+								<th style="width: 8%;">Lineage</th>
+								<th style="width: 8%;">Confidence</th>
+								<th style="width: 8%;">Diagnostics issues</th>
+								<th style="width: 8%;">Sequencing issues</th>
+								<th style="width: 8%;">Full report</th>
+								<!-- 
+								<th style="width: 20%;">Virus protein</th>
+								<th style="width: 6%;">Coverage</th>
+								<th style="width: 16%;">Replacements</th>
+								<th style="width: 16%;">Insertions</th>
+								<th style="width: 16%;">Deletions</th> !-->
 							</tr>
 						</thead>
 						<tbody ng-repeat="covResult in fileItemUnderAnalysis.response.covWebReport.results track by $index">
 							<tr>
-								<td rowspan="{{coverageFeatures.length+1}}">{{covResult.covReport.sequenceResult.id}}</td>
-								<td rowspan="{{coverageFeatures.length+1}}">{{covResult.covReport.sequenceResult.isForwardCov ?
-									"Yes" : "No"}}</td>
+								<td>{{covResult.covReport.sequenceResult.id}}</td>
+								<td>{{covResult.covReport.sequenceResult.isForwardCov ? "Yes" : "No"}}</td>
+								<td>{{getLineageDisplayString(covResult.covReport.sequenceResult)}}</td>
+								<td>{{getLikelihoodDisplayString(covResult.covReport.sequenceResult)}}</td>
+								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.diagnosticsIssues}}</td>
+								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
+								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.sequencingIssues}}</td>
+								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
+								<td ng-if="covResult.covReport.sequenceResult.isForwardCov"><a
+									ng-click="viewPPReport(fileItemUnderAnalysis, covResult.covReport.sequenceResult.id, covResult.covReport.sequenceResult.primerProbeMismatchReport)">View <i class="glyphicon glyphicon-link"></i>
+								</a></td>
+								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
+								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">
+									<span ng-repeat="difference in covResult.covReport.sequenceResult.differences">
+										{{difference.displayText}}
+										<br/>
+									</span> 
+								</td>
+								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 							</tr>
+							
+							<!-- 
 							<tr ng-repeat="feature in coverageFeatures track by $index">	
 								<td><a ng-click="switchToGenomeVisualisation(covResult, feature)">{{feature.displayName}}</a><span ng-if="feature.description"><br/>{{feature.description}}</span></td>
 								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
@@ -254,7 +289,7 @@
 										</span>
 									</span>
 								</td>
-							</tr>
+							</tr>  -->
 						</tbody>
 					</table>
 					</p>

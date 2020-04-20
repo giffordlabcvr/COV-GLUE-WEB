@@ -22,6 +22,14 @@ covApp.controller('covFastaAnalysisCtrl',
 
 				$scope.availableTipAnnotations = [
 					{
+						name: "isolatePlusLineage",
+						displayName: "Virus name & lineage"
+					},
+					{
+						name: "lineage",
+						displayName: "Lineage"
+					},
+					{
 						name: "isolate",
 						displayName: "Virus name"
 					},
@@ -176,7 +184,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 					item.remove();
 				}
-			    
+				
 				$scope.updateRequest = function(fileItem) {
 					var requestID = fileItem.requestStatus.requestID;
 					glueWS.getGlueRequestStatus(requestID).then(function onSuccess(response) {
@@ -600,5 +608,59 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	$scope.displaySection = 'genomeVisualisation';
 				}
 
+				$scope.getLineageDisplayString = function(sequenceResult) {
+					if(sequenceResult.isForwardCov) {
+						if(sequenceResult.lineageAssignmentResult != null &&
+								sequenceResult.lineageAssignmentResult.bestLineage != null) {
+							return sequenceResult.lineageAssignmentResult.bestLineage;
+						} else {
+							return "-";
+						}
+					} else {
+						return "N/A";
+					}
+				}
+				$scope.getLikelihoodDisplayString = function(sequenceResult) {
+					if(sequenceResult.isForwardCov) {
+						if(sequenceResult.lineageAssignmentResult != null &&
+								sequenceResult.lineageAssignmentResult.bestLineage != null) {
+							return toFixed(sequenceResult.lineageAssignmentResult.bestLikelihoodWeightRatio * 100, 2)+"%";
+						} else {
+							return "-";
+						}
+					} else {
+						return "N/A";
+					}
+				}
+				
+				$scope.viewPPReport = function(fileItem, sequenceId, primerProbeMismatchReport) {
+					if(fileItem.seqIdToReportUrl == null) {
+						fileItem.seqIdToReportUrl = {};
+					}
+					var reportUrl = fileItem.seqIdToReportUrl[sequenceId];
+					var fileName = "covPrimerProbeReport.html";
+					if(reportUrl == null) {
+						console.log("primerProbeMismatchReport", primerProbeMismatchReport);
+						glueWS.runGlueCommand("module/covPrimerProbeReportTransformer", {
+							"transform-to-web-file": {
+								"webFileType": "WEB_PAGE",
+								"commandDocument":primerProbeMismatchReport,
+								"outputFile": fileName
+							}
+						})
+						.success(function(data, status, headers, config) {
+							console.info('transform-to-web-file result', data);
+							var transformerResult = data.freemarkerDocTransformerWebResult;
+							reportUrl = "/glue_web_files/"+transformerResult.webSubDirUuid+"/"+transformerResult.webFileName;
+							fileItem.seqIdToReportUrl[sequenceId] = reportUrl;
+							$window.open(reportUrl, '_blank');
+						})
+						.error(glueWS.raiseErrorDialog(dialogs, "rendering primer/probe report"));
+					} else {
+						$window.open(reportUrl, '_blank');
+					}
+				};
+				
+				
 				
 		}]);

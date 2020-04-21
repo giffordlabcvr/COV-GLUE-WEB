@@ -17,6 +17,14 @@ covApp.controller('covDeletionCtrl',
 
 			$scope.availableTipAnnotations = [
 				{
+					name: "isolatePlusLineage",
+					displayName: "Virus name & lineage"
+				},
+				{
+					name: "lineage",
+					displayName: "Lineage"
+				},
+				{
 					name: "isolate",
 					displayName: "Virus name"
 				},

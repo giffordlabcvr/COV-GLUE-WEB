@@ -141,7 +141,7 @@ covApp.controller('covReplacementCtrl',
 									"functionName": "visualisePhyloAsSvg", 
 									"document": {
 										"inputDocument": {
-										    "aaVisFeature" : $scope.replacement.feature,
+										    "visFeature" : $scope.replacement.feature,
 										    "aaVisCodonLabel" : $scope.replacement.codonLabel,
 											"pxWidth" : 1136 - scrollbarWidth, 
 											"pxHeight" : "auto",

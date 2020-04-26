@@ -13,7 +13,7 @@ covApp.controller('covDeletionsCtrl',
 			$scope.updateCount = function(pContext) {
 				console.log("updateCount", pContext);
 				var cmdParams = {
-						"tableName": "cov_deletion",
+						"tableName": "cov_nt_deletion",
 						"whereClause": $scope.whereClause
 				};
 				pContext.extendCountCmdParams(cmdParams);
@@ -34,7 +34,7 @@ covApp.controller('covDeletionsCtrl',
 			$scope.updatePage = function(pContext) {
 				console.log("updatePage", pContext);
 				var cmdParams = {
-						"tableName": "cov_deletion",
+						"tableName": "cov_nt_deletion",
 						"allObjects": false,
 			            "whereClause":$scope.whereClause,
 			            "rendererModuleName": "covListDeletionsRenderer"

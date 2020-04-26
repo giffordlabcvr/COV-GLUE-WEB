@@ -1,12 +1,13 @@
 <div ng-cloak>
-	<h3>{{insertion.featureDisplayName}} insertion {{insertion.displayName}}</h3>
+	<h4>Insertion of nucleotides {{insertion.displayName}} relative to <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">Wuhan-Hu-1</a></h4>
 	<p>
-	<small ng-if="insertion.featureDescription">{{insertion.featureDisplayName}}: {{insertion.featureDescription}}<br/></small>	
-	<small ng-if="insertion.parentFeature">
+	<small>Coding region {{insertion.featureDisplayName}}<span ng-if="deletion.featureDescription">: {{insertion.featureDescription}}</span><br/></small>	
+	<small ng-if="insertion.codonAligned">Codon-aligned; inserted amino acids:
+	{{insertion.lastCodonBefore+"-"+insertion.insertedAas+"-"+insertion.firstCodonAfter}}<br/></small>	
+	<small ng-if="insertion.parentFeature && insertion.codonAligned">
 		{{"Equivalently " + 
 						insertion.parentLastCodonBefore + "-" + 
 						insertion.insertedAas + "-" + insertion.parentFirstCodonAfter}} in {{insertion.parentFeatureDisplayName}}<br/></small>	
-	<small>Insertion between nucleotide positions {{insertion.lastRefNtBefore}} and {{insertion.firstRefNtAfter}} in the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a></small>	
 	<p/>
 	<div class="btn-group" style="margin-bottom: 15px">
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
@@ -57,7 +58,7 @@
 			Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with a symbol at each tip.
 			<br/>
 			If the sequence contains the {{insertion.featureDisplayName}} insertion {{insertion.displayName}}, a green plus sign is used. 
-			If it contains an insertion of different amino acids at the same location, an orange question mark is shown, hover over this to see the alternative insertion. 
+			If it contains an insertion of different nucleotides at the same location, an orange question mark is shown, hover over this to see the alternative insertion. 
 			Otherwise a red minus sign is used.
 			<br/>
 			Unfortunately, because the global reference tree contains a subset of sequences, only a subset of instances of a given insertion will appear, possibly none.

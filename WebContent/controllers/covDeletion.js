@@ -47,7 +47,7 @@ covApp.controller('covDeletionCtrl',
 			];
 			
 			
-			glueWS.runGlueCommand("custom-table-row/cov_deletion/"+$scope.deletionId, {
+			glueWS.runGlueCommand("custom-table-row/cov_nt_deletion/"+$scope.deletionId, {
 			    "render-object":{
 			        "rendererModuleName":"covDeletionRenderer"
 			    }
@@ -116,9 +116,9 @@ covApp.controller('covDeletionCtrl',
 									"functionName": "visualisePhyloAsSvg", 
 									"document": {
 										"inputDocument": {
-										    "aaVisFeature" : $scope.deletion.feature,
-										    "aaVisDeletionStart" : $scope.deletion.startCodon,
-										    "aaVisDeletionEnd" : $scope.deletion.endCodon,
+										    "visFeature" : $scope.deletion.feature,
+										    "visDeletionStart" : $scope.deletion.referenceNtStart,
+										    "visDeletionEnd" : $scope.deletion.referenceNtEnd,
 											"pxWidth" : 1136 - scrollbarWidth, 
 											"pxHeight" : "auto",
 											"legendPxWidth" : 1136, 
@@ -146,7 +146,7 @@ covApp.controller('covDeletionCtrl',
 				}
 			}
 			
-			$scope.seqWhereClause = "cov_deletion_sequence.cov_deletion.id = '"+$scope.deletionId+"'";
+			$scope.seqWhereClause = "cov_nt_deletion_sequence.cov_nt_deletion.id = '"+$scope.deletionId+"'";
 
 			$scope.updateSeqPage = function(pContext) {
 				console.log("updateSeqPage", pContext);

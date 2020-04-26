@@ -261,7 +261,8 @@ covApp.controller('covFastaAnalysisCtrl',
 				    		$scope.setPlacement(sequenceReport, sequenceReport.covReport.sequenceResult.placements[0]);
 			    		}
 			    	}
-
+			    	$scope.setSelectedDifference(sequenceReport, {noDifference:{},displayText:'None'});
+			    	
 			    	item.sequenceReport = sequenceReport;
 			    }
 
@@ -292,6 +293,10 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	sequenceReport.covReport.placement = placement;
 			    }
 
+			    $scope.setSelectedDifference = function(sequenceReport, difference) {
+			    	sequenceReport.covReport.selectedDifference = difference;
+					console.log('selected difference', difference);
+			    }
 			    
 				$scope.featureSvgUpdated = function() {
 					console.info('featureSvgUpdated');
@@ -441,13 +446,7 @@ covApp.controller('covFastaAnalysisCtrl',
 						sequenceReport.covReport.sequenceResult.id+":"+
 						placement.placementIndex+":"+
 						$scope.tipAnnotation.name+":"+
-						$scope.aaFeature.name+":"+
-						$scope.aaFeature.varType+":"+
-						$scope.aaFeature.aaCodonLabel+":"+
-						$scope.aaFeature.aaDeletionStart+":"+
-						$scope.aaFeature.aaDeletionEnd+":"+
-						$scope.aaFeature.aaInsertionStart+":"+
-						$scope.aaFeature.aaInsertionAAs;
+						sequenceReport.covReport.selectedDifference.displayText;
 					console.info('cacheKey', cacheKey);
 					
 
@@ -463,34 +462,42 @@ covApp.controller('covFastaAnalysisCtrl',
 						var legendFileName = "legend.svg";
 						var scrollbarWidth = 17;
 						var segment = sequenceReport.covReport.sequenceResult.segment;
+						var inputDocument = {
+						    "placerResult" : $scope.fileItemUnderAnalysis.response.covWebReport.placerResult, 
+						    "placerModule" : sequenceReport.covReport.sequenceResult.placerModule,
+						    "queryName" : sequenceReport.covReport.sequenceResult.id,
+						    "queryNucleotides" : sequenceReport.covReport.sequenceResult.visualisationHints.queryNucleotides,
+						    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
+						    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
+						    "placementIndex" : placement.placementIndex,
+							"pxWidth" : 1136 - scrollbarWidth, 
+							"pxHeight" : "auto",
+							"legendPxWidth" : 1136, 
+							"legendPxHeight" : 80,
+						    "fileName": fileName,
+						    "tipAnnotation": $scope.tipAnnotation.name,
+						    "legendFileName": legendFileName
+						};
+						var selectedDifference = sequenceReport.covReport.selectedDifference;
+						if(selectedDifference.replacement != null) {
+							inputDocument.visFeature = selectedDifference.replacement.feature;
+							inputDocument.aaVisCodonLabel = selectedDifference.replacement.codonLabel;
+						} else if(selectedDifference.insertion != null) {
+							inputDocument.visFeature = selectedDifference.insertion.variationFeature;
+							inputDocument.visInsertionLastNtBeforeStart = selectedDifference.insertion.refLastNtBeforeIns;
+							inputDocument.visInsertionFirstNtAfterEnd = selectedDifference.insertion.refFirstNtAfterIns;
+							inputDocument.visInsertedNts = selectedDifference.insertion.insertedQryNts;
+						} else if(selectedDifference.deletion != null) {
+							inputDocument.visFeature = selectedDifference.deletion.variationFeature;
+							inputDocument.visDeletionStart = selectedDifference.deletion.refFirstNtDeleted;
+							inputDocument.visDeletionEnd = selectedDifference.deletion.refLastNtDeleted;
+						} 
 						glueWS.runGlueCommand("module/covSvgPhyloVisualisation", 
 								{ 
 									"invoke-function": {
 										"functionName": "visualisePhyloAsSvg", 
 										"document": {
-											"inputDocument": {
-											    "placerResult" : $scope.fileItemUnderAnalysis.response.covWebReport.placerResult, 
-											    "placerModule" : sequenceReport.covReport.sequenceResult.placerModule,
-											    "queryName" : sequenceReport.covReport.sequenceResult.id,
-											    "queryNucleotides" : sequenceReport.covReport.sequenceResult.visualisationHints.queryNucleotides,
-											    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
-											    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
-											    "aaVisFeature" : $scope.aaFeature.name,
-											    "aaVisCodonLabel" : $scope.aaFeature.varType == 'aminoAcid' ? $scope.aaFeature.aaCodonLabel : null,
-											    "aaVisDeletionStart" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionStart : null,
-											    "aaVisDeletionEnd" : $scope.aaFeature.varType == 'deletion' ? $scope.aaFeature.aaDeletionEnd : null,
-											    "aaVisInsertionLastBeforeStart" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionStart : null,
-											    "aaVisInsertionFirstAfterEnd" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionStart+1 : null,
-											    "aaVisInsertedAas" : $scope.aaFeature.varType == 'insertion' ? $scope.aaFeature.aaInsertionAAs : null,
-											    "placementIndex" : placement.placementIndex,
-												"pxWidth" : 1136 - scrollbarWidth, 
-												"pxHeight" : "auto",
-												"legendPxWidth" : 1136, 
-												"legendPxHeight" : 80,
-											    "fileName": fileName,
-											    "tipAnnotation": $scope.tipAnnotation.name,
-											    "legendFileName": legendFileName
-											}
+											"inputDocument": inputDocument
 										}
 									} 
 								}
@@ -512,6 +519,17 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 			    $scope.getPlacementLabel = function(placement) {
 			    	return placement.placementIndex + " (" + toFixed(placement.likeWeightRatio * 100, 2) + "%)";
+			    }
+			    
+			    $scope.fullDisplayText = function(difference) {
+			    	if(difference.displayText == "None") {
+			    		return difference.displayText;
+			    	}
+			    	if(difference.knownLink != null) {
+			    		return "Known "+difference.displayText;
+			    	} else {
+			    		return "Novel "+difference.displayText;
+			    	}
 			    }
 			    
 				$scope.downloadExampleSequence = function() {
@@ -541,62 +559,9 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	return coveragePct;
 			    }
 
-			    $scope.getReplacements = function(sequenceResult, featureName) {
-			    	var replacements = [];
-			    	_.each(sequenceResult.replacements, function(repl) {
-			    		if(repl.replacement.feature == featureName) {
-			    			replacements.push(repl.replacement);
-			    		}
-			    	});
-			    	return replacements;
-			    }
-
-			    $scope.getInsertions = function(sequenceResult, featureName) {
-			    	var insertions = [];
-			    	_.each(sequenceResult.insertions, function(ins) {
-			    		if(ins.insertion.variationFeature == featureName) {
-			    			insertions.push(ins.insertion);
-			    		}
-			    	});
-			    	return insertions;
-			    }
-
-			    $scope.getDeletions = function(sequenceResult, featureName) {
-			    	var deletions = [];
-			    	_.each(sequenceResult.deletions, function(del) {
-			    		if(del.deletion.variationFeature == featureName) {
-			    			deletions.push(del.deletion);
-			    		}
-			    	});
-			    	return deletions;
-			    }
-
-				$scope.switchToReplacementPhylo = function(report, feature, codonLabel) {
+				$scope.switchToDifferenceTree = function(report, difference) {
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
-					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
-			    	aaFeature.aaCodonLabel = parseInt(codonLabel);
-			    	$scope.setAAFeature(aaFeature);
-			    	$scope.setVarType("aminoAcid");
-			    	$scope.displaySection = 'phyloPlacement';
-				}
-
-				$scope.switchToDeletionPhylo = function(report, feature, startCodon, endCodon) {
-			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
-					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
-			    	aaFeature.aaDeletionStart = parseInt(startCodon);
-			    	aaFeature.aaDeletionEnd = parseInt(endCodon);
-			    	$scope.setAAFeature(aaFeature);
-			    	$scope.setVarType("deletion");
-			    	$scope.displaySection = 'phyloPlacement';
-				}
-
-				$scope.switchToInsertionPhylo = function(report, feature, lastCodonBefore, insertedAAs, firstCodonAfter) {
-			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
-					var aaFeature = _.find($scope.availableFeatures, function(f) {return f.name == feature.name;});
-			    	aaFeature.aaInsertionStart = parseInt(lastCodonBefore);
-			    	aaFeature.aaInsertionAAs = insertedAAs;
-			    	$scope.setAAFeature(aaFeature);
-			    	$scope.setVarType("insertion");
+			    	$scope.setSelectedDifference(report, difference);
 			    	$scope.displaySection = 'phyloPlacement';
 				}
 

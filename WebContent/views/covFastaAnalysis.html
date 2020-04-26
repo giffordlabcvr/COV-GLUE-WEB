@@ -52,7 +52,7 @@
 		<p>
 			<small><br/>For testing, download this
 				<a ng-click="downloadExampleSequence()">example sequence file</a>
-				and submit it for analysis. The file has been modified to contain an insertion, a deletion and two replacements.</small>
+				and submit it for analysis. The file has been modified to contain various differences.</small>
 		</p>
 		
 		
@@ -165,29 +165,17 @@
 						<thead>
 							<tr>
 								<th rowspan="2" style="width: 20%;">Sequence</th>
-								<th colspan="3" style="width: 24%;">Classification</th>
+								<th colspan="3" style="width: 15%;">Classification</th>
 								<th colspan="3" style="width: 24%;">Primer/probe analysis</th>
-								<th rowspan="2" style="width: 32%;">Differences from reference</th>
-								<!-- 
-								<th style="width: 20%;">Virus protein</th>
-								<th style="width: 6%;">Coverage</th>
-								<th style="width: 16%;">Replacements</th>
-								<th style="width: 16%;">Insertions</th>
-								<th style="width: 16%;">Deletions</th> !-->
+								<th rowspan="2" style="width: 41%;">Differences from reference</th>
 							</tr>
 							<tr>
-								<th style="width: 8%;">SARS-CoV-2?</th>
-								<th style="width: 8%;">Lineage</th>
-								<th style="width: 8%;">Total LWR</th>
+								<th style="width: 5%;">SARS-CoV-2?</th>
+								<th style="width: 5%;">Lineage</th>
+								<th style="width: 5%;">Total LWR</th>
 								<th style="width: 8%;">Diagnostics issues</th>
 								<th style="width: 8%;">Sequencing issues</th>
 								<th style="width: 8%;">Full report</th>
-								<!-- 
-								<th style="width: 20%;">Virus protein</th>
-								<th style="width: 6%;">Coverage</th>
-								<th style="width: 16%;">Replacements</th>
-								<th style="width: 16%;">Insertions</th>
-								<th style="width: 16%;">Deletions</th> !-->
 							</tr>
 						</thead>
 						<tbody ng-repeat="covResult in fileItemUnderAnalysis.response.covWebReport.results track by $index">
@@ -206,92 +194,16 @@
 								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">
 									<span ng-repeat="difference in covResult.covReport.sequenceResult.differences">
-										{{difference.displayText}}
+										<span ng-if="difference.knownLink != null">
+											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a>
+										</span>
+										<span>{{(difference.knownLink == null ? "Novel ": " ")+difference.displayText}} 
+										(<a ng-click="switchToDifferenceTree(covResult, difference)">Tree <i class="glyphicon glyphicon-link"></i></a>)</span>
 										<br/>
 									</span> 
 								</td>
 								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 							</tr>
-							
-							<!-- 
-							<tr ng-repeat="feature in coverageFeatures track by $index">	
-								<td><a ng-click="switchToGenomeVisualisation(covResult, feature)">{{feature.displayName}}</a><span ng-if="feature.description"><br/>{{feature.description}}</span></td>
-								<td>{{toFixed(getFeatureCoverage(covResult.covReport.sequenceResult, feature.name), 2)}}%</td>
-								<td>
-									<span ng-if="getReplacements(covResult.covReport.sequenceResult, feature.name).length == 0">-</span>
-									<span ng-repeat="replacement in getReplacements(covResult.covReport.sequenceResult, feature.name) track by $index">
-										{{replacement.refAas.split("").join("/")}}{{replacement.codonLabel}}{{replacement.queryAas.split("").join("/")}},
-										<span ng-if="replacement.known_replacements.length == 0">
-										Novel,
-										</span>										
-										<span ng-if="replacement.known_replacements.length == 1">
-										<a target="_blank" href="#/project/replacement/{{replacement.known_replacements[0].known_replacement.id}}">
-											Observed:{{replacement.known_replacements[0].known_replacement.num_seqs}}</a>,
-										</span>										
-										<span ng-if="replacement.known_replacements.length > 1">
-										<span ng-repeat="known_replacement in replacement.known_replacements track by $index">
-										<a target="_blank" href="#/project/replacement/{{known_replacement.known_replacement.id}}">
-											{{known_replacement.known_replacement.display_name}}
-											observed:{{known_replacement.known_replacement.num_seqs}}</a>
-										</span>,
-										</span>										
-										<a ng-click="switchToReplacementPhylo(covResult, feature, replacement.codonLabel)">Tree</a>
-										<br/>
-									</span>
-								</td>
-								<td>
-									<span ng-if="getInsertions(covResult.covReport.sequenceResult, feature.name).length == 0">-</span>
-									<span ng-repeat="insertion in getInsertions(covResult.covReport.sequenceResult, feature.name) track by $index">
-										{{insertion.insertionIsCodonAligned ? 
-											( insertion.refLastCodonBeforeIns+"-"+insertion.insertedQryAas+"-"+insertion.refFirstCodonAfterIns) : 
-											( "Non-codon-aligned:nt"+insertion.refLastNtBeforeIns+"-"+insertion.insertedQryNts+"-nt"+insertion.refFirstNtAfterIns )}},
-										<span ng-if="insertion.known_insertions.length == 0">
-										Novel,
-										</span>										
-										<span ng-if="insertion.known_insertions.length == 1">
-										<a target="_blank" href="#/project/insertion/{{insertion.known_insertions[0].known_insertion.id}}">
-											Observed:{{insertion.known_insertions[0].known_insertion.num_seqs}}</a>,
-										</span>										
-										<span ng-if="insertion.known_insertions.length > 1">
-										<span ng-repeat="known_insertion in insertion.known_insertions track by $index">
-										<a target="_blank" href="#/project/insertion/{{known_insertion.known_insertion.id}}">
-											{{known_insertion.known_insertion.display_name}}
-											observed:{{known_insertion.known_insertion.num_seqs}}</a>
-										<br/>
-										</span>,
-										</span>										
-										<span ng-if="insertion.insertionIsCodonAligned">
-											<a ng-click="switchToInsertionPhylo(covResult, feature, insertion.refLastCodonBeforeIns, insertion.insertedQryAas, insertion.refFirstCodonAfterIns)">Tree</a>
-										</span>
-									</span>
-								</td>
-								<td>
-									<span ng-if="getDeletions(covResult.covReport.sequenceResult, feature.name).length == 0">-</span>
-									<span ng-repeat="deletion in getDeletions(covResult.covReport.sequenceResult, feature.name) track by $index">
-										{{deletion.deletionIsCodonAligned ? 
-											( deletion.refFirstCodonDeleted+ ( deletion.refFirstCodonDeleted == deletion.refLastCodonDeleted ? "":"-"+deletion.refLastCodonDeleted ) + ":del" ) : 
-											( "Non-codon-aligned:nt"+deletion.refFirstNtDeleted+"-nt"+deletion.refLastNtDeleted )}},
-										<span ng-if="deletion.known_deletions.length == 0">
-										Novel,
-										</span>										
-										<span ng-if="deletion.known_deletions.length == 1">
-										<a target="_blank" href="#/project/deletion/{{deletion.known_deletions[0].known_deletion.id}}">
-											Observed:{{deletion.known_deletions[0].known_deletion.num_seqs}}</a>,
-										</span>										
-										<span ng-if="deletion.known_deletions.length > 1">
-										<span ng-repeat="known_deletion in deletion.known_deletions track by $index">
-										<a target="_blank" href="#/project/deletion/{{known_deletion.known_deletion.id}}">
-											{{known_deletion.known_deletion.display_name}}
-											observed:{{known_deletion.known_deletion.num_seqs}}</a>
-										<br/>
-										</span>,
-										</span>										
-										<span ng-if="deletion.deletionIsCodonAligned">
-											<a ng-click="switchToDeletionPhylo(covResult, feature, deletion.refFirstCodonDeleted, deletion.refLastCodonDeleted)">Tree</a>
-										</span>
-									</span>
-								</td>
-							</tr>  -->
 						</tbody>
 					</table>
 					</p>
@@ -386,48 +298,23 @@
 								<br/>
 								&nbsp;
 								<br/>
-								Annotate <div class="btn-group" dropdown is-open="status.vtButtonOpen">
-									<button ng-disabled="phyloVisualisationUpdating" id="vt-button" type="button" class="btn btn-sm btn-default"
-										dropdown-toggle>
-											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : aaFeature.varType.replace("aminoAcid", "amino acid")}}
-										<span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu"
-										aria-labelledby="vt-button">
-										<li ng-click="setVarType('aminoAcid')"
-											role="menuitem"><a>amino acid</a></li>
-										<li ng-click="setVarType('deletion')"
-											role="menuitem"><a>deletion</a></li>
-										<li ng-click="setVarType('insertion')"
-											role="menuitem"><a>insertion</a></li>
-									</ul>
-								</div> in coding region: <div class="btn-group" dropdown is-open="status.aafButtonOpen">
+								Annotate genomic difference <div class="btn-group" dropdown is-open="status.aafButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="aaf-button" type="button" class="btn btn-sm btn-default"
 										dropdown-toggle>
-											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : aaFeature.displayName}}
+											{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : 
+												fullDisplayText(fileItemUnderAnalysis.sequenceReport.covReport.selectedDifference)}}
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu" role="menu"
 										aria-labelledby="aaf-button">
+										<li ng-click="setSelectedDifference(fileItemUnderAnalysis.sequenceReport, {noDifference:{},displayText:'None'})"
+											role="menuitem"><a>None</a></li>
 										<li
-											ng-repeat="feature in availableFeatures"
-											ng-click="setAAFeature(feature)"
-											role="menuitem"><a>{{feature.displayName}}</a></li>
+											ng-repeat="difference in fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.differences"
+											ng-click="setSelectedDifference(fileItemUnderAnalysis.sequenceReport, difference)"
+											role="menuitem"><a>{{fullDisplayText(difference)}}</a></li>
 									</ul>
-								</div>
-								<span ng-if="aaFeature.varType == 'aminoAcid'" ng-disabled="phyloVisualisationUpdating">, codon number: 
-									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaCodonLabel"/>
-								</span> <span ng-if="aaFeature.varType == 'deletion'" ng-disabled="phyloVisualisationUpdating">, start codon: 
-									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionStart"/>, end codon:
-									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaDeletionEnd"/>
-								</span> <span ng-if="aaFeature.varType == 'insertion'" ng-disabled="phyloVisualisationUpdating">, of amino acids:
-									<input class="aaCodonLabelInput" ng-model="aaFeature.aaInsertionAAs"/>, between codons: 
-									<input type="number" class="aaCodonLabelInput" ng-model="aaFeature.aaInsertionStart"/> and {{aaFeature.aaInsertionStart+1}}
-								</span> (Range: 1-{{aaFeature.max_codon_number}})								
-								<br/>
-								&nbsp;
-								<br/>
-								Annotate metadata: <div class="btn-group" dropdown is-open="status.taButtonOpen">
+								</div> , metadata: <div class="btn-group" dropdown is-open="status.taButtonOpen">
 									<button ng-disabled="phyloVisualisationUpdating" id="ta-button" type="button" class="btn btn-sm btn-default"
 										dropdown-toggle>
 										{{fileItemUnderAnalysis.sequenceReport.covReport.placement == null ? "-" : tipAnnotation.displayName}}

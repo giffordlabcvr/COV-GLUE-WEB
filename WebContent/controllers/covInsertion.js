@@ -47,7 +47,7 @@ covApp.controller('covInsertionCtrl',
 			];
 			
 			
-			glueWS.runGlueCommand("custom-table-row/cov_insertion/"+$scope.insertionId, {
+			glueWS.runGlueCommand("custom-table-row/cov_nt_insertion/"+$scope.insertionId, {
 			    "render-object":{
 			        "rendererModuleName":"covInsertionRenderer"
 			    }
@@ -116,10 +116,10 @@ covApp.controller('covInsertionCtrl',
 									"functionName": "visualisePhyloAsSvg", 
 									"document": {
 										"inputDocument": {
-										    "aaVisFeature" : $scope.insertion.feature,
-										    "aaVisInsertionLastBeforeStart" : $scope.insertion.lastCodonBefore,
-										    "aaVisInsertionFirstAfterEnd" : $scope.insertion.firstCodonAfter,
-										    "aaVisInsertedAas" : $scope.insertion.insertedAas,
+										    "visFeature" : $scope.insertion.feature,
+										    "visInsertionLastNtBeforeStart" : $scope.insertion.lastRefNtBefore,
+										    "visInsertionFirstNtAfterEnd" : $scope.insertion.firstRefNtAfter,
+										    "visInsertedNts" : $scope.insertion.insertedNts,
 											"pxWidth" : 1136 - scrollbarWidth, 
 											"pxHeight" : "auto",
 											"legendPxWidth" : 1136, 
@@ -147,7 +147,7 @@ covApp.controller('covInsertionCtrl',
 				}
 			}
 			
-			$scope.seqWhereClause = "cov_insertion_sequence.cov_insertion.id = '"+$scope.insertionId+"'";
+			$scope.seqWhereClause = "cov_nt_insertion_sequence.cov_nt_insertion.id = '"+$scope.insertionId+"'";
 
 			$scope.updateSeqPage = function(pContext) {
 				console.log("updateSeqPage", pContext);

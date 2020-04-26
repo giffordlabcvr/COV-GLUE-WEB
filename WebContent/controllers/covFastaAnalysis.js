@@ -518,7 +518,12 @@ covApp.controller('covFastaAnalysisCtrl',
 				}
 				
 			    $scope.getPlacementLabel = function(placement) {
-			    	return placement.placementIndex + " (" + toFixed(placement.likeWeightRatio * 100, 2) + "%)";
+			    	var label = placement.placementIndex + " (LWR " + toFixed(placement.likeWeightRatio * 100, 2) + "%";
+			    	if(placement.bestLineage != null) {
+			    		label = label + ", lineage "+placement.bestLineage;
+			    	}
+			    	label = label+")";
+			    	return label;
 			    }
 			    
 			    $scope.fullDisplayText = function(difference) {

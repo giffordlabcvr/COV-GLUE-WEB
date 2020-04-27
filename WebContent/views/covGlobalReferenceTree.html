@@ -5,14 +5,14 @@ CoV-GLUE uses a reference tree to represent the main lineages of the pandemic at
 </p>
 
 <p>
-The lineage definitions are taken from 
-<a target=_blank href="http://virological.org/t/a-dynamic-nomenclature-for-sars-cov-2-to-assist-genomic-epidemiology/458">Rambaut, Holmes & Pybus</a>.
+The lineage definitions are taken from <a target=_blank href="https://doi.org/10.1101/2020.04.17.046086">Rambaut, et al. 2020</a>.
+They can be accessed via a GitHub repository
+<a target=_blank href="https://github.com/hCoV-2019/lineages">https://github.com/hCoV-2019/lineages</a>. 
 </p>
 <p>
-These can be accessed via the <a target=_blank href="https://github.com/hCoV-2019/pangolin">PANGOLIN</a> project. 
-The CoV-GLUE reference alignment and tree are computed independently from PANGOLIN: </p>
+The CoV-GLUE reference alignment and tree are computed as follows: </p>
 <ul>
-<li>The alignment is computed using MAFFT.</li>
-<li>The tree is computed using RAxML, 100 bootstraps, GTRGAMMAI substitution model.</li>
-<li>The rooting is based on an early split in the virus population, characterised by the L/S polymorphism at ORF 8 position 84.
+<li>A multiple sequence alignment of the lineage representatives is computed using MAFFT.</li>
+<li>The tree is computed using RAxML, 100 bootstraps, GTRGAMMAI substitution model, using the coding region part of the alignment.</li>
+<li>The rooting is based on an early split in the virus population, characterised by the L/S polymorphism at ORF 8 position 84, lineage A has S, lineage B has L.
 </ul>

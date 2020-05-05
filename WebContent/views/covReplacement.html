@@ -99,22 +99,25 @@
 				<thead>
 					<th>Virus name</th>
 					<th>GISAID ID</th>
+					<th>Lineage</th>
 					<th>Country</th>
 					<th>Location</th>
 					<th>Collection date</th>
 				</thead>
 				<colgroup>
 			       <col style="width: 20%;">
+			       <col style="width: 10%;">
+			       <col style="width: 10%;">
 			       <col style="width: 20%;">
-			       <col style="width: 20%;">
-			       <col style="width: 20%;">
-			       <col style="width: 20%;">
+			       <col style="width: 30%;">
+			       <col style="width: 10%;">
 			    </colgroup>
 				<tbody>
 					<tr ng-repeat="seq in listSequenceResult track by $index">
 						<td>{{seq.isolate}}</td>
 						<td>{{seq.sequenceID}}</td>
-						<td>{{seq['m49_country.display_name']}}</td>
+						<td>{{handleNull(seq['cov_glue_lineage'])}}{{(seq['cov_glue_lw_ratio'] == null ? "" : " ("+toFixed(seq['cov_glue_lw_ratio'] * 100.0, 2)+"%)")}}</td>
+						<td>{{seq['m49_country.display_name']}} ({{seq["m49_country.id"]}})</td>
 						<td>{{seq.place_sampled}}</td>
 						<td>{{seq.collection_month_day != null ? seq.collection_month_day+"-" : ""}}{{seq.collection_month}}-{{seq.collection_year}}</td>
 					</tr>

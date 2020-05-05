@@ -156,6 +156,8 @@ covApp.controller('covInsertionCtrl',
 						"whereClause": $scope.seqWhereClause,
 						"fieldName": ["sequenceID", 
 							"isolate",
+							"cov_glue_lineage",
+							"cov_glue_lw_ratio",
 							"collection_month_day", 
 							"collection_month", 
 							"collection_year", 
@@ -204,11 +206,15 @@ covApp.controller('covInsertionCtrl',
 			]);
 
 			$scope.seqPagingContext.setSortableProperties([
-  	            { property:"sequenceID", displayName: "GISAID ID"}
+  	            { property:"sequenceID", displayName: "GISAID ID"},
+        		{ property:"collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
+	            { property: "cov_glue_lineage_sortable", displayName: "Lineage", filterHints: {type: "String"} },
             ]);
 
 			$scope.seqPagingContext.setFilterProperties([
-	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} }
+	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
+	            { property: "collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
+	            { property: "cov_glue_lineage", displayName: "Lineage", filterHints: {type: "String"} },
 			]);
 			                          			
 			$scope.seqPagingContext.setDefaultFilterElems([]);

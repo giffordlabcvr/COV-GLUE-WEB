@@ -132,8 +132,8 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.versioningMenuTitle = "Versioning";
 	$scope.teamMenuTitle = "Team";
 	$scope.excludedSeqsMenuTitle = "Excluded sequences";
-	$scope.globalRefTreeMenuTitle = "Global reference tree";
-	$scope.sequenceAcksMenuTitle = "Sequence acknowledgements";
+	$scope.globalRefTreeMenuTitle = "Reference tree";
+	$scope.sequenceAcksMenuTitle = "Data acknowledgement";
 	$scope.replacementsMenuTitle = "Replacements";
 	$scope.deletionsMenuTitle = "Deletions";
 	$scope.insertionsMenuTitle = "Insertions";

@@ -1,10 +1,9 @@
 <div>
 	<h2>Coding region deletions</h2>
 	<p>
-	This page lists non-frameshifting coding region deletions relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">SARS-CoV-2 reference sequence</a> 
-	that have been detected in viral genome sequences from the pandemic. Click on the link in the deleted nucleotides column to view more information about each deletion.</p>
-	<p>Non-frameshifting deletions may be <em>codon-aligned</em> signifying that the first and last deleted nucleotides lie at the start and end of codons. If so, the deleted codons are given.</p> 
-	<p>Note that CoV-GLUE only detects deletions strictly <em>within</em> coding regions. A 382nt deletion which spans ORF 7b and ORF 8 has been <a href="https://www.biorxiv.org/content/10.1101/2020.03.11.987222v1" target="_blank">confirmed</a> in sequences from Singapore, but such deletions are not yet detected.</p>
+	This page lists coding region deletions relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">hCoV-19 reference sequence</a> 
+	that have been detected in GISAID viral genome sequences from the pandemic. See the <a href="CoV-GLUE_User_Guide.pdf" target="_blank">User Guide</a> for more details. 
+	Click on the link in the Deleted nucleotides column to view more information about a specific deletion.</p>
 	<paging-buttons paging-context="pagingContext"></paging-buttons>
 	<span ng-show="deletions.length == 0">None</span>
 	<div ng-show="deletions.length > 0">	

@@ -3,44 +3,35 @@
 
 	<div class="row">
 		<div class="col-md-9">
-			<h1>CoV-GLUE</h1>
-			<h3>Virus genome analysis for the SARS-CoV-2 pandemic</h3>
+			<h1>CoV-GLUE <small>enabled by data from </small><a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="100"></a></h1>
 
-			<p>SARS-CoV-2 is the virus which causes the COVID-19 disease. This
-				virus will naturally accumulate nucleotide mutations (changes) in
-				its RNA genome as the pandemic progresses. Most of these changes
-				will have no effect on amino acid composition, some will result in
-				amino acid replacements, while others will result in changes in gene
-				lengths as a result of insertions or deletions (indels). On average
-				the observed changes would be expected to have no or minimal
+			<p>hCoV-19 (also known as SARS-CoV-2) is the virus which causes the COVID-19 disease. 
+				It is naturally accumulating nucleotide mutations (changes) in
+				its RNA genome as the pandemic progresses. Some of these result in
+				amino acid replacements in viral proteins, while others will change
+				amino acid sequence lengths as a result of insertions or deletions 
+				(indels). On average the observed changes would be expected to have no or minimal
 				consequence on virus biology. However tracking these changes will
 				help us better understand the virus pandemic.</p>
 
+			<h3>hCoV-19 amino acid variation database</h3>
 			<p>CoV-GLUE contains a database of <a href="#/replacement" target="_blank">replacements</a>, 
-			<a href="#/insertion" target="_blank">insertions</a>
-			and <a href="#/deletion" target="_blank">deletions</a> which
-			have been observed in sequences sampled from the pandemic. 
+			<a href="#/insertion" target="_blank">insertions</a> and <a href="#/deletion" target="_blank">deletions</a> which
+			have been observed in GISAID sequences sampled from the pandemic, see the <a href="CoV-GLUE_User_Guide.pdf" target="_blank">User Guide</a> for details.</p>
+			<small>
+			Last update from GISAID: {{gisaidTimeStamp}}. <br/>
+			See the <a href="/#sequenceAcks" target="_blank">data acknowledgements page</a> for details of how to acknowledge data contributors. <br/>
+			Some sequences have been <a href="/#excludedSeqs" target="_blank">excluded from the analysis</a>.
+			</small>
 			</p>
-			<p>
-			You can also use CoV-GLUE to analyse SARS-CoV-2 sequence files:
-			<ol>
-				<li>Click "Add files" to add your sequence file(s) in FASTA nucleotide format, or drag them to this page. </li>
-				<li>Click "Submit" to run the analysis. When complete, click "Show response" to display an analysis summary. </li>
-				<!-- <li>Click on a virus protein name (e.g. nsp1) to visualise that coding region on the genome.</li> -->
-				<li>The lineage (see <a target=_blank href="https://doi.org/10.1101/2020.04.17.046086">Rambaut, et al. 2020</a>) is detected using a max-likelihood method based on RAxML-EPA.</li>
-				<li>Each sequence is analysed against published primer/probe schemes.</li>
-				<li>Any detected replacements or indels will be displayed under "Differences from reference".</li>
-				<li>If a replacement/indel has already been observed in pandemic sequences, click "Known" to view these sequences.</li>
-				<li>Click "Tree" to view the replacement or indel in its phylogenetic context.</li>
-			</ol>
-			</p>
-			<p>CoV-GLUE uses data from <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="55"></a>. 
-			Last update from GISAID: {{gisaidTimeStamp}}. See the <a href="/#sequenceAcks" target="_blank">sequence acknowledgements page</a> for details of the sequence data contributors.</p>
-			<p>Some sequences have been <a href="/#excludedSeqs" target="_blank">excluded from the analysis</a>.</p>
-			
+
+			<h3>Analysis of user-submitted hCoV-19 sequence files</h3>
+			<p>Using the "Add Files" button below, submit your own hCoV-19 sequence files to CoV-GLUE to 
+			receive an interactive report containing visualisations of phylogenetic classification and genomic 
+			variation. See the <a href="CoV-GLUE_User_Guide.pdf">User Guide</a> for more details.</p>
 		</div>
 		<div class="col-md-3">
-			<img width="100%" src="images/GenusCoronovirusSchematic_n.gif" />
+			<img width="250px" src="images/virusImage.jpeg" />
 		</div>
 	</div>
 </div>
@@ -49,7 +40,7 @@
 <div nv-file-drop="" uploader="uploader"
 		filters="queueLimit, customFilter">
 		<p>
-			<small><br/>For testing, download this
+			<small>For testing, download this
 				<a ng-click="downloadExampleSequence()">example sequence file</a>
 				and submit it for analysis. The file has been modified to contain various differences.</small>
 		</p>
@@ -169,7 +160,7 @@
 								<th rowspan="2" style="width: 41%;">Differences from reference</th>
 							</tr>
 							<tr>
-								<th style="width: 5%;">SARS-CoV-2?</th>
+								<th style="width: 5%;">hCoV-19?</th>
 								<th style="width: 5%;">Lineage</th>
 								<th style="width: 5%;">Total LWR</th>
 								<th style="width: 8%;">Diagnostics issues</th>
@@ -242,7 +233,7 @@
 											role="menuitem"><a>{{report.covReport.sequenceResult.id}}</a></li>
 									</ul>
 								</div>
-								(green), highlighting differences with the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">SARS-CoV-2 reference</a> (blue)
+								(green), highlighting differences with the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">hCoV-19 reference</a> (blue)
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
@@ -336,7 +327,7 @@
 							</div>
 					</div>
 					<div>
-						<p>Below is the <a href="/#globalRefTree" target="_blank">global reference tree</a>, annotated with the selected residue / indel and with an additional branch for the submitted sequence.</p>
+						<p>Below is the <a href="/#globalRefTree" target="_blank">reference tree</a>, annotated with the selected residue / indel and with an additional branch for the submitted sequence.</p>
 					</div>
 					<div class="row phyloSvgContainer" us-spinner="{radius:23, width:7, length: 11}" spinner-on="phyloVisualisationUpdating || phyloLegendUpdating" style="min-height: 100px; position: relative">
 						<div ng-if="(phyloVisualisationSvgUrl == null && !phyloVisualisationUpdating) || (phyloLegendSvgUrl == null && !phyloLegendUpdating)">
@@ -351,8 +342,8 @@
 				<h5>Notes</h5>
 				<small>
 				<ul>
-					<li>The coding regions are those annotated on the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a>.</li> 
-					<li>Codon numbering is relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">SARS-CoV-2 reference sequence</a>.</li> 
+					<li>The coding regions are those annotated on the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">hCoV-19 reference sequence</a>.</li> 
+					<li>Codon numbering is relative to the <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512.2" target="_blank">hCoV-19 reference sequence</a>.</li> 
 					<li>Particular care has been paid to correctly translate the ORF1ab nsp12 region taking account of ribosomal slippage.</li> 
 					<li>Where ambiguous nucleotide codes give rise to multiple possible amino acids, these are displayed.</li> 
 				</ul>

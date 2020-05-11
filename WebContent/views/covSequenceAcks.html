@@ -1,47 +1,10 @@
-<h3>Sequence acknowledgements</h3>
-<p>
-CoV-GLUE uses data from the <a href="https://gisaid.org" target="_blank"><img src="images/gisaid.png" alt="GISAID logo" width="70"></a> project.
-This page contains acknowledgements for the GISAID genome sequences which have been used.
-</p>
-<div>
+<h3>Data acknowledgement</h3>
+<p>CoV-GLUE is enabled by hCoV-19 genome sequence data from the GISAID EpiCoV™ database. 
+The GISAID organisation <a href="https://www.gisaid.org/about-us/mission/" target="_blank">promotes the rapid sharing of data whilst protecting the acknowledgement rights of data providers.</a></p>
 
-	<div us-spinner="{radius:23, width:7, length: 11}" spinner-on="loadingSpinner" style="min-height: 100px; position: relative">
-		<paging-buttons ng-show="!loadingSpinner" paging-context="pagingContext">
-		</paging-buttons>
-		<span ng-show="listSequenceResult.length == 0">None</span>
-		<div ng-show="listSequenceResult.length > 0">
-			Sequences {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>Country</th>		
-						<th>Virus name</th>		
-						<th>GISAID ID</th>		
-						<th>Originating lab</th>		
-						<th>Submitting lab</th>	
-						<th>Authors</th>		
-					</tr>
-				</thead>
-				<colgroup>
-			       <col span="1" style="width: 5%;">
-			       <col span="1" style="width: 15%;">
-			       <col span="1" style="width: 5%;">
-			       <col span="1" style="width: 25%;">
-			       <col span="1" style="width: 25%;">
-			       <col span="1" style="width: 25%;">
-				</colgroup>
-				<tbody>
-					<tr ng-repeat="s in listSequenceResult track by $index">
-					<td>{{handleNull(s["m49_country.display_name"])}}</td>
-					<td>{{handleNull(s["isolate"])}}</td>
-					<td>{{handleNull(s["sequenceID"])}}</td>
-					<td>{{handleNull(s["gisaid_originating_lab"])}}</td>
-					<td>{{handleNull(s["gisaid_submitting_lab"])}}</td>
-					<td>{{handleNull(s["gisaid_authors"])}}</td>
-					</tr>
-				</tbody>
-			</table>
-			<paging-buttons paging-context="pagingContext"/>
-		</div>
-	</div>
+<p>If you intend to publish research on or otherwise use sequence data from GISAID, or the derived data available from CoV-GLUE, you must accept the 
+GISAID <a href="https://www.gisaid.org/registration/terms-of-use/">Data Access Agreement</a>
+and appropriately credit (e.g. by attaching as supplementary data) the data contributors. In academic publications you should also cite the GISAID project itself.
+Details of how to give appropriate credit are available on the <a href="https://www.gisaid.org/help/publish-with-data-from-gisaid/" target="_blank">GISAID website.</a></p>
+
 </div>

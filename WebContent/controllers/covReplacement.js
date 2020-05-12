@@ -30,8 +30,8 @@ covApp.controller('covReplacementCtrl',
 					displayName: "Virus name"
 				},
 				{
-					name: "gisaidId",
-					displayName: "GISAID ID"
+					name: "sequenceID",
+					displayName: "Sequence ID"
 				},
 				{
 					name: "country",

@@ -186,7 +186,9 @@
 								</a></td>
 								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">
-									<span ng-repeat="difference in covResult.covReport.sequenceResult.differences">
+									SNPs: <span ng-repeat="difference in snpDifferences(covResult.covReport.sequenceResult.differences) track by $index">{{$index > 0 ? ", ":""}}{{difference.snp.name}}</span> 
+									<br/>
+									<span ng-repeat="difference in nonSnpDifferences(covResult.covReport.sequenceResult.differences)">
 										<span ng-if="difference.knownLink != null">
 											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a>
 										</span>
@@ -303,7 +305,7 @@
 										<li ng-click="setSelectedDifference(fileItemUnderAnalysis.sequenceReport, {noDifference:{},displayText:'None'})"
 											role="menuitem"><a>None</a></li>
 										<li
-											ng-repeat="difference in fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.differences"
+											ng-repeat="difference in nonSnpDifferences(fileItemUnderAnalysis.sequenceReport.covReport.sequenceResult.differences)"
 											ng-click="setSelectedDifference(fileItemUnderAnalysis.sequenceReport, difference)"
 											role="menuitem"><a>{{fullDisplayText(difference)}}</a></li>
 									</ul>

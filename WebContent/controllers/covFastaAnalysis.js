@@ -517,6 +517,13 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
+				$scope.nonSnpDifferences = function(differences) {
+					return _.filter(differences, function(difference) {return difference.snp == null;})
+				};
+				$scope.snpDifferences = function(differences) {
+					return _.filter(differences, function(difference) {return difference.snp != null;})
+				};
+				
 			    $scope.getPlacementLabel = function(placement) {
 			    	var label = placement.placementIndex + " (LWR " + toFixed(placement.likeWeightRatio * 100, 2) + "%";
 			    	if(placement.bestLineage != null) {
@@ -529,6 +536,9 @@ covApp.controller('covFastaAnalysisCtrl',
 			    $scope.fullDisplayText = function(difference) {
 			    	if(difference.displayText == "None") {
 			    		return difference.displayText;
+			    	}
+			    	if(difference.snp != null) {
+			    		return difference.dispalyText;
 			    	}
 			    	if(difference.knownLink != null) {
 			    		return "Known "+difference.displayText;

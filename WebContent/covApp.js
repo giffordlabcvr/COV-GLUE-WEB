@@ -108,6 +108,11 @@ covApp.config(['$routeProvider', 'projectBrowserStandardRoutesProvider',
   	  controller: 'covExcludedSeqsCtrl'
     });
     $routeProvider.
+    when('/otherResources', {
+  	  templateUrl: '../views/covOtherResources.html',
+  	  controller: 'covOtherResourcesCtrl'
+    });
+    $routeProvider.
     when('/globalRefTree', {
   	  templateUrl: '../views/covGlobalReferenceTree.html',
   	  controller: 'covGlobalReferenceTreeCtrl'
@@ -137,6 +142,7 @@ function ($scope, glueWS, glueWebToolConfig) {
 	$scope.replacementsMenuTitle = "Replacements";
 	$scope.deletionsMenuTitle = "Deletions";
 	$scope.insertionsMenuTitle = "Insertions";
+	$scope.otherResourcesMenuTitle = "Other resources";
 	glueWS.setProjectURL("../../../gluetools-ws/project/cov");
 	glueWS.setAsyncURL("../../../gluetools-ws");
 	glueWebToolConfig.setAnalysisToolURL("../gluetools-web/www/analysisTool");

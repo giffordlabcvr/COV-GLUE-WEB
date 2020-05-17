@@ -3,8 +3,11 @@ covApp.controller('covReplacementCtrl',
 		[ '$scope', '$route', '$routeParams','$controller', 'glueWS', 'glueWebToolConfig', 'dialogs', '$analytics', 'saveFile', 'FileSaver', '$http', '$window', '$timeout', 'pagingContext',
 			  function($scope, $route, $routeParams, $controller, glueWS, glueWebToolConfig, dialogs, $analytics, saveFile, FileSaver, $http, $window, $timeout, pagingContext) {
 
-			addUtilsToScope($scope);
-
+			$controller('covVariationCtrl', { $scope: $scope, 
+				glueWebToolConfig: glueWebToolConfig, 
+				glueWS: glueWS, 
+				dialogs: dialogs});
+			
 			$scope.replacement = null;
 			$scope.replacementId = $routeParams.id;
 			
@@ -16,6 +19,8 @@ covApp.controller('covReplacementCtrl',
 			$scope.phyloSvgResultObjectCache = {};
 			$scope.residueAnalysis = false;
 
+			$scope.initGlobalRegionFixedValueSetM49();
+			
 			$scope.availableTipAnnotations = [
 				{
 					name: "isolatePlusLineage",
@@ -186,7 +191,11 @@ covApp.controller('covReplacementCtrl',
 							"collection_year", 
 							"m49_country.display_name",
 							"m49_country.id",
-							"place_sampled"
+							"m49_country.m49_sub_region.display_name",
+							"place_sampled",
+							"gisaid_authors_short",
+							"gisaid_originating_lab",
+							"gisaid_submitting_lab",
 						]
 				};
 				pContext.extendListCmdParams(cmdParams);
@@ -236,6 +245,7 @@ covApp.controller('covReplacementCtrl',
 
 			$scope.seqPagingContext.setFilterProperties([
 	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
+  	            $scope.globalRegionFilterM49(),
 	            { property: "collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
 	            { property: "cov_glue_lineage", displayName: "Lineage", filterHints: {type: "String"} },
 			]);
@@ -243,5 +253,9 @@ covApp.controller('covReplacementCtrl',
 			$scope.seqPagingContext.setDefaultFilterElems([]);
 
 			$scope.seqPagingContext.countChanged();
+
+			$scope.showSequenceDialog = function(seq) {
+				  dialogs.create('/dialogs/covSequenceDialog.html','covSequenceDialogCtrl',seq,{ size:"md"});
+			}
 			
 		}]);

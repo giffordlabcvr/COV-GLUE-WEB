@@ -116,7 +116,7 @@
 						<td>{{seq['sequenceID']}}</td>
 						<td>{{handleNull(seq['cov_glue_lineage'])}}</td>
 						<td>{{seq.place_sampled}} ({{seq["m49_country.id"]}})</td>
-						<td>{{seq.collection_month_day != null ? seq.collection_month_day+"-" : ""}}{{seq.collection_month}}-{{seq.collection_year}}</td>
+						<td>{{seq.collection_month_day != null ? seq.collection_month_day+"-" : ""}}{{seq.collection_month != null ? seq.collection_month+"-" : ""}}{{seq.collection_year}}</td>
 					</tr>
 				</tbody>
 			</table>

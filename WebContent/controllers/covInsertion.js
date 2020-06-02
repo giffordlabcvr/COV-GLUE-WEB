@@ -170,7 +170,7 @@ covApp.controller('covInsertionCtrl',
 							"m49_country.id",
 							"m49_country.m49_sub_region.display_name",
 							"place_sampled",
-							"gisaid_authors_short",
+							"gisaid_authors",
 							"gisaid_originating_lab",
 							"gisaid_submitting_lab",
 						]

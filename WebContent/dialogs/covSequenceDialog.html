@@ -7,46 +7,52 @@
 	<div class="small">
 		<h4>{{sequence.isolate}}</h4>
 		<table class="table table-condensed table-striped table-bordered table-nonfluid">
-			<tr>
-				<td><b><a href="http://gisaid.org" target="_blank">GISAID ID</a></b></td>
-				<td>{{sequence.sequenceID}}</td>
-			</tr>
-			<tr>
-				<td><b>Country</b></td>
-				<td>{{sequence["m49_country.display_name"]}}  ({{sequence["m49_country.id"]}})</td>
-			</tr>
-			<tr>
-				<td><b>Location</b></td>
-				<td>{{sequence.place_sampled}}</td>
-			</tr>
-			<tr>
-				<td><b>M49 Sub-region</b></td>
-				<td>{{sequence["m49_country.m49_sub_region.display_name"]}}</td>
-			</tr>
-			<tr>
-				<td><b>Collection date</b></td>
-				<td>{{sequence.collection_month_day != null ? sequence.collection_month_day+"-" : ""}}{{sequence.collection_month != null ? sequence.collection_month+"-" : ""}}{{sequence.collection_year}}</td>
-			</tr>
-			<tr>
-				<td><b>Lineage</b></td>
-				<td>{{handleNull(sequence['cov_glue_lineage'])}}</td>
-			</tr>
-			<tr>
-				<td><b>Total likelihood weight ratio</b></td>
-				<td>{{(sequence['cov_glue_lw_ratio'] == null ? "N/A" : toFixed(sequence['cov_glue_lw_ratio'] * 100.0, 2)+"%")}}</td>
-			</tr>
-			<tr>
-				<td><b>Originating laboratory</b></td>
-				<td>{{handleNull(sequence["gisaid_originating_lab"])}}</td>
-			</tr>
-			<tr>
-				<td><b>Submitting laboratory</b></td>
-				<td>{{handleNull(sequence["gisaid_submitting_lab"])}}</td>
-			</tr>
-			<tr>
-				<td><b>Authors</b></td>
-				<td>{{handleNull(sequence["gisaid_authors_short"])}}</td>
-			</tr>
+			<colgroup>
+		       <col style="width: 20%;">
+		       <col style="width: 80%;">
+		    </colgroup>
+			<tbody>		
+				<tr>
+					<td><b><a href="http://gisaid.org" target="_blank">GISAID ID</a></b></td>
+					<td>{{sequence.sequenceID}}</td>
+				</tr>
+				<tr>
+					<td><b>Location</b></td>
+					<td>{{sequence.place_sampled}}</td>
+				</tr>
+				<tr>
+					<td><b><a href="https://www.iso.org/standard/63545.html" target = "_blank">Country code</a></b></td>
+					<td>{{sequence["m49_country.id"]}}</td>
+				</tr>
+				<tr>
+					<td><b><a href="https://unstats.un.org/unsd/methodology/m49/#geo-regions" target="_blank">M49 Sub-region</a></b></td>
+					<td>{{sequence["m49_country.m49_sub_region.display_name"]}}</td>
+				</tr>
+				<tr>
+					<td><b>Collection date</b></td>
+					<td>{{sequence.collection_month_day != null ? sequence.collection_month_day+"-" : ""}}{{sequence.collection_month != null ? sequence.collection_month+"-" : ""}}{{sequence.collection_year}}</td>
+				</tr>
+				<tr>
+					<td><b><a href="https://doi.org/10.1101/2020.04.17.046086" target="_blank">Lineage</a></b></td>
+					<td>{{handleNull(sequence['cov_glue_lineage'])}}</td>
+				</tr>
+				<tr>
+					<td><b>Total LWR</b></td>
+					<td>{{(sequence['cov_glue_lw_ratio'] == null ? "N/A" : toFixed(sequence['cov_glue_lw_ratio'] * 100.0, 2)+"%")}}</td>
+				</tr>
+				<tr>
+					<td><b>Originating laboratory</b></td>
+					<td>{{handleNull(sequence["gisaid_originating_lab"])}}</td>
+				</tr>
+				<tr>
+					<td><b>Submitting laboratory</b></td>
+					<td>{{handleNull(sequence["gisaid_submitting_lab"])}}</td>
+				</tr>
+				<tr>
+					<td><b>Authors</b></td>
+					<td>{{handleNull(sequence["gisaid_authors"])}}</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	

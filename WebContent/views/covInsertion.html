@@ -40,7 +40,7 @@
 			    </colgroup>
 				<tbody>
 					<tr ng-repeat="seq in listSequenceResult track by $index">
-						<td><a ng-click="showSequenceDialog(seq)">{{seq.isolate}}</a></td>
+						<td><a ng-click="showSequenceDialog(seq)">{{"hCoV-19/"+seq.isolate}}</a></td>
 						<td>{{seq['sequenceID']}}</td>
 						<td>{{handleNull(seq['cov_glue_lineage'])}}</td>
 						<td>{{seq.place_sampled}}</td>

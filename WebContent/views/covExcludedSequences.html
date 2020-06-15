@@ -6,7 +6,7 @@ CoV-GLUE excludes the following GISAID sequences from its analysis:
 <li>Any sequence of length less than 29000 nucleotides or greater than 35000</li>
 <li>Any sequence with a non-human host, e.g. bat, pangolin</li>
 <li>Sequences from environmental samples</li>
-<li>Any sequences marked with a warning flag, as having quality issues on GISAID</li>
-<li>Any sequence with more than 10 unique (across the whole dataset) single nucleotide mutations relative to the hCoV-19 reference sequence.</li>
-<li>Any sequence which we detect has a frameshifting deletion or insertion relative to the hCoV-19 reference sequence.</li>
+<li>Any sequences which cover less than 95% of the coding region</li>
+<li>Any sequence with more than 10 unique (across the whole dataset) single nucleotide mutations relative to Wuhan-Hu-1.</li>
+<li>Any sequence which we detect has a frameshifting deletion or insertion relative to Wuhan-Hu-1.</li>
 </ul>

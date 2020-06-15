@@ -28,6 +28,7 @@
 					<th>Virus name</th>
 					<th>GISAID ID</th>
 					<th>Lineage</th>
+					<th>GISAID Clade</th>
 					<th>Location</th>
 					<th>Collection date</th>
 				</thead>
@@ -35,14 +36,16 @@
 			       <col style="width: 25%;">
 			       <col style="width: 10%;">
 			       <col style="width: 10%;">
-			       <col style="width: 45%;">
+			       <col style="width: 10%;">
+			       <col style="width: 35%;">
 			       <col style="width: 10%;">
 			    </colgroup>
 				<tbody>
 					<tr ng-repeat="seq in listSequenceResult track by $index">
 						<td><a ng-click="showSequenceDialog(seq)">{{"hCoV-19/"+seq.isolate}}</a></td>
 						<td>{{seq['sequenceID']}}</td>
-						<td>{{handleNull(seq['cov_glue_lineage'])}}</td>
+						<td>{{handleNull(seq['cov_glue_lineage'])}} ({{handleNull(seq['gisaid_clade'])}})</td>
+						<td>{{handleNull(seq['gisaid_clade'])}}</td>
 						<td>{{seq.place_sampled}}</td>
 						<td>{{seq.collection_month_day != null ? seq.collection_month_day+"-" : ""}}{{seq.collection_month != null ? seq.collection_month+"-" : ""}}{{seq.collection_year}}</td>
 					</tr>

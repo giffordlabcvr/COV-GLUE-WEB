@@ -8,8 +8,8 @@
 		<h4>{{"hCoV-19/"+sequence.isolate}}</h4>
 		<table class="table table-condensed table-striped table-bordered table-nonfluid">
 			<colgroup>
-		       <col style="width: 20%;">
-		       <col style="width: 80%;">
+		       <col style="width: 30%;">
+		       <col style="width: 70%;">
 		    </colgroup>
 			<tbody>		
 				<tr>
@@ -33,12 +33,20 @@
 					<td>{{sequence.collection_month_day != null ? sequence.collection_month_day+"-" : ""}}{{sequence.collection_month != null ? sequence.collection_month+"-" : ""}}{{sequence.collection_year}}</td>
 				</tr>
 				<tr>
-					<td><b><a href="https://doi.org/10.1101/2020.04.17.046086" target="_blank">Lineage</a></b></td>
+					<td><b><a href="https://doi.org/10.1101/2020.04.17.046086" target="_blank">Rambaut et al. Lineage</a></b> (CoV-GLUE)</td>
 					<td>{{handleNull(sequence['cov_glue_lineage'])}}</td>
 				</tr>
 				<tr>
 					<td><b>Total LWR</b></td>
 					<td>{{(sequence['cov_glue_lw_ratio'] == null ? "N/A" : toFixed(sequence['cov_glue_lw_ratio'] * 100.0, 2)+"%")}}</td>
+				</tr>
+				<tr>
+					<td><b><a href="https://doi.org/10.1101/2020.04.17.046086" target="_blank">Rambaut et al. Lineage</a></b> (PANGOLIN)</td>
+					<td>{{handleNull(sequence['gisaid_lineage'])}}</td>
+				</tr>
+				<tr>
+					<td><b>GISAID Clade</b></td>
+					<td>{{handleNull(sequence['gisaid_clade'])}}</td>
 				</tr>
 				<tr>
 					<td><b>Originating laboratory</b></td>

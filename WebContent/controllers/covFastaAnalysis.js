@@ -613,6 +613,60 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
+				$scope.downloadAnalysis = function(format) {
+					console.log("Downloading analysis");
+					
+					var fileName = $scope.fileItemUnderAnalysis.file.name;
+					var baseFileName = fileName;
+					var lastIndexOfDot = fileName.lastIndexOf(".");
+					if(lastIndexOfDot >= 0) {
+						baseFileName = fileName.substring(0, lastIndexOfDot);
+					}
+					baseFileName = baseFileName+"_analysis";
+					var suffix = ( format == 'CSV' ? ".csv" : ".tsv");
+					var downloadFileName = baseFileName+suffix;
+					
+					saveFile.saveAsDialog("analysis summary file", 
+							downloadFileName, function(finalDownloadFileName) {
+						$scope.analytics.eventTrack("analysisDownload", 
+								{   category: 'dataDownload', 
+							label: 'fileName:'+fileName });
+
+						var inputDocument = {
+							    "covWebReport" : $scope.fileItemUnderAnalysis.response.covWebReport, 
+							    "downloadFileName": finalDownloadFileName,
+							    "downloadFormat": format,
+							    "lineFeedStyle": "LF"
+							};
+						if(userAgent.os.family.indexOf("Windows") !== -1) {
+							inputDocument["lineFeedStyle"] = "CRLF";
+
+						}
+						
+						
+						glueWS.runGlueCommandLong("module/covDownloadAnalysis", {
+							"invoke-function": {
+								"functionName" : "downloadAnalysis", 
+								"document": {
+									"inputDocument": inputDocument
+								}
+							},
+						}, "Preparing analysis summary file")
+						.success(function(data, status, headers, config) {
+							var result = data.tabularWebFileResult;
+							var dlg = dialogs.create(
+									glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+									{ 
+										url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+										fileName: result.webFileName,
+										fileSize: result.webFileSizeString
+									}, {});
+						})
+						.error(glueWS.raiseErrorDialog(dialogs, "Downloading analysis file"));
+					});
+				}
+
+				
 				$scope.viewPPReport = function(fileItem, sequenceId, primerProbeMismatchReport) {
 					if(fileItem.seqIdToReportUrl == null) {
 						fileItem.seqIdToReportUrl = {};

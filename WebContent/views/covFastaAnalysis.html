@@ -156,6 +156,15 @@
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'genomeVisualisation'">Genome visualisation</label>
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'phyloPlacement'">Phylogenetic placement</label>
 						</div>
+						<div class="btn-group" dropdown is-open="status.isopen_downloadtype1">
+					      <button id="downloadtype-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+					        Download summary <span class="caret"></span>
+					      </button>
+					      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button1">
+							<li role="menuitem" ng-click="downloadAnalysis('CSV')"><a>CSV format</a></li>
+							<li role="menuitem" ng-click="downloadAnalysis('TAB')"><a>Tab-delimited format</a></li>
+					      </ul>
+						</div>
 					</p>
 				<div ng-show="displaySection == 'summary'">
 					<p>

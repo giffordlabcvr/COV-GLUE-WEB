@@ -161,8 +161,17 @@
 					        Download summary <span class="caret"></span>
 					      </button>
 					      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button1">
-							<li role="menuitem" ng-click="downloadAnalysis('CSV')"><a>CSV format</a></li>
-							<li role="menuitem" ng-click="downloadAnalysis('TAB')"><a>Tab-delimited format</a></li>
+							<li role="menuitem" ng-click="downloadAnalysis('summary', 'CSV')"><a>CSV format</a></li>
+							<li role="menuitem" ng-click="downloadAnalysis('summary', 'TAB')"><a>Tab-delimited format</a></li>
+					      </ul>
+						</div>
+						<div class="btn-group" dropdown is-open="status.isopen_downloadtype2">
+					      <button id="downloadtype-button2" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+					        Download details <span class="caret"></span>
+					      </button>
+					      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button2">
+							<li role="menuitem" ng-click="downloadAnalysis('details', 'CSV')"><a>CSV format</a></li>
+							<li role="menuitem" ng-click="downloadAnalysis('details', 'TAB')"><a>Tab-delimited format</a></li>
 					      </ul>
 						</div>
 					</p>

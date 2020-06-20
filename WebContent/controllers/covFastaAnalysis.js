@@ -613,8 +613,8 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
-				$scope.downloadAnalysis = function(format) {
-					console.log("Downloading analysis");
+				$scope.downloadAnalysis = function(detailLevel, format) {
+					console.log("Downloading analysis "+detailLevel);
 					
 					var fileName = $scope.fileItemUnderAnalysis.file.name;
 					var baseFileName = fileName;
@@ -622,18 +622,19 @@ covApp.controller('covFastaAnalysisCtrl',
 					if(lastIndexOfDot >= 0) {
 						baseFileName = fileName.substring(0, lastIndexOfDot);
 					}
-					baseFileName = baseFileName+"_analysis";
+					baseFileName = baseFileName+"_analysis_"+detailLevel;
 					var suffix = ( format == 'CSV' ? ".csv" : ".tsv");
 					var downloadFileName = baseFileName+suffix;
 					
-					saveFile.saveAsDialog("analysis summary file", 
+					saveFile.saveAsDialog("analysis "+detailLevel+" file", 
 							downloadFileName, function(finalDownloadFileName) {
 						$scope.analytics.eventTrack("analysisDownload", 
 								{   category: 'dataDownload', 
 							label: 'fileName:'+fileName });
 
 						var inputDocument = {
-							    "covWebReport" : $scope.fileItemUnderAnalysis.response.covWebReport, 
+								"detailLevel": detailLevel,
+								"covWebReport" : $scope.fileItemUnderAnalysis.response.covWebReport, 
 							    "downloadFileName": finalDownloadFileName,
 							    "downloadFormat": format,
 							    "lineFeedStyle": "LF"
@@ -643,7 +644,6 @@ covApp.controller('covFastaAnalysisCtrl',
 
 						}
 						
-						
 						glueWS.runGlueCommandLong("module/covDownloadAnalysis", {
 							"invoke-function": {
 								"functionName" : "downloadAnalysis", 
@@ -651,7 +651,7 @@ covApp.controller('covFastaAnalysisCtrl',
 									"inputDocument": inputDocument
 								}
 							},
-						}, "Preparing analysis summary file")
+						}, "Preparing analysis "+detailLevel+" file")
 						.success(function(data, status, headers, config) {
 							var result = data.tabularWebFileResult;
 							var dlg = dialogs.create(
@@ -662,7 +662,7 @@ covApp.controller('covFastaAnalysisCtrl',
 										fileSize: result.webFileSizeString
 									}, {});
 						})
-						.error(glueWS.raiseErrorDialog(dialogs, "Downloading analysis file"));
+						.error(glueWS.raiseErrorDialog(dialogs, "Downloading analysis "+detailLevel+" file"));
 					});
 				}
 

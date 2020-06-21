@@ -216,12 +216,16 @@ covApp.controller('covDeletionCtrl',
 			]);
 
 			$scope.seqPagingContext.setSortableProperties([
-  	            { property:"sequenceID", displayName: "GISAID ID"},
-        		{ property:"collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
-	            { property: "cov_glue_lineage_sortable", displayName: "Lineage", filterHints: {type: "String"} },
+  	            { property: "sequenceID", displayName: "GISAID ID"},
+	            { property: "place_sampled", displayName: "Location"},
+	            { property: "m49_country.display_name", displayName: "Country"},
+        		{ property: "collection_date", displayName: "Collection Date"},
+	            { property: "cov_glue_lineage_sortable", displayName: "Lineage"},
             ]);
 
 			$scope.seqPagingContext.setFilterProperties([
+  	            { property: "sequenceID", displayName: "GISAID ID", filterHints: {type: "String"} },
+	            { property: "place_sampled", displayName: "Location", filterHints: {type: "String"} },
 	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
   	            $scope.globalRegionFilterM49(),
 	            { property: "collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },

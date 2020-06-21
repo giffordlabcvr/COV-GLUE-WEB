@@ -5,6 +5,21 @@ covApp.controller('covVariationCtrl',
 
 			addUtilsToScope($scope);
 			
+			$scope.displayLineage = function(seq) {
+				if(seq.cov_glue_lineage == null && seq.gisaid_lineage == null) {
+					return "-";
+				}
+				if(seq.cov_glue_lineage != null && seq.gisaid_lineage == null) {
+					return seq.cov_glue_lineage;
+				}
+				if(seq.cov_glue_lineage == null && seq.gisaid_lineage != null) {
+					return seq.gisaid_lineage;
+				}
+				if(seq.cov_glue_lineage == seq.gisaid_lineage) {
+					return seq.cov_glue_lineage;
+				}
+				return seq.cov_glue_lineage + " or " + seq.gisaid_lineage;
+			}
 			
 			$scope.globalRegionFilterM49 = function() {
 				// note property here is a dummy value.

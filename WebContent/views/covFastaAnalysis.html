@@ -59,10 +59,10 @@
 
 				<table class="table" width="100%">
 					<thead>
-					<col width="40%"></col>
-					<col width="20%"></col>
-					<col width="20%"></col>
-					<col width="20%"></col>
+					<col width="30%"></col>
+					<col width="5%"></col>
+					<col width="35%"></col>
+					<col width="30%"></col>
 					<tr>
 						<th>File</th>
 						<th ng-show="uploader.isHTML5">Size</th>
@@ -116,6 +116,10 @@
 									ng-click="showError(item)">
 									<span class="glyphicon glyphicon-list"></span> Show response
 								</button>
+								<a href="{{summaryDownloadUrl(item)}}"><button type="button" class="btn btn-primary btn-xs"
+									ng-disabled="item.response == null || item.commandError != null">
+									<span class="glyphicon glyphicon-save"></span> Summary CSV
+								</button></a>
 								<button type="button" class="btn btn-primary btn-xs"
 									ng-click="removeItem(item)"
 									ng-disabled="item.response == null && item.commandError == null">

@@ -136,10 +136,14 @@ covApp.controller('covFastaAnalysisCtrl',
 				
 			    // CALLBACKS
 			    $scope.uploader.onBeforeUploadItem = function(item) {
-					var commandObject = {
+			    	var lineFeedStyle = "LF";
+					if(userAgent.os.family.indexOf("Windows") !== -1) {
+						lineFeedStyle = "CRLF";
+					}
+			    	var commandObject = {
 							"invoke-consumes-binary-function" : {
 								"functionName": "reportFastaWeb",
-								"argument": [item.file.name]
+								"argument": [item.file.name, lineFeedStyle]
 							}
 					};
 			    	item.formData = [{command: JSON.stringify(commandObject)}];
@@ -641,7 +645,6 @@ covApp.controller('covFastaAnalysisCtrl',
 							};
 						if(userAgent.os.family.indexOf("Windows") !== -1) {
 							inputDocument["lineFeedStyle"] = "CRLF";
-
 						}
 						
 						glueWS.runGlueCommandLong("module/covDownloadAnalysis", {
@@ -695,6 +698,10 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				};
 				
+				$scope.summaryDownloadUrl = function(fileItem) {
+					tabularWebFileResult = fileItem.response.covWebReport.tabularWebFileResult;
+					return("gluetools-ws/glue_web_files/"+tabularWebFileResult.webSubDirUuid+"/"+tabularWebFileResult.webFileName);
+				};
 				
 				
 		}]);

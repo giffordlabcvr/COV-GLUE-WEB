@@ -218,6 +218,7 @@ covApp.controller('covDeletionCtrl',
 
 			$scope.seqPagingContext.setSortableProperties([
   	            { property: "sequenceID", displayName: "GISAID ID"},
+	            { property: "gisaid_virus_name", displayName: "Virus Name"},
 	            { property: "place_sampled", displayName: "Location"},
 	            { property: "m49_country.display_name", displayName: "Country"},
         		{ property: "collection_date", displayName: "Collection Date"},
@@ -226,6 +227,7 @@ covApp.controller('covDeletionCtrl',
 
 			$scope.seqPagingContext.setFilterProperties([
   	            { property: "sequenceID", displayName: "GISAID ID", filterHints: {type: "String"} },
+	            { property: "gisaid_virus_name", displayName: "Virus Name", filterHints: {type: "String"} },
 	            { property: "place_sampled", displayName: "Location", filterHints: {type: "String"} },
 	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
   	            $scope.globalRegionFilterM49(),

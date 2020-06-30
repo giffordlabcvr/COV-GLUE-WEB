@@ -64,7 +64,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					$scope.gisaidTimeStamp = data.propertyValueResult.value;
 					console.info('$scope.gisaidTimeStamp', $scope.gisaidTimeStamp);
 				})
-				.error(glueWS.raiseErrorDialog(dialogs, "retrieving available features"));
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving gisaidTimeStamp project property"));
 				
 				
 				glueWS.runGlueCommand("", {

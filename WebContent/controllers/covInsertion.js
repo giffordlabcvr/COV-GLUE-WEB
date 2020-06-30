@@ -161,7 +161,7 @@ covApp.controller('covInsertionCtrl',
 				var cmdParams = {
 						"whereClause": $scope.seqWhereClause,
 						"fieldName": ["sequenceID", 
-							"isolate",
+							"gisaid_virus_name",
 							"cov_glue_lineage",
 							"cov_glue_lw_ratio",
 							"gisaid_lineage",

@@ -114,7 +114,7 @@
 			    </colgroup>
 				<tbody>
 					<tr ng-repeat="seq in listSequenceResult track by $index">
-						<td><a ng-click="showSequenceDialog(seq)">{{"hCoV-19/"+seq.isolate}}</a></td>
+						<td><a ng-click="showSequenceDialog(seq)">{{seq.gisaid_virus_name}}</a></td>
 						<td>{{seq['sequenceID']}}</td>
 						<td>{{displayLineage(seq)}}</td>
 						<td>{{handleNull(seq['gisaid_clade'])}}</td>

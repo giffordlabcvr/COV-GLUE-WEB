@@ -437,6 +437,42 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
+				$scope.svgPhyloInputDoc = function(sequenceReport, placement, placerResult, 
+						webFileType, fileName, legendFileName) {
+					var scrollbarWidth = 17;
+					var inputDocument = {
+					    "placerResult" : placerResult, 
+					    "placerModule" : sequenceReport.covReport.sequenceResult.placerModule,
+					    "queryName" : sequenceReport.covReport.sequenceResult.id,
+					    "queryNucleotides" : sequenceReport.covReport.sequenceResult.visualisationHints.queryNucleotides,
+					    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
+					    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
+					    "placementIndex" : placement.placementIndex,
+						"pxWidth" : 1136 - scrollbarWidth, 
+						"pxHeight" : "auto",
+						"legendPxWidth" : 1136, 
+						"legendPxHeight" : 80,
+					    "fileName": fileName,
+					    "tipAnnotation": $scope.tipAnnotation.name,
+					    "legendFileName": legendFileName, 
+					    "webFileType": webFileType
+					};
+					var selectedDifference = sequenceReport.covReport.selectedDifference;
+					if(selectedDifference.replacement != null) {
+						inputDocument.visFeature = selectedDifference.replacement.feature;
+						inputDocument.aaVisCodonLabel = selectedDifference.replacement.codonLabel;
+					} else if(selectedDifference.insertion != null) {
+						inputDocument.visFeature = selectedDifference.insertion.variationFeature;
+						inputDocument.visInsertionLastNtBeforeStart = selectedDifference.insertion.refLastNtBeforeIns;
+						inputDocument.visInsertionFirstNtAfterEnd = selectedDifference.insertion.refFirstNtAfterIns;
+						inputDocument.visInsertedNts = selectedDifference.insertion.insertedQryNts;
+					} else if(selectedDifference.deletion != null) {
+						inputDocument.visFeature = selectedDifference.deletion.variationFeature;
+						inputDocument.visDeletionStart = selectedDifference.deletion.refFirstNtDeleted;
+						inputDocument.visDeletionEnd = selectedDifference.deletion.refLastNtDeleted;
+					} 
+					return inputDocument;
+				} 
 				
 				$scope.updatePhyloSvg = function() {
 					
@@ -445,6 +481,7 @@ covApp.controller('covFastaAnalysisCtrl',
 
 					var sequenceReport = $scope.fileItemUnderAnalysis.sequenceReport;
 					var placement = sequenceReport.covReport.placement;
+					var placerResult = $scope.fileItemUnderAnalysis.response.covWebReport.placerResult;
 
 					var cacheKey = $scope.fileItemUnderAnalysis.response.responseID+":"+
 						sequenceReport.covReport.sequenceResult.id+":"+
@@ -464,38 +501,8 @@ covApp.controller('covFastaAnalysisCtrl',
 					} else {
 						var fileName = "visualisation.svg";
 						var legendFileName = "legend.svg";
-						var scrollbarWidth = 17;
-						var segment = sequenceReport.covReport.sequenceResult.segment;
-						var inputDocument = {
-						    "placerResult" : $scope.fileItemUnderAnalysis.response.covWebReport.placerResult, 
-						    "placerModule" : sequenceReport.covReport.sequenceResult.placerModule,
-						    "queryName" : sequenceReport.covReport.sequenceResult.id,
-						    "queryNucleotides" : sequenceReport.covReport.sequenceResult.visualisationHints.queryNucleotides,
-						    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
-						    "queryToTargetRefSegments": sequenceReport.covReport.sequenceResult.visualisationHints.queryToTargetRefSegments,
-						    "placementIndex" : placement.placementIndex,
-							"pxWidth" : 1136 - scrollbarWidth, 
-							"pxHeight" : "auto",
-							"legendPxWidth" : 1136, 
-							"legendPxHeight" : 80,
-						    "fileName": fileName,
-						    "tipAnnotation": $scope.tipAnnotation.name,
-						    "legendFileName": legendFileName
-						};
-						var selectedDifference = sequenceReport.covReport.selectedDifference;
-						if(selectedDifference.replacement != null) {
-							inputDocument.visFeature = selectedDifference.replacement.feature;
-							inputDocument.aaVisCodonLabel = selectedDifference.replacement.codonLabel;
-						} else if(selectedDifference.insertion != null) {
-							inputDocument.visFeature = selectedDifference.insertion.variationFeature;
-							inputDocument.visInsertionLastNtBeforeStart = selectedDifference.insertion.refLastNtBeforeIns;
-							inputDocument.visInsertionFirstNtAfterEnd = selectedDifference.insertion.refFirstNtAfterIns;
-							inputDocument.visInsertedNts = selectedDifference.insertion.insertedQryNts;
-						} else if(selectedDifference.deletion != null) {
-							inputDocument.visFeature = selectedDifference.deletion.variationFeature;
-							inputDocument.visDeletionStart = selectedDifference.deletion.refFirstNtDeleted;
-							inputDocument.visDeletionEnd = selectedDifference.deletion.refLastNtDeleted;
-						} 
+						var inputDocument = $scope.svgPhyloInputDoc(sequenceReport, placement, placerResult, 
+								"WEB_PAGE", fileName, legendFileName); 
 						glueWS.runGlueCommand("module/covSvgPhyloVisualisation", 
 								{ 
 									"invoke-function": {
@@ -617,6 +624,63 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
+				$scope.downloadTree = function(format) {
+					console.log("Downloading tree, format: "+format);
+					var sequenceReport = $scope.fileItemUnderAnalysis.sequenceReport;
+					var placement = sequenceReport.covReport.placement;
+					var placerResult = $scope.fileItemUnderAnalysis.response.covWebReport.placerResult;
+					
+					var fileName = $scope.fileItemUnderAnalysis.file.name;
+					var baseFileName = fileName;
+					var lastIndexOfDot = fileName.lastIndexOf(".");
+					if(lastIndexOfDot >= 0) {
+						baseFileName = fileName.substring(0, lastIndexOfDot);
+					}
+					baseFileName = baseFileName+"_tree";
+					var suffix; 
+					if(format == 'Newick') {
+						suffix = ".nwk";
+					} else if(format == 'SVG') {
+						suffix = ".svg";
+					};
+					var downloadFileName = baseFileName+suffix;
+					
+					saveFile.saveAsDialog(format+" tree file", 
+							downloadFileName, function(finalDownloadFileName) {
+						$scope.analytics.eventTrack("treeDownload", 
+								{   category: 'dataDownload', 
+							label: 'fileName:'+fileName });
+
+						if(format == "SVG") {
+							// null legend file means include the legend in the tree SVG.
+							var inputDocument = $scope.svgPhyloInputDoc(sequenceReport, placement, placerResult, 
+									"DOWNLOAD", finalDownloadFileName, null);  
+
+							glueWS.runGlueCommandLong("module/covSvgPhyloVisualisation", 
+									{ 
+										"invoke-function": {
+											"functionName": "visualisePhyloAsSvg", 
+											"document": {
+												"inputDocument": inputDocument
+											}
+										} 
+									}, "Preparing "+format+" tree file")
+							.success(function(data, status, headers, config) {
+								var result = data.visualisePhyloAsSvgResult.treeTransformResult.freemarkerDocTransformerWebResult;
+								var dlg = dialogs.create(
+										glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+										{ 
+											url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+											fileName: result.webFileName,
+											fileSize: result.webFileSizeString
+										}, {});
+							})
+							.error(glueWS.raiseErrorDialog(dialogs, "Downloading "+format+" tree file"));
+						}
+					});
+
+				};
+				
 				$scope.downloadAnalysis = function(detailLevel, format) {
 					console.log("Downloading analysis "+detailLevel);
 					
@@ -699,8 +763,16 @@ covApp.controller('covFastaAnalysisCtrl',
 				};
 				
 				$scope.summaryDownloadUrl = function(fileItem) {
-					tabularWebFileResult = fileItem.response.covWebReport.tabularWebFileResult;
-					return("gluetools-ws/glue_web_files/"+tabularWebFileResult.webSubDirUuid+"/"+tabularWebFileResult.webFileName);
+					if(fileItem.response != null) {
+						var covWebReport = fileItem.response.covWebReport;
+						if(covWebReport != null) {
+							tabularWebFileResult = fileItem.response.covWebReport.tabularWebFileResult;
+							if(tabularWebFileResult != null) {
+								return("gluetools-ws/glue_web_files/"+tabularWebFileResult.webSubDirUuid+"/"+tabularWebFileResult.webFileName);
+							}
+						}
+					}
+					return "";
 				};
 				
 				

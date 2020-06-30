@@ -25,11 +25,15 @@
 }
 
 
-.updateVisualisationButton {
+.phyloButtons {
 	padding-right: 0px;
 	display: inline-block;
 	vertical-align: bottom;
 	float: none;
+}
+
+.downloadTreeButton {
+	padding-top: 10px;
 }
 
 .featureSvgContainer {

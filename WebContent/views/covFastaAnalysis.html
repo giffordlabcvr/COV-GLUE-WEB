@@ -353,13 +353,20 @@
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
-					    --><div class="col-md-2 updateVisualisationButton text-right">
+					    --><div class="col-md-2 phyloButtons text-right">
 								<button ng-disabled="phyloVisualisationUpdating || fileItemUnderAnalysis.sequenceReport.covReport.placement == null" type="button" class="btn btn-primary"
 									ng-click="updatePhyloSvg()"><i class="glyphicon glyphicon-refresh"></i> Update</button>
+					    		<div class="btn-group downloadTreeButton" dropdown is-open="status.isopen_downloadtree1">
+							      <button ng-disabled="phyloVisualisationUpdating || fileItemUnderAnalysis.sequenceReport.covReport.placement == null"
+							      	id="downloadtree-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+							        Download tree <span class="caret"></span>
+							      </button>
+							      <ul class="dropdown-menu" role="menu" aria-labelledby="downloadtree-button1">
+									<li role="menuitem" ng-click="downloadTree('Newick')"><a>Newick format</a></li>
+									<li role="menuitem" ng-click="downloadTree('SVG')"><a>SVG format</a></li>
+							      </ul>
+								</div>
 							</div>
-					</div>
-					<div>
-						<p>Below is the <a href="/#globalRefTree" target="_blank">reference tree</a>, annotated with the selected residue / indel and with an additional branch for the submitted sequence.</p>
 					</div>
 					<div class="row phyloSvgContainer" us-spinner="{radius:23, width:7, length: 11}" spinner-on="phyloVisualisationUpdating || phyloLegendUpdating" style="min-height: 100px; position: relative">
 						<div ng-if="(phyloVisualisationSvgUrl == null && !phyloVisualisationUpdating) || (phyloLegendSvgUrl == null && !phyloLegendUpdating)">

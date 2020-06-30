@@ -442,7 +442,6 @@ covApp.controller('covFastaAnalysisCtrl',
 					var scrollbarWidth = 17;
 					var inputDocument = {
 					    "placerResult" : placerResult, 
-					    "placerModule" : sequenceReport.covReport.sequenceResult.placerModule,
 					    "queryName" : sequenceReport.covReport.sequenceResult.id,
 					    "queryNucleotides" : sequenceReport.covReport.sequenceResult.visualisationHints.queryNucleotides,
 					    "targetReferenceName": sequenceReport.covReport.sequenceResult.visualisationHints.targetReferenceName,
@@ -667,6 +666,35 @@ covApp.controller('covFastaAnalysisCtrl',
 									}, "Preparing "+format+" tree file")
 							.success(function(data, status, headers, config) {
 								var result = data.visualisePhyloAsSvgResult.treeTransformResult.freemarkerDocTransformerWebResult;
+								var dlg = dialogs.create(
+										glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+										{ 
+											url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+											fileName: result.webFileName,
+											fileSize: result.webFileSizeString
+										}, {});
+							})
+							.error(glueWS.raiseErrorDialog(dialogs, "Downloading "+format+" tree file"));
+						} else if(format == "Newick") {
+							var inputDocument = {
+								    "placerResult" : placerResult, 
+								    "queryName" : sequenceReport.covReport.sequenceResult.id,
+								    "placementIndex" : placement.placementIndex,
+								    "fileName": downloadFileName,
+								    "tipAnnotation": $scope.tipAnnotation.name,
+								};
+							
+							glueWS.runGlueCommandLong("module/covSvgPhyloVisualisation", 
+									{ 
+										"invoke-function": {
+											"functionName": "visualisePhyloAsNewick", 
+											"document": {
+												"inputDocument": inputDocument
+											}
+										} 
+									}, "Preparing "+format+" tree file")
+							.success(function(data, status, headers, config) {
+								var result = data.stringWebFileResult;
 								var dlg = dialogs.create(
 										glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
 										{ 

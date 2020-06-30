@@ -10,3 +10,24 @@ CoV-GLUE excludes the following GISAID sequences from its analysis:
 <li>Any sequence with more than 10 unique (across the whole dataset) single nucleotide mutations relative to Wuhan-Hu-1.</li>
 <li>Any sequence which we detect has a frameshifting deletion or insertion relative to Wuhan-Hu-1.</li>
 </ul>
+
+<p>
+	<table class="table table-striped table-bordered table-fluid" style="width: 50%;">
+		<thead>
+			<colgroup>
+		       <col span="1" style="width: 70%;">
+		       <col span="1" style="width: 30%;">
+		    </colgroup>
+		</thead>
+		<tbody>
+			<tr>
+				<td><b>Number of GISAID sequences retrieved</b></td>
+				<td align='right'>{{sequencesRetrieved}}</td>
+			</tr>
+			<tr>
+				<td><b>Number of GISAID sequences which passed exclusion criteria</b></td>
+				<td align='right'>{{sequencesPassingExclusion}}</td>
+			</tr>
+		</tbody>
+	</table>
+</p>

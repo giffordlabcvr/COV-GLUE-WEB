@@ -1,6 +1,6 @@
 covApp.controller('covInsertionsCtrl', 
-		[ '$scope', '$route', '$routeParams', 'glueWS', 'dialogs', 'pagingContext', 
-		  function($scope, $route, $routeParams, glueWS, dialogs, pagingContext) {
+		[ '$scope', '$route', '$routeParams', 'glueWS', 'glueWebToolConfig', 'dialogs', 'pagingContext', '$analytics', 'saveFile', 'FileSaver',
+			  function($scope, $route, $routeParams, glueWS, glueWebToolConfig, dialogs, pagingContext, $analytics, saveFile, FileSaver) {
 
 			addUtilsToScope($scope);
 
@@ -9,7 +9,8 @@ covApp.controller('covInsertionsCtrl',
 			$scope.pagingContext = null;
 			$scope.whereClause = "true"
 
-			
+			$scope.analytics = $analytics;
+
 			$scope.updateCount = function(pContext) {
 				console.log("updateCount", pContext);
 				var cmdParams = {
@@ -73,4 +74,61 @@ covApp.controller('covInsertionsCtrl',
   			$scope.pagingContext.setDefaultFilterElems([]);
   			$scope.pagingContext.countChanged();
 
+			$scope.downloadInsertions = function(downloadFormat) {
+				console.log("Downloading isolate metadata");
+				
+				var suffix = "csv";
+				if(downloadFormat == "TAB") {
+					suffix = "tsv";
+				}
+				
+				saveFile.saveAsDialog("Insertions data file", 
+						"insertions."+suffix, function(fileName) {
+					var cmdParams = {
+							"lineFeedStyle": "LF"
+					};
+					if($scope.whereClause) {
+						cmdParams.whereClause = $scope.whereClause;
+					}
+					$scope.pagingContext.extendCmdParamsWhereClause(cmdParams);
+					$scope.pagingContext.extendCmdParamsSortOrder(cmdParams);
+
+					if(userAgent.os.family.indexOf("Windows") !== -1) {
+						cmdParams["lineFeedStyle"] = "CRLF";
+					}
+
+					$scope.analytics.eventTrack("insertionsDownload", 
+							{   category: 'dataDownload', 
+						label: 'totalItems:'+$scope.pagingContext.getTotalItems() });
+
+					glueWS.runGlueCommandLong("module/covInsertionWebExporter", {
+						"invoke-function": {
+							"functionName" : "exportInsertions", 
+							"argument": [
+								downloadFormat,
+								cmdParams.whereClause,
+								cmdParams.sortProperties,
+								fileName,
+								cmdParams.lineFeedStyle
+							]
+						},
+					},
+					"Insertions file preparation in progress")
+					.success(function(data, status, headers, config) {
+						var result = data.tabularWebFileResult;
+						var dlg = dialogs.create(
+								glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+								{ 
+									url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+									fileName: result.webFileName,
+									fileSize: result.webFileSizeString
+								}, {});
+					})
+					.error(glueWS.raiseErrorDialog(dialogs, "preparing insertions file"));
+				});
+			}
+
+
+  			
+  			
 		}]);

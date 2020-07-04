@@ -5,7 +5,17 @@
 	Click on the link in the "Replacement"" column to view more information about a specific replacement.
 	See the <a href="CoV-GLUE_User_Guide.pdf" target="_blank">User Guide</a> for more details. 
 	</p>
-	<paging-buttons paging-context="pagingContext"></paging-buttons>
+	<paging-buttons paging-context="pagingContext">
+		<div class="btn-group" dropdown is-open="status.isopen_downloadtype1">
+	    	<button id="downloadtype-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+	        	Download <span class="caret"></span>
+	      	</button>
+	      	<ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button1">
+				<li role="menuitem" ng-click="downloadReplacements('CSV')"><a>CSV format</a></li>
+				<li role="menuitem" ng-click="downloadReplacements('TAB')"><a>Tab-delimited format</a></li>
+	      	</ul>
+		</div>
+	</paging-buttons>
 	<span ng-show="replacements.length == 0">None</span>
 	<div ng-show="replacements.length > 0">	
 		Replacements {{pagingContext.firstItemIndex}} to {{pagingContext.lastItemIndex}} of {{pagingContext.totalItems}}
@@ -41,7 +51,17 @@
 				</tr>
 			</tbody>
 		</table>
-		<paging-buttons paging-context="pagingContext"></paging-buttons>
+		<paging-buttons paging-context="pagingContext">
+			<div class="btn-group" dropdown is-open="status.isopen_downloadtype2">
+		    	<button id="downloadtype-button2" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+		        	Download <span class="caret"></span>
+		      	</button>
+		      	<ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button2">
+					<li role="menuitem" ng-click="downloadReplacements('CSV')"><a>CSV format</a></li>
+					<li role="menuitem" ng-click="downloadReplacements('TAB')"><a>Tab-delimited format</a></li>
+		      	</ul>
+			</div>
+		</paging-buttons>
 		<h5>Notes</h5>
 		<small>
 			<ol>

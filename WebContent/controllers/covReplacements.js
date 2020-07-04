@@ -1,6 +1,6 @@
 covApp.controller('covReplacementsCtrl', 
-		[ '$scope', '$route', '$routeParams', 'glueWS', 'dialogs', 'pagingContext', 
-		  function($scope, $route, $routeParams, glueWS, dialogs, pagingContext) {
+		[ '$scope', '$route', '$routeParams', 'glueWS', 'glueWebToolConfig', 'dialogs', 'pagingContext', '$analytics', 'saveFile', 'FileSaver',
+		  function($scope, $route, $routeParams, glueWS, glueWebToolConfig, dialogs, pagingContext, $analytics, saveFile, FileSaver) {
 
 			addUtilsToScope($scope);
 
@@ -8,7 +8,7 @@ covApp.controller('covReplacementsCtrl',
 
 			$scope.pagingContext = null;
 			$scope.whereClause = "true"
-
+			$scope.analytics = $analytics;
 			
 			$scope.updateCount = function(pContext) {
 				console.log("updateCount", pContext);
@@ -84,4 +84,60 @@ covApp.controller('covReplacementsCtrl',
   			$scope.pagingContext.setDefaultFilterElems([]);
   			$scope.pagingContext.countChanged();
 
+  			
+			$scope.downloadReplacements = function(downloadFormat) {
+				console.log("Downloading isolate metadata");
+				
+				var suffix = "csv";
+				if(downloadFormat == "TAB") {
+					suffix = "tsv";
+				}
+				
+				saveFile.saveAsDialog("Replacements data file", 
+						"replacements."+suffix, function(fileName) {
+					var cmdParams = {
+							"lineFeedStyle": "LF"
+					};
+					if($scope.whereClause) {
+						cmdParams.whereClause = $scope.whereClause;
+					}
+					$scope.pagingContext.extendCmdParamsWhereClause(cmdParams);
+					$scope.pagingContext.extendCmdParamsSortOrder(cmdParams);
+
+					if(userAgent.os.family.indexOf("Windows") !== -1) {
+						cmdParams["lineFeedStyle"] = "CRLF";
+					}
+
+					$scope.analytics.eventTrack("replacementsDownload", 
+							{   category: 'dataDownload', 
+						label: 'totalItems:'+$scope.pagingContext.getTotalItems() });
+
+					glueWS.runGlueCommandLong("module/covReplacementWebExporter", {
+						"invoke-function": {
+							"functionName" : "exportReplacements", 
+							"argument": [
+								downloadFormat,
+								cmdParams.whereClause,
+								cmdParams.sortProperties,
+								fileName,
+								cmdParams.lineFeedStyle
+							]
+						},
+					},
+					"Replacements file preparation in progress")
+					.success(function(data, status, headers, config) {
+						var result = data.tabularWebFileResult;
+						var dlg = dialogs.create(
+								glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+								{ 
+									url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+									fileName: result.webFileName,
+									fileSize: result.webFileSizeString
+								}, {});
+					})
+					.error(glueWS.raiseErrorDialog(dialogs, "preparing replacements file"));
+				});
+			}
+
+  			
 		}]);

@@ -163,6 +163,18 @@
 					<arg name="functionName">exportInsertions</arg>
 				</simpleCommandFilter>
 			</modePathRegexFilter>
+			<modePathRegexFilter>
+				<regex>.*/module/covDeletionWebExporter$</regex>
+				<simpleCommandFilter words="invoke-function">
+					<arg name="functionName">exportDeletions</arg>
+				</simpleCommandFilter>
+			</modePathRegexFilter>
+			<modePathRegexFilter>
+				<regex>.*/module/covSequenceMetadataWebExporter$</regex>
+				<simpleCommandFilter words="invoke-function">
+					<arg name="functionName">exportSequenceMetadata</arg>
+				</simpleCommandFilter>
+			</modePathRegexFilter>
 			<simpleCommandFilter words="count custom-table-row">
 				<arg name="tableName">cov_replacement</arg>
 			</simpleCommandFilter>

@@ -1,6 +1,6 @@
 covApp.controller('covVariationCtrl', 
-		[ '$scope', 'glueWS', 'dialogs', 'glueWebToolConfig', 'filterUtils',
-    function($scope, glueWS, dialogs, glueWebToolConfig, filterUtils) {
+		[ '$scope', 'glueWS', 'dialogs', 'glueWebToolConfig', 'filterUtils', '$analytics', 'saveFile', 'FileSaver',
+    function($scope, glueWS, dialogs, glueWebToolConfig, filterUtils, $analytics, saveFile, FileSaver) {
 
 
 			addUtilsToScope($scope);
@@ -103,6 +103,60 @@ covApp.controller('covVariationCtrl',
 				})
 				.error(glueWS.raiseErrorDialog(dialogs, "retrieving M49 region tree"));
 			};
-			
+
+			$scope.downloadSequenceMetadata = function(downloadFormat) {
+				console.log("Downloading sequence metadata");
+				
+				var suffix = "csv";
+				if(downloadFormat == "TAB") {
+					suffix = "tsv";
+				}
+				
+				saveFile.saveAsDialog("sequence metadata file", 
+						"sequenceMetadata."+suffix, function(fileName) {
+					var cmdParams = {
+							"lineFeedStyle": "LF"
+					};
+					if($scope.seqWhereClause) {
+						cmdParams.whereClause = $scope.seqWhereClause;
+					}
+					$scope.seqPagingContext.extendCmdParamsWhereClause(cmdParams);
+					$scope.seqPagingContext.extendCmdParamsSortOrder(cmdParams);
+
+					if(userAgent.os.family.indexOf("Windows") !== -1) {
+						cmdParams["lineFeedStyle"] = "CRLF";
+					}
+
+					$scope.analytics.eventTrack("sequenceMetadataDownload", 
+							{   category: 'dataDownload', 
+						label: 'totalItems:'+$scope.seqPagingContext.getTotalItems() });
+
+					glueWS.runGlueCommandLong("module/covSequenceMetadataWebExporter", {
+						"invoke-function": {
+							"functionName" : "exportSequenceMetadata", 
+							"argument": [
+								downloadFormat,
+								cmdParams.whereClause,
+								cmdParams.sortProperties,
+								fileName,
+								cmdParams.lineFeedStyle
+							]
+						},
+					},
+					"Sequence metadata file preparation in progress")
+					.success(function(data, status, headers, config) {
+						var result = data.tabularWebFileResult;
+						var dlg = dialogs.create(
+								glueWebToolConfig.getProjectBrowserURL()+'/dialogs/fileReady.html','fileReadyCtrl',
+								{ 
+									url:"gluetools-ws/glue_web_files/"+result.webSubDirUuid+"/"+result.webFileName, 
+									fileName: result.webFileName,
+									fileSize: result.webFileSizeString
+								}, {});
+					})
+					.error(glueWS.raiseErrorDialog(dialogs, "preparing sequence metadata file"));
+				});
+			}
+
 
 }]);

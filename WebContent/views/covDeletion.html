@@ -19,7 +19,17 @@
 		<div>
 		<p>The following pandemic sequences contain {{deletion.featureDisplayName}} deletion {{deletion.displayName}}</p>
 		</div>
-		<paging-buttons paging-context="seqPagingContext"></paging-buttons>
+		<paging-buttons paging-context="seqPagingContext">
+			<div class="btn-group" dropdown is-open="status.isopen_downloadtype1">
+		    	<button id="downloadtype-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+		        	Download <span class="caret"></span>
+		      	</button>
+		      	<ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button1">
+					<li role="menuitem" ng-click="downloadSequenceMetadata('CSV')"><a>CSV format</a></li>
+					<li role="menuitem" ng-click="downloadSequenceMetadata('TAB')"><a>Tab-delimited format</a></li>
+		      	</ul>
+			</div>
+		</paging-buttons>
 		<span ng-show="listSequenceResult.length == 0">No data</span>
 		<div ng-show="listSequenceResult.length > 0">
 			Sequences {{seqPagingContext.firstItemIndex}} to {{seqPagingContext.lastItemIndex}} of {{seqPagingContext.totalItems}}
@@ -51,7 +61,17 @@
 					</tr>
 				</tbody>
 			</table>
-			<paging-buttons paging-context="seqPagingContext"></paging-buttons>
+			<paging-buttons paging-context="seqPagingContext">
+				<div class="btn-group" dropdown is-open="status.isopen_downloadtype2">
+			    	<button id="downloadtype-button2" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
+			        	Download <span class="caret"></span>
+			      	</button>
+			      	<ul class="dropdown-menu" role="menu" aria-labelledby="downloadtype-button2">
+						<li role="menuitem" ng-click="downloadSequenceMetadata('CSV')"><a>CSV format</a></li>
+						<li role="menuitem" ng-click="downloadSequenceMetadata('TAB')"><a>Tab-delimited format</a></li>
+			      	</ul>
+				</div>
+			</paging-buttons>
 		</div>
 	</div>
 	

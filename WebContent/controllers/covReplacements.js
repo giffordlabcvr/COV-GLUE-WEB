@@ -86,14 +86,14 @@ covApp.controller('covReplacementsCtrl',
 
   			
 			$scope.downloadReplacements = function(downloadFormat) {
-				console.log("Downloading isolate metadata");
+				console.log("Downloading replacements");
 				
 				var suffix = "csv";
 				if(downloadFormat == "TAB") {
 					suffix = "tsv";
 				}
 				
-				saveFile.saveAsDialog("Replacements data file", 
+				saveFile.saveAsDialog("replacements data file", 
 						"replacements."+suffix, function(fileName) {
 					var cmdParams = {
 							"lineFeedStyle": "LF"

@@ -75,14 +75,14 @@ covApp.controller('covInsertionsCtrl',
   			$scope.pagingContext.countChanged();
 
 			$scope.downloadInsertions = function(downloadFormat) {
-				console.log("Downloading isolate metadata");
+				console.log("Downloading insertions");
 				
 				var suffix = "csv";
 				if(downloadFormat == "TAB") {
 					suffix = "tsv";
 				}
 				
-				saveFile.saveAsDialog("Insertions data file", 
+				saveFile.saveAsDialog("insertions data file", 
 						"insertions."+suffix, function(fileName) {
 					var cmdParams = {
 							"lineFeedStyle": "LF"

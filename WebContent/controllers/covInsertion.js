@@ -132,7 +132,8 @@ covApp.controller('covInsertionCtrl',
 										    "fileName": fileName,
 										    "tipAnnotation": $scope.tipAnnotation.name,
 										    "legendFileName": legendFileName, 
-										    "webFileType": "WEB_PAGE"
+										    "webFileType": "WEB_PAGE",
+										    "includePopups": true
 										}
 									}
 								} 

@@ -438,7 +438,7 @@ covApp.controller('covFastaAnalysisCtrl',
 				}
 				
 				$scope.svgPhyloInputDoc = function(sequenceReport, placement, placerResult, 
-						webFileType, fileName, legendFileName) {
+						webFileType, fileName, legendFileName, includePopups) {
 					var scrollbarWidth = 17;
 					var inputDocument = {
 					    "placerResult" : placerResult, 
@@ -454,7 +454,8 @@ covApp.controller('covFastaAnalysisCtrl',
 					    "fileName": fileName,
 					    "tipAnnotation": $scope.tipAnnotation.name,
 					    "legendFileName": legendFileName, 
-					    "webFileType": webFileType
+					    "webFileType": webFileType,
+					    "includePopups": includePopups
 					};
 					var selectedDifference = sequenceReport.covReport.selectedDifference;
 					if(selectedDifference.replacement != null) {
@@ -501,7 +502,7 @@ covApp.controller('covFastaAnalysisCtrl',
 						var fileName = "visualisation.svg";
 						var legendFileName = "legend.svg";
 						var inputDocument = $scope.svgPhyloInputDoc(sequenceReport, placement, placerResult, 
-								"WEB_PAGE", fileName, legendFileName); 
+								"WEB_PAGE", fileName, legendFileName, true); 
 						glueWS.runGlueCommand("module/covSvgPhyloVisualisation", 
 								{ 
 									"invoke-function": {
@@ -653,7 +654,7 @@ covApp.controller('covFastaAnalysisCtrl',
 						if(format == "SVG") {
 							// null legend file means include the legend in the tree SVG.
 							var inputDocument = $scope.svgPhyloInputDoc(sequenceReport, placement, placerResult, 
-									"DOWNLOAD", finalDownloadFileName, null);  
+									"DOWNLOAD", finalDownloadFileName, null, false);  
 
 							glueWS.runGlueCommandLong("module/covSvgPhyloVisualisation", 
 									{ 

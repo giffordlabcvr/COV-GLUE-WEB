@@ -174,9 +174,6 @@ covApp.controller('covInsertionCtrl',
 							"m49_country.id",
 							"m49_country.m49_sub_region.display_name",
 							"place_sampled",
-							"gisaid_authors",
-							"gisaid_originating_lab",
-							"gisaid_submitting_lab",
 						]
 				};
 				pContext.extendListCmdParams(cmdParams);
@@ -241,7 +238,4 @@ covApp.controller('covInsertionCtrl',
 
 			$scope.seqPagingContext.countChanged();
 			
-			$scope.showSequenceDialog = function(seq) {
-				  dialogs.create('/dialogs/covSequenceDialog.html','covSequenceDialogCtrl',seq,{ size:"md"});
-			}
 		}]);

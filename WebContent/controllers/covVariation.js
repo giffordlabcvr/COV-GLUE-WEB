@@ -1,6 +1,6 @@
 covApp.controller('covVariationCtrl', 
-		[ '$scope', 'glueWS', 'dialogs', 'glueWebToolConfig', 'filterUtils', '$analytics', 'saveFile', 'FileSaver',
-    function($scope, glueWS, dialogs, glueWebToolConfig, filterUtils, $analytics, saveFile, FileSaver) {
+		[ '$scope', 'glueWS', 'dialogs', 'glueWebToolConfig', 'filterUtils', '$analytics', 'saveFile', 'FileSaver', '$http',
+    function($scope, glueWS, dialogs, glueWebToolConfig, filterUtils, $analytics, saveFile, FileSaver, $http) {
 
 
 			addUtilsToScope($scope);
@@ -156,6 +156,21 @@ covApp.controller('covVariationCtrl',
 					})
 					.error(glueWS.raiseErrorDialog(dialogs, "preparing sequence metadata file"));
 				});
+			}
+
+			$scope.showSequenceDialog = function(seq) {
+				var seqID = seq.sequenceID;
+				var url = "https://www.epicov.org/acknowledgement/"+
+					seqID.substring(10,12)+"/"+
+					seqID.substring(12,14)+"/"+
+					seqID+".json";
+				$http.get(url)
+					.success(function(data, status, headers, config) {
+						seq.authorshipDetails = data;
+						console.log("seq", seq);
+						dialogs.create('/dialogs/covSequenceDialog.html','covSequenceDialogCtrl',seq,{ size:"md"});
+					})
+					.error(glueWS.raiseErrorDialog(dialogs, "retrieving authorship details"));
 			}
 
 

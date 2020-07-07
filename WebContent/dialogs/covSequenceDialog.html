@@ -50,15 +50,15 @@
 				</tr>
 				<tr>
 					<td><b>Originating laboratory</b></td>
-					<td>{{handleNull(sequence["gisaid_originating_lab"])}}</td>
+					<td>{{handleNull(sequence.authorshipDetails["covv_orig_lab"])}}</td>
 				</tr>
 				<tr>
 					<td><b>Submitting laboratory</b></td>
-					<td>{{handleNull(sequence["gisaid_submitting_lab"])}}</td>
+					<td>{{handleNull(sequence.authorshipDetails["covv_subm_lab"])}}</td>
 				</tr>
 				<tr>
 					<td><b>Authors</b></td>
-					<td>{{handleNull(sequence["gisaid_authors"])}}</td>
+					<td>{{handleNull(sequence.authorshipDetails["covv_authors"])}}</td>
 				</tr>
 			</tbody>
 		</table>

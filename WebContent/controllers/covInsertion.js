@@ -231,7 +231,7 @@ covApp.controller('covInsertionCtrl',
 	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
   	            $scope.globalRegionFilterM49(),
 	            { property: "collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
-	            { property: "cov_glue_lineage", displayName: "Lineage", filterHints: {type: "String"} },
+	            { property: "cov_glue_lineage", altProperties:["gisaid_lineage"], displayName: "Lineage", filterHints: {type: "String"} },
 			]);
 			                          			
 			$scope.seqPagingContext.setDefaultFilterElems([]);

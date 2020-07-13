@@ -24,7 +24,13 @@
 	float: none;
 }
 
-
+.updateVisualisationButton {
+	padding-right: 0px;
+	display: inline-block;
+	vertical-align: bottom;
+	float: none;
+}
+	
 .phyloButtons {
 	padding-right: 0px;
 	display: inline-block;

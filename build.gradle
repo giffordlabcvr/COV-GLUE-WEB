@@ -3,7 +3,7 @@ apply plugin: 'pl.allegro.tech.build.axion-release'
 apply plugin: 'org.hidetake.ssh'
 apply plugin: 'com.bmuschko.cargo'
 
-project.ext.set("glueVersion", "1.1.103")
+project.ext.set("glueVersion", "1.1.107")
 
 ssh.settings { knownHosts = allowAnyHosts }
 
@@ -12,8 +12,8 @@ project.version = scmVersion.version
 remotes {
   covglue_cvr {
     host = 'cov-glue.cvr.gla.ac.uk'
-    user = 'sing01j'
-    identity = file('/Users/joshsinger/.ssh/cov-glue_id_rsa')
+    user = 'ok16n'
+    identity = file('/Users/evdoxiataka/.ssh/cov_glue_id_rsa')
   }
   
 }

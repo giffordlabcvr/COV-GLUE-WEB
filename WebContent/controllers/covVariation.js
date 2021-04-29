@@ -5,7 +5,7 @@ covApp.controller('covVariationCtrl',
 
 			addUtilsToScope($scope);
 			
-			$scope.displayLineage = function(seq) {
+			/*$scope.displayLineage = function(seq) {
 				if(seq.cov_glue_lineage == null && seq.gisaid_lineage == null) {
 					return "-";
 				}
@@ -19,6 +19,13 @@ covApp.controller('covVariationCtrl',
 					return seq.cov_glue_lineage;
 				}
 				return seq.cov_glue_lineage + " or " + seq.gisaid_lineage;
+			}*/
+			
+			$scope.displayLineage = function(seq) {
+				if(seq.gisaid_lineage == null) {
+					return "-";
+				}
+				return seq.gisaid_lineage;
 			}
 			
 			$scope.globalRegionFilterM49 = function() {

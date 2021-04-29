@@ -66,7 +66,7 @@ covApp.controller('covFastaAnalysisCtrl',
 				})
 				.error(glueWS.raiseErrorDialog(dialogs, "retrieving gisaidTimeStamp project property"));
 
-				glueWS.runGlueCommand("custom-table-row/cov_project_properties/lineageVersion", {
+				/*glueWS.runGlueCommand("custom-table-row/cov_project_properties/lineageVersion", {
 				    "show":{
 				        "property":{
 				            "property":"value"
@@ -77,7 +77,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					$scope.lineageVersion = data.propertyValueResult.value;
 					console.info('$scope.lineageVersion', $scope.lineageVersion);
 				})
-				.error(glueWS.raiseErrorDialog(dialogs, "retrieving lineageVersion project property"));
+				.error(glueWS.raiseErrorDialog(dialogs, "retrieving lineageVersion project property"));*/
 
 				
 				glueWS.runGlueCommand("", {

@@ -15,8 +15,8 @@
 				help us better understand the pandemic and could help improve antiviral drug and 
 				vaccine effectiveness.</p>
 			<small>
-				CoV-GLUE uses its own lineage-assignment method for the <a href="https://doi.org/10.1038/s41564-020-0770-5" target="_blank">Rambaut et al. dynamic lineage nomenclature system</a>.<br/>
-				Last update of lineage definitions from the Rambaut et al. system: {{lineageVersion}}.<br/>
+				<!--  CoV-GLUE uses its own lineage-assignment method for the <a href="https://doi.org/10.1038/s41564-020-0770-5" target="_blank">Rambaut et al. dynamic lineage nomenclature system</a>.<br/>
+				Last update of lineage definitions from the Rambaut et al. system: {{lineageVersion}}.<br/>-->
 				The GISAID clade nomenclature is given alongside the lineage for GISAID sequences.<br/>
 			</small>  
 			<h3>Amino acid variation database</h3>
@@ -32,7 +32,7 @@
 
 			<h3>Analysis of user-submitted sequences</h3>
 			<p>Using the "Add Files" button below, submit your own hCoV-19 FASTA file to 
-			receive an interactive report containing visualisations of phylogenetic classification and genomic 
+			receive an interactive report containing visualisations of <!--  phylogenetic classification and -->genomic 
 			variation. See the <a href="CoV-GLUE_User_Guide.pdf">User Guide</a> for more details.</p>
 		</div>
 		<div class="col-md-3">
@@ -158,7 +158,7 @@
 						<div class="btn-group">
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'summary'">Summary</label>
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'genomeVisualisation'">Genome visualisation</label>
-					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'phyloPlacement'">Phylogenetic placement</label>
+					       <!--   <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'phyloPlacement'">Phylogenetic placement</label>-->
 						</div>
 						<div class="btn-group" dropdown is-open="status.isopen_downloadtype1">
 					      <button id="downloadtype-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
@@ -185,14 +185,14 @@
 						<thead>
 							<tr>
 								<th rowspan="2" style="width: 20%;">Sequence</th>
-								<th colspan="3" style="width: 15%;">Classification</th>
+								<th colspan="1" style="width: 15%;">Classification</th>
 								<th colspan="3" style="width: 24%;">Primer/probe analysis</th>
 								<th rowspan="2" style="width: 41%;">Differences from reference</th>
 							</tr>
 							<tr>
-								<th style="width: 5%;">hCoV-19?</th>
-								<th style="width: 5%;">Lineage</th>
-								<th style="width: 5%;">Total LWR</th>
+								<th style="width: 15%;">hCoV-19?</th>
+								<!--  <th style="width: 5%;">Lineage</th>
+								<th style="width: 5%;">Total LWR</th>-->
 								<th style="width: 8%;">Diagnostics issues</th>
 								<th style="width: 8%;">Sequencing issues</th>
 								<th style="width: 8%;">Full report</th>
@@ -202,8 +202,8 @@
 							<tr>
 								<td>{{covResult.covReport.sequenceResult.id}}</td>
 								<td>{{covResult.covReport.sequenceResult.isForwardCov ? "Yes" : "No"}}</td>
-								<td>{{getLineageDisplayString(covResult.covReport.sequenceResult)}}</td>
-								<td>{{getLikelihoodDisplayString(covResult.covReport.sequenceResult)}}</td>
+								<!--  <td>{{getLineageDisplayString(covResult.covReport.sequenceResult)}}</td>
+								<td>{{getLikelihoodDisplayString(covResult.covReport.sequenceResult)}}</td>-->
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.diagnosticsIssues}}</td>
 								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.sequencingIssues}}</td>
@@ -220,7 +220,7 @@
 											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a>
 										</span>
 										<span>{{(difference.knownLink == null ? "Novel ": " ")+difference.displayText}} 
-										(<a ng-click="switchToDifferenceTree(covResult, difference)">Tree <i class="glyphicon glyphicon-link"></i></a>)</span>
+										<!-- (<a ng-click="switchToDifferenceTree(covResult, difference)">Tree <i class="glyphicon glyphicon-link"></i></a>) --></span>
 										<br/>
 									</span> 
 								</td>
@@ -282,7 +282,7 @@
 						</div>
 					</div>
 				</div>
-				<div ng-show="displaySection == 'phyloPlacement'" class="container-fluid">
+				<!--<div ng-show="displaySection == 'phyloPlacement'" class="container-fluid">
 					<div class="row">
 						<div class="phyloVisualisationControls col-md-10">
 							<p>
@@ -353,7 +353,7 @@
 							</div>
 							</p>
 						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
-					    --><div class="col-md-2 phyloButtons text-right">
+					    <div class="col-md-2 phyloButtons text-right">
 								<button ng-disabled="phyloVisualisationUpdating || fileItemUnderAnalysis.sequenceReport.covReport.placement == null" type="button" class="btn btn-primary"
 									ng-click="updatePhyloSvg()"><i class="glyphicon glyphicon-refresh"></i> Update</button>
 					    		<div class="btn-group downloadTreeButton" dropdown is-open="status.isopen_downloadtree1">
@@ -377,7 +377,7 @@
 						</div>
 						<div style="height: 800px; overflow: auto;" data-onload="phyloSvgUpdated()" ng-include="phyloVisualisationSvgUrl"></div>
 					</div>
-				</div>
+				</div>-->
 				<h5>Notes</h5>
 				<small>
 				<ul>

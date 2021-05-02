@@ -5,7 +5,7 @@ covApp.controller('covVariationCtrl',
 
 			addUtilsToScope($scope);
 			
-			$scope.displayLineage = function(seq) {
+			/*$scope.displayLineage = function(seq) {
 				if(seq.cov_glue_lineage == null && seq.gisaid_lineage == null) {
 					return "-";
 				}
@@ -19,14 +19,14 @@ covApp.controller('covVariationCtrl',
 					return seq.cov_glue_lineage;
 				}
 				return seq.cov_glue_lineage + " or " + seq.gisaid_lineage;
-			}
+			}*/
 			
-			/*$scope.displayLineage = function(seq) {
+			$scope.displayLineage = function(seq) {
 				if(seq.gisaid_lineage == null) {
 					return "-";
 				}
 				return seq.gisaid_lineage;
-			}*/
+			}
 			
 			$scope.globalRegionFilterM49 = function() {
 				// note property here is a dummy value.
@@ -167,10 +167,19 @@ covApp.controller('covVariationCtrl',
 
 			$scope.showSequenceDialog = function(seq) {
 				var seqID = seq.sequenceID;
-				var url = "https://www.epicov.org/acknowledgement/"+
+				var len = seqID.length;
+				if(len == 14){
+					var url = "https://www.epicov.org/acknowledgement/"+
 					seqID.substring(10,12)+"/"+
 					seqID.substring(12,14)+"/"+
 					seqID+".json";
+				}
+				else if(len == 15){
+					var url = "https://www.epicov.org/acknowledgement/"+
+					seqID.substring(11,13)+"/"+
+					seqID.substring(13,15)+"/"+
+					seqID+".json";	
+				}
 				$http.get(url)
 					.success(function(data, status, headers, config) {
 						seq.authorshipDetails = data;

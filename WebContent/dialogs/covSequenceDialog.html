@@ -32,14 +32,15 @@
 					<td><b>Collection date</b></td>
 					<td>{{sequence.collection_month_day != null ? sequence.collection_month_day+"-" : ""}}{{sequence.collection_month != null ? sequence.collection_month+"-" : ""}}{{sequence.collection_year}}</td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<td><b><a href="https://doi.org/10.1038/s41564-020-0770-5" target="_blank">Rambaut et al. Lineage</a></b> (CoV-GLUE)</td>
 					<td>{{handleNull(sequence['cov_glue_lineage'])}}</td>
 				</tr>
 				<tr>
 					<td><b>Total LWR</b></td>
 					<td>{{(sequence['cov_glue_lw_ratio'] == null ? "N/A" : toFixed(sequence['cov_glue_lw_ratio'] * 100.0, 2)+"%")}}</td>
-				</tr>
+				</tr> 
+				-->
 				<tr>
 					<td><b><a href="https://doi.org/10.1038/s41564-020-0770-5" target="_blank">Rambaut et al. Lineage</a></b> (PANGOLIN)</td>
 					<td>{{handleNull(sequence['gisaid_lineage'])}}</td>

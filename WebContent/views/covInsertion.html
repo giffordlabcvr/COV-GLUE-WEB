@@ -11,7 +11,8 @@
 	<p/>
 	<div class="btn-group" style="margin-bottom: 15px">
         <label class="btn btn-primary" ng-model="displaySection" btn-radio="'containingSequences'">Containing sequences</label>
-        <label class="btn btn-primary" ng-model="displaySection" btn-radio="'phylogeneticTree'">Phylogenetic tree</label>
+       <!--  <label class="btn btn-primary" ng-model="displaySection" btn-radio="'phylogeneticTree'">Phylogenetic tree</label> 
+        -->
     </div>
 	
 
@@ -75,7 +76,7 @@
 		</div>
 	</div>
 	
-	<div ng-if="displaySection == 'phylogeneticTree'" class="container-fluid">
+	<!--   <div ng-if="displaySection == 'phylogeneticTree'" class="container-fluid">
 		<div class="row">
 			<p>
 			Below is the <a href="/#globalRefTree" target="_blank">reference tree</a>, annotated with a symbol at each tip.
@@ -109,5 +110,6 @@
 			<div style="height: 800px; overflow: auto;" data-onload="phyloSvgUpdated()" ng-include="phyloVisualisationSvgUrl"></div>
 		</div>
 	</div>
+	-->
 	
 </div>

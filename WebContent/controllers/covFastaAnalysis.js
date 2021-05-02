@@ -66,7 +66,7 @@ covApp.controller('covFastaAnalysisCtrl',
 				})
 				.error(glueWS.raiseErrorDialog(dialogs, "retrieving gisaidTimeStamp project property"));
 
-				glueWS.runGlueCommand("custom-table-row/cov_project_properties/lineageVersion", {
+				/*glueWS.runGlueCommand("custom-table-row/cov_project_properties/lineageVersion", {
 				    "show":{
 				        "property":{
 				            "property":"value"
@@ -78,7 +78,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					console.info('$scope.lineageVersion', $scope.lineageVersion);
 				})
 				.error(glueWS.raiseErrorDialog(dialogs, "retrieving lineageVersion project property"));
-
+*/
 				
 				glueWS.runGlueCommand("", {
 				    "list":{
@@ -140,10 +140,10 @@ covApp.controller('covFastaAnalysisCtrl',
 					if(newObj == "genomeVisualisation" && !$scope.fileItemUnderAnalysis.clickedGenomeVis) {
 						$scope.fileItemUnderAnalysis.clickedGenomeVis = true;
 						$scope.updateFeatureSvg(); 
-					} else if(newObj == "phyloPlacement" && !$scope.fileItemUnderAnalysis.clickedPhyloPlacement) {
+					} /*else if(newObj == "phyloPlacement" && !$scope.fileItemUnderAnalysis.clickedPhyloPlacement) {
 						$scope.fileItemUnderAnalysis.clickedPhyloPlacement = true;
 						$scope.updatePhyloSvg(); 
-					} 
+					} */
 				});
 
 				
@@ -271,13 +271,13 @@ covApp.controller('covFastaAnalysisCtrl',
 			    		}
 			    		$scope.setFeature(sequenceReport, feature);
 			    	}
-			    	if(sequenceReport.covReport.sequenceResult.placements == null) {
+			    	/*if(sequenceReport.covReport.sequenceResult.placements == null) {
 			    		$scope.setPlacement(sequenceReport, null);
 			    	} else {
 			    		if(sequenceReport.covReport.placement == null) {
 				    		$scope.setPlacement(sequenceReport, sequenceReport.covReport.sequenceResult.placements[0]);
 			    		}
-			    	}
+			    	}*/
 			    	$scope.setSelectedDifference(sequenceReport, {noDifference:{},displayText:'None'});
 			    	
 			    	item.sequenceReport = sequenceReport;
@@ -305,10 +305,10 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	$scope.aaFeature.varType = varType;
 			    }
 
-			    $scope.setPlacement = function(sequenceReport, placement) {
+			    /*$scope.setPlacement = function(sequenceReport, placement) {
 			    	// need to nest feature within covReport to avoid breaking command doc assumptions.
 			    	sequenceReport.covReport.placement = placement;
-			    }
+			    }*/
 
 			    $scope.setSelectedDifference = function(sequenceReport, difference) {
 			    	sequenceReport.covReport.selectedDifference = difference;
@@ -334,13 +334,13 @@ covApp.controller('covFastaAnalysisCtrl',
 					
 				}
 				
-				$scope.phyloSvgUpdated = function() {
+				/*$scope.phyloSvgUpdated = function() {
 					$scope.phyloVisualisationUpdating = false;
 				}
 				
 				$scope.phyloLegendSvgUpdated = function() {
 					$scope.phyloLegendUpdating = false;
-				}
+				}*/
 				
 				$scope.updateFeatureSvgFromUrl = function(cacheKey, svgUrl) {
 					if(svgUrl == $scope.featureVisualisationSvgUrl) {
@@ -352,7 +352,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
-				$scope.updatePhyloSvgFromResultObject = function(cacheKey, svgResultObject) {
+				/*$scope.updatePhyloSvgFromResultObject = function(cacheKey, svgResultObject) {
 					if(_.isEqual(svgResultObject, $scope.phyloVisualisationSvgResultObject)) {
 						// onLoad does not get invoked again for the same URLs.
 						$scope.phyloSvgUpdated();
@@ -367,7 +367,7 @@ covApp.controller('covFastaAnalysisCtrl',
 						svgResultObject.legendTransformResult.freemarkerDocTransformerWebResult.webSubDirUuid+"/"+
 						svgResultObject.legendTransformResult.freemarkerDocTransformerWebResult.webFileName;
 					}
-				}
+				}*/
 				
 				$scope.saveFeatureScrollLeft = function() {
 					if($scope.lastFeatureName != null) {
@@ -450,7 +450,7 @@ covApp.controller('covFastaAnalysisCtrl',
 					}
 				}
 				
-				$scope.svgPhyloInputDoc = function(sequenceReport, placement, placerResult, 
+				/*$scope.svgPhyloInputDoc = function(sequenceReport, placement, placerResult, 
 						webFileType, fileName, legendFileName, includePopups) {
 					var scrollbarWidth = 17;
 					var inputDocument = {
@@ -485,9 +485,9 @@ covApp.controller('covFastaAnalysisCtrl',
 						inputDocument.visDeletionEnd = selectedDifference.deletion.refLastNtDeleted;
 					} 
 					return inputDocument;
-				} 
+				} */
 				
-				$scope.updatePhyloSvg = function() {
+				/*$scope.updatePhyloSvg = function() {
 					
 					$scope.phyloVisualisationUpdating = true;
 					$scope.phyloLegendUpdating = true;
@@ -539,7 +539,7 @@ covApp.controller('covFastaAnalysisCtrl',
 								dlgFunction(response.data, response.status, response.headers, response.config);
 						});
 					}
-				}
+				}*/
 				
 				$scope.nonSnpDifferences = function(differences) {
 					return _.filter(differences, function(difference) {return difference.snp == null;})
@@ -548,14 +548,14 @@ covApp.controller('covFastaAnalysisCtrl',
 					return _.filter(differences, function(difference) {return difference.snp != null;})
 				};
 				
-			    $scope.getPlacementLabel = function(placement) {
+			   /* $scope.getPlacementLabel = function(placement) {
 			    	var label = placement.placementIndex + " (LWR " + toFixed(placement.likeWeightRatio * 100, 2) + "%";
 			    	if(placement.bestLineage != null) {
 			    		label = label + ", lineage "+placement.bestLineage;
 			    	}
 			    	label = label+")";
 			    	return label;
-			    }
+			    }*/
 			    
 			    $scope.fullDisplayText = function(difference) {
 			    	if(difference.displayText == "None") {
@@ -598,11 +598,11 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	return coveragePct;
 			    }
 
-				$scope.switchToDifferenceTree = function(report, difference) {
+				/*$scope.switchToDifferenceTree = function(report, difference) {
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
 			    	$scope.setSelectedDifference(report, difference);
 			    	$scope.displaySection = 'phyloPlacement';
-				}
+				}*/
 
 				$scope.switchToGenomeVisualisation = function(report, feature) {
 			    	$scope.setSequenceReport($scope.fileItemUnderAnalysis, report);
@@ -612,7 +612,7 @@ covApp.controller('covFastaAnalysisCtrl',
 			    	$scope.displaySection = 'genomeVisualisation';
 				}
 
-				$scope.getLineageDisplayString = function(sequenceResult) {
+				/*$scope.getLineageDisplayString = function(sequenceResult) {
 					if(sequenceResult.isForwardCov) {
 						if(sequenceResult.lineageAssignmentResult != null &&
 								sequenceResult.lineageAssignmentResult.bestLineage != null) {
@@ -635,9 +635,9 @@ covApp.controller('covFastaAnalysisCtrl',
 					} else {
 						return "N/A";
 					}
-				}
+				}*/
 				
-				$scope.downloadTree = function(format) {
+				/*$scope.downloadTree = function(format) {
 					console.log("Downloading tree, format: "+format);
 					var sequenceReport = $scope.fileItemUnderAnalysis.sequenceReport;
 					var placement = sequenceReport.covReport.placement;
@@ -721,7 +721,7 @@ covApp.controller('covFastaAnalysisCtrl',
 						}
 					});
 
-				};
+				};*/
 				
 				$scope.downloadAnalysis = function(detailLevel, format) {
 					console.log("Downloading analysis "+detailLevel);

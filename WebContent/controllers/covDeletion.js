@@ -67,10 +67,10 @@ covApp.controller('covDeletionCtrl',
 
 		    $scope.setTipAnnotation = function(tipAnnotation) {
 		    	$scope.tipAnnotation = tipAnnotation;
-		    	$scope.updatePhyloSvg();
+		    	//$scope.updatePhyloSvg();
 		    }
 
-			$scope.phyloSvgUpdated = function() {
+			/*$scope.phyloSvgUpdated = function() {
 				$scope.phyloVisualisationUpdating = false;
 			}
 			
@@ -151,7 +151,7 @@ covApp.controller('covDeletionCtrl',
 							dlgFunction(response.data, response.status, response.headers, response.config);
 					});
 				}
-			}
+			}*/
 			
 			$scope.seqWhereClause = "cov_nt_deletion_sequence.cov_nt_deletion.id = '"+$scope.deletionId+"'";
 
@@ -162,8 +162,8 @@ covApp.controller('covDeletionCtrl',
 						"whereClause": $scope.seqWhereClause,
 						"fieldName": ["sequenceID", 
 							"gisaid_virus_name",
-							"cov_glue_lineage",
-							"cov_glue_lw_ratio",
+							//"cov_glue_lineage",
+							//"cov_glue_lw_ratio",
 							"gisaid_lineage",
 							"gisaid_clade",
 							"collection_month_day", 
@@ -220,7 +220,7 @@ covApp.controller('covDeletionCtrl',
 	            { property: "place_sampled", displayName: "Location"},
 	            { property: "m49_country.display_name", displayName: "Country"},
         		{ property: "collection_date", displayName: "Collection Date"},
-	            { property: "cov_glue_lineage_sortable", displayName: "Lineage"},
+	            //{ property: "cov_glue_lineage_sortable", displayName: "Lineage"},
             ]);
 
 			$scope.seqPagingContext.setFilterProperties([
@@ -230,8 +230,8 @@ covApp.controller('covDeletionCtrl',
 	            { property: "m49_country.display_name", altProperties:["m49_country.id"], displayName: "Country", filterHints: {type: "String"} },
   	            $scope.globalRegionFilterM49(),
 	            { property: "collection_date", displayName: "Collection Date", filterHints: {type: "Date"} },
-	            //{ property: "gisaid_lineage", displayName: "Lineage", filterHints: {type: "String"} },
-	            { property: "cov_glue_lineage", altProperties:["gisaid_lineage"], displayName: "Lineage", filterHints: {type: "String"} },
+	            { property: "gisaid_lineage", displayName: "Lineage", filterHints: {type: "String"} },
+	            //{ property: "cov_glue_lineage", altProperties:["gisaid_lineage"], displayName: "Lineage", filterHints: {type: "String"} },
 			]);
 			                          			
 			$scope.seqPagingContext.setDefaultFilterElems([]);

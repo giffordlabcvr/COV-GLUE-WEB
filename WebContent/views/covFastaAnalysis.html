@@ -43,7 +43,7 @@
 </div>
 
 
-  <!-- <div nv-file-drop="" uploader="uploader"
+ <div nv-file-drop="" uploader="uploader"
 		filters="queueLimit, customFilter">
 		<p>
 			<small>For testing, download this
@@ -156,7 +156,7 @@
 						<div class="btn-group">
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'summary'">Summary</label>
 					        <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'genomeVisualisation'">Genome visualisation</label>
-					       <!--   <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'phyloPlacement'">Phylogenetic placement</label> 
+					       <!--   <label class="btn btn-primary ng-pristine ng-untouched ng-valid active" ng-model="displaySection" btn-radio="'phyloPlacement'">Phylogenetic placement</label> -->
 						</div>
 						<div class="btn-group" dropdown is-open="status.isopen_downloadtype1">
 					      <button id="downloadtype-button1" type="button" class="btn btn-default" dropdown-toggle ng-disabled="disabled">
@@ -190,7 +190,7 @@
 							<tr>
 								<th style="width: 15%;">hCoV-19?</th>
 								<!--  <th style="width: 5%;">Lineage</th>
-								<th style="width: 5%;">Total LWR</th> 
+								<th style="width: 5%;">Total LWR</th> -->
 								<th style="width: 8%;">Diagnostics issues</th>
 								<th style="width: 8%;">Sequencing issues</th>
 								<th style="width: 8%;">Full report</th>
@@ -201,7 +201,7 @@
 								<td>{{covResult.covReport.sequenceResult.id}}</td>
 								<td>{{covResult.covReport.sequenceResult.isForwardCov ? "Yes" : "No"}}</td>
 								<!--  <td>{{getLineageDisplayString(covResult.covReport.sequenceResult)}}</td>
-								<td>{{getLikelihoodDisplayString(covResult.covReport.sequenceResult)}}</td> 
+								<td>{{getLikelihoodDisplayString(covResult.covReport.sequenceResult)}}</td> -->
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.diagnosticsIssues}}</td>
 								<td ng-if="!covResult.covReport.sequenceResult.isForwardCov">N/A</td>
 								<td ng-if="covResult.covReport.sequenceResult.isForwardCov">{{covResult.covReport.sequenceResult.primerProbeMismatchReport.covPPReport.sequencingIssues}}</td>
@@ -266,7 +266,7 @@
 								(green), highlighting differences with <a href="https://www.ncbi.nlm.nih.gov/nuccore/NC_045512" target="_blank">Wuhan-Hu-1</a> (blue)
 							</div>
 							</p>
-						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3
+						</div><!-- https://stackoverflow.com/questions/20547819/vertical-align-with-bootstrap-3 -->
 					    <div class="col-md-2 updateVisualisationButton text-right">
 								<button ng-disabled="featureVisualisationUpdating || fileItemUnderAnalysis.sequenceReport.covReport.feature == null || fileItemUnderAnalysis.sequenceReport.covReport.comparisonRef == null" type="button" class="btn btn-primary"
 									ng-click="updateFeatureSvg()"><i class="glyphicon glyphicon-refresh"></i> Update</button>
@@ -375,7 +375,7 @@
 						</div>
 						<div style="height: 800px; overflow: auto;" data-onload="phyloSvgUpdated()" ng-include="phyloVisualisationSvgUrl"></div>
 					</div>
-				</div> 
+				</div> -->
 				<h5>Notes</h5>
 				<small>
 				<ul>
@@ -388,5 +388,5 @@
 				
 			</div>
 		</div>
-	</div> -->
+	</div> 
 </div>

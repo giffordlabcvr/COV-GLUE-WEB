@@ -21,7 +21,7 @@
 			<!-- <p>CoV-GLUE contains a database of amino acid <a href="http://vshiny1.cvr.gla.ac.uk/cov-glue-viz/" target="_blank">replacements</a>, 
 			<a href="#/insertion" target="_blank">insertions</a> and <a href="#/deletion" target="_blank">deletions</a> which
 			have been observed in GISAID hCoV-19 sequences sampled from the pandemic, see the <a href="CoV-GLUE_User_Guide.pdf" target="_blank">User Guide</a> for details.</p> -->
-			<p>The database of amino acid replacements, insertions and deletions which have been observed in GISAID hCoV-19 sequences sampled from the pandemic has now moved to <a href="http://cov-glue-viz.cvr.gla.ac.uk" target="_blank">Cov-GLUE-Viz</a></p>
+			<p>The dataset of amino acid replacements, insertions and deletions which have been observed in GISAID hCoV-19/SARS-CoV-2 sequences sampled from the pandemic is available at <a href="http://cov-glue-viz.cvr.gla.ac.uk" target="_blank">Cov-GLUE-Viz</a></p>
 			<!-- <small>
 			Last update from GISAID: {{gisaidTimeStamp}}. <br/>
 			See the <a href="/#sequenceAcks" target="_blank">data acknowledgements page</a> for details of how to acknowledge GISAID data contributors. <br/>
@@ -35,7 +35,7 @@
 			variation. See the <a href="CoV-GLUE_User_Guide.pdf">User Guide</a> for more details.</p>
 		</div>
 		<div class="col-md-3">
-			<img width="270px" style="padding-bottom:20px" src="images/Whole_virus 2_trp.png" />
+			<img width="270px" style="padding-bottom:20px" src="images/vir_green.png" />
 			<p class="text-center">
 				<small>Image: <a target="_blank" href="http://www.scientart.com/">Annabel Slater</a> / <a target="_blank" href="http://www.gla.ac.uk/researchinstitutes/iii/cvr/">CVR</a></small>
 			</p>
@@ -216,7 +216,8 @@
 									<br/>
 									<span ng-repeat="difference in nonSnpDifferences(covResult.covReport.sequenceResult.differences)">
 										<span ng-if="difference.knownLink != null">
-											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a>
+										<!--	<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a> -->
+											<a target="_blank" href="http://cov-glue-viz.cvr.gla.ac.uk/mutations.php">Known</a>
 										</span>
 										<span>{{(difference.knownLink == null ? "Novel ": " ")+difference.displayText}} 
 										</span>

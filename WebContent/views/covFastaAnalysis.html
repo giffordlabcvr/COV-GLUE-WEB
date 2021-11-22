@@ -215,12 +215,12 @@
 									SNPs: <span ng-repeat="difference in snpDifferences(covResult.covReport.sequenceResult.differences) track by $index">{{$index > 0 ? ", ":""}}{{difference.snp.name}}</span> 
 									<br/>
 									<span ng-repeat="difference in nonSnpDifferences(covResult.covReport.sequenceResult.differences)">
-										<!-- <span ng-if="difference.knownLink != null">
-											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a> 
-											<a target="_blank" href="http://cov-glue-viz.cvr.gla.ac.uk/mutations.php">Known</a>
-										</span>
-										<span>{{(difference.knownLink == null ? "Novel ": " ")+difference.displayText}} 
-										</span> --> 
+										<!-- <span ng-if="difference.knownLink != null">-->
+										<!--	<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a>--> 
+										<!--	<a target="_blank" href="http://cov-glue-viz.cvr.gla.ac.uk/mutations.php">Known</a>-->
+										<!-- </span>-->
+										<span>{{(difference.knownLink == null ? "NonSNPs ": "NonSNP's ")+difference.displayText}} 
+										</span> 
 										<br/>
 									</span> 
 								</td>

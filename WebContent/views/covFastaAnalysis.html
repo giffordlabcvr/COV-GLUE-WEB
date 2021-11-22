@@ -32,7 +32,7 @@
 			<h3>Analysis of user-submitted sequences</h3>
 			<p>Using the "Add Files" button below, submit your own hCoV-19 FASTA file to 
 			receive an interactive report containing visualisations of genomic 
-			variation. See the <a href="CoV-GLUE_User_Guide.pdf">User Guide</a> for more details.</p>
+			variation. Please note that there is a limit of 50 sequences for each submitted FASTA file.</p>
 		</div>
 		<div class="col-md-3">
 			<img width="270px" style="padding-bottom:20px" src="images/vir_green.png" />
@@ -215,12 +215,12 @@
 									SNPs: <span ng-repeat="difference in snpDifferences(covResult.covReport.sequenceResult.differences) track by $index">{{$index > 0 ? ", ":""}}{{difference.snp.name}}</span> 
 									<br/>
 									<span ng-repeat="difference in nonSnpDifferences(covResult.covReport.sequenceResult.differences)">
-										<span ng-if="difference.knownLink != null">
-										<!--	<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a> -->
+										<!-- <span ng-if="difference.knownLink != null">
+											<a target="_blank" href="#/project/{{difference.knownLink}}">Known</a> 
 											<a target="_blank" href="http://cov-glue-viz.cvr.gla.ac.uk/mutations.php">Known</a>
 										</span>
 										<span>{{(difference.knownLink == null ? "Novel ": " ")+difference.displayText}} 
-										</span>
+										</span> --> 
 										<br/>
 									</span> 
 								</td>

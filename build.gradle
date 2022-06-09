@@ -11,9 +11,9 @@ project.version = scmVersion.version
 
 remotes {
   covglue_cvr {
-    host = 'cov-glue.cvr.gla.ac.uk'
-    user = 'am589p'
-    identity = file('/Users/imacadmin/.ssh/cov_glue_id_rsa')
+    host = 'cov-glue2.cvr.gla.ac.uk'
+    user = 'glue-user'
+    identity = file('/Users/imacadmin/.ssh/cov_glue2_id_rsa')
   }
   
 }

@@ -78,7 +78,7 @@ cargo {
     }
 
     remote {
-        hostname = 'cov-glue.cvr.gla.ac.uk'
+        hostname = 'cov-glue2.cvr.gla.ac.uk'
         // credentials in ~/.gradle/gradle.properties
         username = System.getProperty("cov_glue.tomcat.mgmt.username")
         password = System.getProperty("cov_glue.tomcat.mgmt.password")
